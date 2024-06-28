@@ -16,7 +16,7 @@ export default function ChatClientPDF() {
       {pdfViewerOpened && (
         <PDFViewer
           initialDoc="/files/doc.pdf"
-          licenseKey={process.env.NEXT_PUBLIC_PDF_EXPRESS_KEY || ""}
+          licenseKey={process.env.NEXT_PUBLIC_PDF_EXPRESS_KEY || "kyZYD7Ai1Mi7dyp3V8Ed"}
         />
       )}
     </>
