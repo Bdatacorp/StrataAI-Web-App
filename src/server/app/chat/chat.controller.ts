@@ -40,7 +40,7 @@ class ChatController {
       };
 
       const res: any = await this.chatService.create(data);
-
+console.log(res);
       if (res.data) {
         return {
           status: true,
