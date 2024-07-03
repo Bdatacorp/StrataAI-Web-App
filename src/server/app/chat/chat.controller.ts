@@ -30,7 +30,7 @@ class ChatController {
       const validated = ChatValidate.parse(supplier);
 
       const data = {
-        sourceId: "cha_6Ubrv8b61T3bTe8Yyq4mV",
+        sourceId: process.env.CHAT_PDF_SOURCEID,
         messages: [
           {
             role: "user",
