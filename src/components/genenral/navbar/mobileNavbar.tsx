@@ -12,6 +12,7 @@ import {
   initialState,
 } from "@/lib/provider/features/ui/ui.slice";
 import { RootState } from "@/lib/provider/store";
+import { NavBarLinkTypes } from "./type";
 
 export default function MobileNavbar() {
   const opened = useSelector(
@@ -43,21 +44,15 @@ export default function MobileNavbar() {
           </div>
 
           <div className={`flex flex-col pt-5 gap-5 items-center px-4`}>
-            {NavBarLinks.map(({ Icon, label, link, action }, index) => (
+            {NavBarLinks.map(({ Icon, label, link, type, Element }, index) => (
               <Tooltip label={label} position="right" key={index}>
                 <ActionIcon variant="transparent">
-                  {link ? (
+                  {link && (
                     <Link href={link}>
-                      <Icon className="text-[30px] text-white" />
+                      {Icon && <Icon className="text-[30px] text-white" />}
                     </Link>
-                  ) : (
-                    action && (
-                      <Icon
-                        onClick={() => dispatch(action())}
-                        className="text-[30px] text-white cursor-pointer"
-                      />
-                    )
                   )}
+                  {Element && type === NavBarLinkTypes.action && <Element />}
                 </ActionIcon>
               </Tooltip>
             ))}

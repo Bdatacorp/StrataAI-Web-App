@@ -5,9 +5,15 @@ import { IconType } from "react-icons";
 import { UrlObject } from "url";
 type Url = string | UrlObject;
 
+export enum NavBarLinkTypes {
+  link = "link",
+  action = "action",
+}
+
 export type NavbarLinkType = {
   label: string;
-  Icon: IconType;
+  type?: NavBarLinkTypes;
+  Icon?: IconType;
+  Element?: any;
   link?: Routes | Url;
-  action?: () => UnknownAction;
 };

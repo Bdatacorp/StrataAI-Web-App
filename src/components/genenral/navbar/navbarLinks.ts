@@ -1,12 +1,12 @@
-import { NavbarLinkType } from "./type";
+import { NavbarLinkType, NavBarLinkTypes } from "./type";
 import { Routes } from "@/lib/config/routes";
 import { PiFilePdfFill } from "react-icons/pi";
 import {
   IoChatbubbleEllipsesOutline,
   IoSettingsOutline,
 } from "react-icons/io5";
-import { useDispatch } from "react-redux";
-import { togglePDFViewer } from "@/lib/provider/features/pdf/pdf.slice";
+import PDFNavlink from './pdfNavlink';
+
 
 const NavBarLinks: NavbarLinkType[] = [
   {
@@ -16,8 +16,8 @@ const NavBarLinks: NavbarLinkType[] = [
   },
   {
     label: "Show PDF",
-    Icon: PiFilePdfFill,
-    action: togglePDFViewer,
+    Element: PDFNavlink,
+    type: NavBarLinkTypes.action,
   },
   {
     label: "Settings",

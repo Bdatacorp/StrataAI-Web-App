@@ -1,13 +1,16 @@
+import ChatClient from "@/components/modules/chat/client/chatClient";
 import ChatClientPDF from "@/components/modules/chat/client/chatClientPDF";
-import PDFViewer from "@/components/ui/webViewer/pdfViewer";
+import ChatFooter from "@/components/modules/chat/server/chatFooter";
+import ChatPageWrapper from "@/components/modules/chat/server/chatPageWrapper";
+import ChatServer from "@/components/modules/chat/server/chatServer";
+import PDFViewer from "@/components/ui/client/webViewer/pdfViewer";
 
 export default function ChatPage() {
   return (
-    <div className="w-full h-full flex gap-5">
-      <div className="w-full lg:w-[40%]">
-        <ChatClientPDF />
-      </div>
-      <div></div>
-    </div>
+    <ChatPageWrapper>
+      <ChatClientPDF />
+      <ChatClient />
+      <ChatFooter />
+    </ChatPageWrapper>
   );
 }
