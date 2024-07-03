@@ -13,7 +13,7 @@ export default async function httpErrorPipe(
 
   if (response.status === 500) {
     const res = await response.json();
-
+console.log(res);
     if (method !== httpErrorPipeMethod.GET) {
       if (res.error) {
         return {
