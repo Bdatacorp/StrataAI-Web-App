@@ -6,6 +6,7 @@ import responseProcess from "../utils/helper/responseProcess";
 import chatServiceInstance, { ChatService } from "./chat.service";
 import { Chat, ChatCreateDto } from "./chat.types";
 import ChatValidate from "./chat.validate";
+import askFromAssistant from "@/server/actions/openapi/assistant";
 
 class ChatController {
   private chatService: ChatService;
@@ -24,10 +25,10 @@ class ChatController {
     return res;
   }
 
-  async send(supplier: ChatCreateDto) {
+  async send(message: ChatCreateDto) {
     "use server";
     try {
-      const validated = ChatValidate.parse(supplier);
+      const validated = ChatValidate.parse(message);
 
       const data = {
         sourceId: process.env.CHAT_PDF_SOURCEID,
@@ -39,9 +40,11 @@ class ChatController {
         ],
       };
 
-      const res: any = await this.chatService.create(data);
+      // const res: any = await this.chatService.create(data);
 
-      if (res.data) {
+      const res = await askFromAssistant(message.text);
+
+      if (res.status) {
         return {
           status: true,
           payload: res,
