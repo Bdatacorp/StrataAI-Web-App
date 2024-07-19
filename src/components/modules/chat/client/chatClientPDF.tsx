@@ -24,14 +24,14 @@ export default function ChatClientPDF() {
 
   return (
     <>
-      {pdfViewerOpened && (
-        <div className="hidden lg:block w-full lg:w-[40%]">
-          {/* <PDFViewer
+      <div className="hidden lg:block w-full lg:w-[40%]">
+        {pdfViewerOpened && (
+          <PDFViewer
             initialDoc="/files/doc.pdf"
             licenseKey={process.env.NEXT_PUBLIC_PDF_EXPRESS_KEY || ""}
-          /> */}
-        </div>
-      )}
+          />
+        )}
+      </div>
 
       <Modal
         size="xl"

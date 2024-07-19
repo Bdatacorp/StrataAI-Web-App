@@ -5,7 +5,7 @@ interface initialState {
 }
 
 const initialState = {
-  isPDFViewerOpened: true,
+  isPDFViewerOpened: false,
 };
 
 const pdfSlice = createSlice({

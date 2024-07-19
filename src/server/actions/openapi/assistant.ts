@@ -1,50 +1,108 @@
 "use server";
 
 import OpenAI from "openai";
-import { TextContentBlock } from "openai/resources/beta/threads/messages.mjs";
+import data from "./data.json";
+import writeToJson from "@/utils/helper/writeToJson";
 
 const client = new OpenAI();
 
-export default async function askFromAssistant(question: string) {
-  //   const completion = await openai.chat.completions.create({
-  //     messages: [{ role: "system", content: message }],
-  //     model: "gpt-4o-mini",
-  //   });
+interface ThreadMesseges {
+  thread_id: string;
+  user_id: string;
+  assistant_id: string;
+  messeges: any[];
+}
 
-  const assistant = await client.beta.assistants.retrieve(
+export default async function askFromAssistant(question: string) {
+  let assistants: any[] = data.assistants;
+  let threads: any[] = data.threds;
+  let messages: ThreadMesseges[] = data.messages;
+
+  let currentThread: OpenAI.Beta.Threads.Thread;
+  let currentAssistant: OpenAI.Beta.Assistant;
+
+  currentAssistant = await client.beta.assistants.retrieve(
     "asst_cp5Ehu5en87RUriHhTP2lIN8"
   );
 
-  const thread = await client.beta.threads.create();
+  if (currentAssistant && !assistants[0]) {
+    assistants.push(currentAssistant);
+  }
 
-  const message = await client.beta.threads.messages.create(thread.id, {
+  if (threads[0]) {
+    console.log("Thread Found : ", threads[0].id);
+    currentThread = await client.beta.threads.retrieve(threads[0].id);
+  } else {
+    console.log("Thread Not Found");
+    currentThread = await client.beta.threads.create();
+    threads.push(currentThread);
+  }
+
+  const message = await client.beta.threads.messages.create(currentThread.id, {
     content: question,
     role: "user",
   });
 
-  const run = await client.beta.threads.runs.createAndPoll(thread.id, {
-    assistant_id: assistant.id,
+  const run = await client.beta.threads.runs.createAndPoll(currentThread.id, {
+    assistant_id: currentAssistant.id,
   });
 
-  console.log("run status", run.status);
-
-  let result;
+  console.log(`Thread ${currentThread.id} Run status`, run.status);
 
   if (run.status == "completed") {
-    result = await client.beta.threads.messages.list(thread.id);
-    console.log(result.data[0].content[0]);
+    const result: OpenAI.Beta.Threads.Messages.MessagesPage =
+      await client.beta.threads.messages.list(currentThread.id);
+    console.log(result);
+
+    // Update current threds messages list
+    if (messages.length === 0) {
+      messages.push({
+        thread_id: currentThread.id,
+        assistant_id: currentAssistant.id,
+        user_id: "USER-1",
+        messeges: result.data,
+      });
+    } else {
+      messages.map((message) => {
+        console.log("Messages List : ", message);
+        if (message.thread_id === currentThread.id) {
+          message.messeges = result.data;
+          console.log("Messages Found");
+        }
+      });
+    }
+
+    console.log("Create Message Result : ", result.data[0].content[0]);
+    await writeToJson(data, "./src/server/actions/openapi/data.json");
+
+    return createActionResponse(currentThread.id);
   } else {
-    console.log(run.status);
+    console.log("Run Status : ", run.status);
+    console.log("Run Details : ", run);
+    return {
+      status: false,
+    };
   }
+}
 
-  const content = result?.data[0].content[0];
+function createActionResponse(thread_id: string) {
+  let messages: ThreadMesseges[] = data.messages;
 
-  if (content && content.type === "text") {
-    const textContent = content?.text.value;
+  const latestMessage: any = messages[0].messeges.find(
+    (list) => list?.thread_id === thread_id
+  );
+
+  const formattedMessage =
+    latestMessage?.content[0].type === "text" &&
+    latestMessage?.content[0].text.value;
+
+  console.log("Latest Message : ", formattedMessage);
+
+  if (formattedMessage) {
     return {
       status: true,
       data: {
-        content: textContent,
+        content: formattedMessage,
       },
     };
   }
