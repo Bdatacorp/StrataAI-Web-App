@@ -26,10 +26,10 @@ export default function ChatClientPDF() {
     <>
       {pdfViewerOpened && (
         <div className="hidden lg:block w-full lg:w-[40%]">
-          <PDFViewer
+          {/* <PDFViewer
             initialDoc="/files/doc.pdf"
             licenseKey={process.env.NEXT_PUBLIC_PDF_EXPRESS_KEY || ""}
-          />
+          /> */}
         </div>
       )}
 

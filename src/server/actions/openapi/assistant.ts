@@ -32,23 +32,24 @@ export default async function askFromAssistant(question: string) {
 
   if (run.status == "completed") {
     result = await client.beta.threads.messages.list(thread.id);
-    // console.log(result.data[0].content[0]);
+    console.log(result.data[0].content[0]);
   } else {
     console.log(run.status);
   }
 
-  const content: any = result?.data[0].content[0];
+  const content = result?.data[0].content[0];
 
-  if (content) {
+  if (content && content.type === "text") {
+    const textContent = content?.text.value;
     return {
       status: true,
       data: {
-        content: content?.text.value,
+        content: textContent,
       },
     };
-  } else {
-    return {
-      status: false,
-    };
   }
+
+  return {
+    status: false,
+  };
 }

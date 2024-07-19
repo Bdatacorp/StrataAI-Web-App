@@ -6,6 +6,8 @@ import { ColorSchemeScript, MantineProvider } from "@mantine/core";
 import theme from "./_theme";
 import ReduxProvider from "@/lib/provider/reduxProvider";
 
+import "./index.css";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {

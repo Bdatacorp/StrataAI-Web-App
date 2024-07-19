@@ -1,28 +1,22 @@
 "use client";
 
 import { message, MessageRoles } from "@/components/modules/chat/types";
-import { useEffect, useState } from "react";
+import Markdown from "react-markdown";
 
 export default function ChatMessage(message: message) {
-  const [lines, setLines] = useState<string[]>([message.text]);
-
-  useEffect(() => {
-    setLines(message.text.split("\n"));
-  }, [message]);
-
   return (
     <div className="w-full">
       {message.role === MessageRoles.Assistant ? (
         <div className="bg-white p-5 rounded">
-          {lines.map((line, index) => (
-            <div key={index}>{line}</div>
-          ))}
+          <article className="prose ">
+            <Markdown>{message.text}</Markdown>
+          </article>
         </div>
       ) : (
-        <div className="bg-primary p-5 text-white rounded w-auto">
-          {lines.map((line, index) => (
-            <div key={index}>{line}</div>
-          ))}
+        <div className="float-right bg-primary p-5 text-white rounded-3xl w-3/4 lg:w-7/12">
+          <article className="prose text-white">
+            <Markdown>{message.text}</Markdown>
+          </article>
         </div>
       )}
     </div>
