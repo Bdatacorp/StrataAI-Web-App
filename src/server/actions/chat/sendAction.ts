@@ -10,12 +10,12 @@ export default async function sendAction(
   formData: FormData
 ) {
   const text = formData.get("text") as string;
+  const token = formData.get("token") as string;
 
   const message: ChatCreateDto = {
     text,
+    token,
   };
-
-  
 
   const res: any = await chatController.send(message);
 
@@ -34,6 +34,7 @@ export default async function sendAction(
         text: { message: "" },
       },
       content: res.payload.data.content,
+      id: res.payload.data.id,
     };
   } else {
     return {

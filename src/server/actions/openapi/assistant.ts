@@ -3,39 +3,45 @@
 import OpenAI from "openai";
 import data from "./data.json";
 import writeToJson from "@/utils/helper/writeToJson";
+import loadThreadMessages from "./messages";
+import { ASSISTANT_ID } from "./constants";
+import { ThreadMessages } from "./types";
 
 const client = new OpenAI();
 
-interface ThreadMesseges {
-  thread_id: string;
-  user_id: string;
-  assistant_id: string;
-  messeges: any[];
-}
 
-export default async function askFromAssistant(question: string) {
+
+export default async function askFromAssistant(
+  question: string,
+  token: string
+) {
   let assistants: any[] = data.assistants;
   let threads: any[] = data.threds;
-  let messages: ThreadMesseges[] = data.messages;
+  let messages: ThreadMessages[] = data.messages;
 
   let currentThread: OpenAI.Beta.Threads.Thread;
   let currentAssistant: OpenAI.Beta.Assistant;
 
-  currentAssistant = await client.beta.assistants.retrieve(
-    "asst_cp5Ehu5en87RUriHhTP2lIN8"
-  );
+  currentAssistant = await client.beta.assistants.retrieve(ASSISTANT_ID);
 
   if (currentAssistant && !assistants[0]) {
     assistants.push(currentAssistant);
   }
 
-  if (threads[0]) {
-    console.log("Thread Found : ", threads[0].id);
-    currentThread = await client.beta.threads.retrieve(threads[0].id);
+  const user_messages = messages.find((message) => message.user_id === token);
+  if (user_messages?.user_id) {
+    console.log("User Session Found : ", user_messages.thread_id);
+    currentThread = await client.beta.threads.retrieve(user_messages.thread_id);
   } else {
-    console.log("Thread Not Found");
+    console.log("User Session Not Found");
     currentThread = await client.beta.threads.create();
-    threads.push(currentThread);
+    threads.push({ ...currentThread, user_id: token });
+    messages.push({
+      user_id: token,
+      assistant_id: currentAssistant.id,
+      thread_id: currentThread.id,
+      messages: [],
+    });
   }
 
   const message = await client.beta.threads.messages.create(currentThread.id, {
@@ -60,13 +66,13 @@ export default async function askFromAssistant(question: string) {
         thread_id: currentThread.id,
         assistant_id: currentAssistant.id,
         user_id: "USER-1",
-        messeges: result.data,
+        messages: result.data,
       });
     } else {
       messages.map((message) => {
         console.log("Messages List : ", message);
         if (message.thread_id === currentThread.id) {
-          message.messeges = result.data;
+          message.messages = result.data;
           console.log("Messages Found");
         }
       });
@@ -86,9 +92,9 @@ export default async function askFromAssistant(question: string) {
 }
 
 function createActionResponse(thread_id: string) {
-  let messages: ThreadMesseges[] = data.messages;
+  let messages: ThreadMessages[] = data.messages;
 
-  const latestMessage: any = messages[0].messeges.find(
+  const latestMessage: any = messages[0].messages.find(
     (list) => list?.thread_id === thread_id
   );
 
@@ -102,6 +108,7 @@ function createActionResponse(thread_id: string) {
     return {
       status: true,
       data: {
+        id: latestMessage.id,
         content: formattedMessage,
       },
     };

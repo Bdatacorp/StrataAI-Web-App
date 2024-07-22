@@ -2,7 +2,7 @@
 
 import { useSelector } from "react-redux";
 import { message } from "../types";
-import ChatMessages from "./chatMessages";
+import ChatMessages from "./chatMesseges";
 import { RootState } from "@/lib/provider/store";
 
 export default function ChatClient() {

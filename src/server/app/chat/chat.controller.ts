@@ -4,9 +4,11 @@ import ResponceStatus from "../utils/config/responseStatus";
 import CacheTags from "../utils/config/cacheTags";
 import responseProcess from "../utils/helper/responseProcess";
 import chatServiceInstance, { ChatService } from "./chat.service";
-import { Chat, ChatCreateDto } from "./chat.types";
+import { Chat, ChatCreateDto, ChatMessage } from "./chat.types";
 import ChatValidate from "./chat.validate";
 import askFromAssistant from "@/server/actions/openapi/assistant";
+import loadThreadMessages from "@/server/actions/openapi/messages";
+import askFromAssistantStreaming from "@/server/actions/openapi/assistantWithStreaming";
 
 class ChatController {
   private chatService: ChatService;
@@ -30,19 +32,7 @@ class ChatController {
     try {
       const validated = ChatValidate.parse(message);
 
-      const data = {
-        sourceId: process.env.CHAT_PDF_SOURCEID,
-        messages: [
-          {
-            role: "user",
-            content: validated.text,
-          },
-        ],
-      };
-
-      // const res: any = await this.chatService.create(data);
-
-      const res = await askFromAssistant(message.text);
+      const res = await askFromAssistant(message.text, message.token);
 
       if (res.status) {
         return {
@@ -58,6 +48,23 @@ class ChatController {
       console.log(error);
       return zodErrorMessageFormatter(error);
     }
+  }
+
+  async sendStream(message: ChatCreateDto) {
+    "use server";
+
+    const validated = ChatValidate.parse(message);
+
+    const res = await askFromAssistantStreaming(message.text, message.token);
+
+    return res;
+  }
+
+  async loadMessages(token: string): Promise<ChatMessage> {
+    "use server";
+    const res = await loadThreadMessages(token);
+
+    return res;
   }
 }
 

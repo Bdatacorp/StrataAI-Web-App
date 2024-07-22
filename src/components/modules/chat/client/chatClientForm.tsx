@@ -10,11 +10,15 @@ import { ChatFormState } from "../types";
 import { error } from "console";
 import { useDispatch } from "react-redux";
 import {
-  setAssistantMessege,
-  setUserMessege,
+  loadPreMessages,
+  setAssistantMessage,
+  setUserMessage,
 } from "@/lib/provider/features/chat/chat.slice";
+import loadChatMessages from "@/server/actions/chat/loadMessages";
+import userSession from "@/utils/generators/userSession";
 
 const initialState: ChatFormState = {
+  id: "",
   content: "",
   status: false,
   errors: {
@@ -28,19 +32,29 @@ export default function ChatClientForm() {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    loadSessionMessages(userSession());
     if (state.content) {
-      dispatch(setAssistantMessege(state.content));
+      dispatch(setAssistantMessage({ id: state.id, content: state.content }));
       if (inputRef.current) {
         inputRef.current.value = "";
       }
     }
   }, [state]);
 
+  async function loadSessionMessages(token: string) {
+    const messages = await loadChatMessages(token);
+    console.log(messages);
+    if (messages.status) {
+      dispatch(loadPreMessages(messages.payload));
+    }
+  }
+
   const handleFormSubmit = (formData: FormData) => {
+    formData.set("token", userSession());
     formAction(formData);
     const data = formData.get("text");
     if (data) {
-      dispatch(setUserMessege(data));
+      dispatch(setUserMessage({ id: state.id, content: state.content }));
     }
   };
 

@@ -1,5 +1,5 @@
 import { Card, ScrollArea } from "@mantine/core";
-import ChatMessages from "../client/chatMessages";
+import ChatMessages from "../client/chatMesseges";
 import { message } from "../types";
 
 export default function ChatServer() {

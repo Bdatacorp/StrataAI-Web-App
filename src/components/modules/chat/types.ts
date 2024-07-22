@@ -3,12 +3,14 @@ export type ChatFormErrors = {
 };
 
 export type ChatFormState = {
+  id:string,
   content: string;
   status: boolean;
   errors: ChatFormErrors;
 };
 
 export type message = {
+  id: string;
   text: string;
   role: string;
 };

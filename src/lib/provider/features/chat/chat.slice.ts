@@ -1,5 +1,5 @@
 import { message, MessageRoles } from "@/components/modules/chat/types";
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface initialState {
   messages: message[];
@@ -8,6 +8,7 @@ export interface initialState {
 const initialState: initialState = {
   messages: [
     {
+      id: "0",
       text: "Hello, I am a Strata chat assistant here to help you with any questions you may have regarding the document you have uploaded.",
       role: MessageRoles.Assistant,
     },
@@ -18,18 +19,61 @@ const chatSlice = createSlice({
   name: "chat",
   initialState,
   reducers: {
-    setAssistantMessege(state, action) {
+    setAssistantMessage(
+      state,
+      action: PayloadAction<{ id: string; content: string }>
+    ) {
       state.messages.push({
-        text: action.payload,
+        id: action.payload.id,
+        text: action.payload.content,
         role: MessageRoles.Assistant,
       });
     },
-    setUserMessege(state, action) {
-      state.messages.push({ text: action.payload, role: MessageRoles.User });
+    setAssistantMessageStream(
+      state,
+      action: PayloadAction<{ id: string; content: string }>
+    ) {
+      const existing = state.messages.find(
+        (item) => item.id === action.payload.id
+      );
+
+      if (existing) {
+        state.messages = state.messages.map((message) =>
+          message.id === existing.id
+            ? { ...message, text: existing.text + action.payload.content }
+            : message
+        );
+      }
+    },
+    initiateNewMessageForStream(state, action: PayloadAction<{ id: string }>) {
+      state.messages.push({
+        id: action.payload.id,
+        text: "",
+        role: MessageRoles.Assistant,
+      });
+    },
+    setUserMessage(
+      state,
+      action: PayloadAction<{ id: string; content: string }>
+    ) {
+      state.messages.push({
+        id: action.payload.id,
+        text: action.payload.content,
+        role: MessageRoles.User,
+      });
+    },
+    loadPreMessages(state, action: PayloadAction<message[]>) {
+      state.messages = action.payload;
     },
   },
 });
 
-export const { setAssistantMessege, setUserMessege } = chatSlice.actions;
+export const {
+  setAssistantMessage,
+  setUserMessage,
+  loadPreMessages,
+  setAssistantMessageStream,
+  initiateNewMessageForStream,
+} = chatSlice.actions;
 
 export default chatSlice.reducer;
