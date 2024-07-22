@@ -7,7 +7,7 @@ export interface Session extends OpenAI.Beta.Threads.Thread {
   assistant_id: string;
 }
 
-export interface ThreadMessages {
+export interface ThreadMessage {
   session_id: string;
   thread_id: string;
   user_id: string;
@@ -16,7 +16,10 @@ export interface ThreadMessages {
 }
 
 export interface APPRepositary {
-  assistant: OpenAI.Beta.Assistants.Assistant;
+  metaData?: {
+    path: string;
+  };
+  assistant: OpenAI.Beta.Assistants.Assistant[];
   sessions: Session[];
-  messages: ThreadMessages[];
+  messages: ThreadMessage[];
 }
