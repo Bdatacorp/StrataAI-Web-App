@@ -73,8 +73,8 @@ export default function ChatClientFormStreaming() {
 
         if (initiated === 0) {
           const slpittedChunk = chunk.split(":");
-          if (slpittedChunk[0] === "thread") {
-            console.log("Message Thread Initiated");
+          if (slpittedChunk[0] === "id") {
+            console.log("Client Message Initiated");
             message_id = slpittedChunk[1];
             dispatch(
               initiateNewMessageForStream({
@@ -83,6 +83,7 @@ export default function ChatClientFormStreaming() {
             );
           }
         } else {
+          // const message = chunk.split("|");
           dispatch(
             setAssistantMessageStream({
               id: message_id ? message_id : "",
