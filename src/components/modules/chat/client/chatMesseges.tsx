@@ -26,7 +26,11 @@ export default function ChatMessages({ messages }: { messages: message[] }) {
             ref={index === messages.length - 1 ? lastMessageRef : null}
             key={index}
           >
-            <ChatMessage text={message.text} role={message.role} />
+            <ChatMessage
+              text={message.text}
+              role={message.role}
+              id={message.id}
+            />
           </div>
         ))}
       </div>

@@ -1,14 +1,9 @@
 import { ASSISTANT_ID } from "@/server/actions/openapi/constants";
 import OpenAI from "openai";
-import {
-  Thread,
-  Assistant as AssistantType,
-} from "openai/src/resources/beta/index.js";
 import { APPRepositary, Session, ThreadMessage } from "./type";
 import { Logger } from "@/utils/logger/logger";
 import writeToJson from "@/utils/helper/writeToJson";
 import readJsonFile from "@/utils/helper/readJson";
-import { MessagesPage } from "openai/resources/beta/threads/messages.mjs";
 
 /**
  * Assistant Class Help to Initiate Assisant, Initiate Session, Initiate Thread and Create
@@ -16,8 +11,8 @@ import { MessagesPage } from "openai/resources/beta/threads/messages.mjs";
  */
 export class Assistant {
   private openai: OpenAI;
-  private assistant?: AssistantType | null;
-  private thread?: Thread;
+  private assistant?: OpenAI.Beta.Assistants.Assistant | null;
+  private thread?: OpenAI.Beta.Threads.Thread;
   private session?: Session;
   private repository: APPRepositary;
   private logger: Logger;
@@ -168,7 +163,7 @@ export class Assistant {
    * Save Messages List to Chat History by update Thread Messages List
    */
   private async updateThreadMessageList(threadID: string) {
-    const messagesList: MessagesPage =
+    const messagesList: OpenAI.Beta.Threads.Messages.MessagesPage =
       await this.openai.beta.threads.messages.list(threadID);
 
     if (this.repository.messages.length === 0) {
