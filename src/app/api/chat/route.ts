@@ -1,6 +1,5 @@
 import askFromAssistantStreaming from "@/server/actions/openapi/assistantWithStreaming";
 import updateThreadMessages from "@/server/actions/openapi/updateThreadMessages";
-import { AssistantResponse, OpenAIStream, StreamingTextResponse } from "ai";
 import { NextResponse } from "next/server";
 import OpenAI from "openai";
 
