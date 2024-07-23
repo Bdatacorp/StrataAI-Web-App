@@ -43,12 +43,102 @@
       "thread_id": "thread_9QzJp5oRbHSGZ4T3GQwQkU6d",
       "messages": [
         {
-          "id": "msg_aedzYusosuuKrgbvTOyi4J9C",
+          "id": "msg_tAQFFcZmnBBa97PyK03CjuvX",
           "object": "thread.message",
-          "created_at": 1721710409,
+          "created_at": 1721725832,
           "assistant_id": "asst_PCXsE7XsUujgXU4HGj27sdss",
           "thread_id": "thread_9QzJp5oRbHSGZ4T3GQwQkU6d",
-          "run_id": "run_HgRAhg0Vc8Nv3x9WRjdHRM4F",
+          "run_id": "run_Z30skG9zZDpifRrrpPpfiq72",
+          "role": "assistant",
+          "content": [
+            {
+              "type": "text",
+              "text": {
+                "value": "The Owners Corporations Act 2006 specifies that an owners corporation must repair and maintain the common property, including the chattels, fixtures, fittings, and services related to the common property or its enjoyment【32:2†source】. Owners corporations are also responsible for repairing and maintaining services in or relating to a lot that benefit more than one lot and the common property. In instances where it is impracticable for a lot owner to repair or maintain a service, the owners corporation may undertake the repairs and maintenance at the request and expense of the lot owner .",
+                "annotations": [
+                  {
+                    "type": "file_citation",
+                    "text": "【32:2†source】",
+                    "start_index": 220,
+                    "end_index": 233,
+                    "file_citation": {
+                      "file_id": "file-za6AEsOgyTcdn4xz2T1uigQg"
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "attachments": [],
+          "metadata": {}
+        },
+        {
+          "id": "msg_s9yHZQqgI2TtgUu5bgakH4VX",
+          "object": "thread.message",
+          "created_at": 1721725829,
+          "assistant_id": null,
+          "thread_id": "thread_9QzJp5oRbHSGZ4T3GQwQkU6d",
+          "run_id": null,
+          "role": "user",
+          "content": [
+            {
+              "type": "text",
+              "text": {
+                "value": "details of maintaining the common property",
+                "annotations": []
+              }
+            }
+          ],
+          "attachments": [],
+          "metadata": {}
+        },
+        {
+          "id": "msg_xp6uQIuocKOikwyIvdB7c69Q",
+          "object": "thread.message",
+          "created_at": 1721725807,
+          "assistant_id": "asst_PCXsE7XsUujgXU4HGj27sdss",
+          "thread_id": "thread_9QzJp5oRbHSGZ4T3GQwQkU6d",
+          "run_id": "run_bcRfxG11xoym8GTPRu51hdEH",
+          "role": "assistant",
+          "content": [
+            {
+              "type": "text",
+              "text": {
+                "value": "Hello! How can I assist you today?",
+                "annotations": []
+              }
+            }
+          ],
+          "attachments": [],
+          "metadata": {}
+        },
+        {
+          "id": "msg_lCrJxXFrdF1rkLEqXQjXfEWP",
+          "object": "thread.message",
+          "created_at": 1721725799,
+          "assistant_id": null,
+          "thread_id": "thread_9QzJp5oRbHSGZ4T3GQwQkU6d",
+          "run_id": null,
+          "role": "user",
+          "content": [
+            {
+              "type": "text",
+              "text": {
+                "value": "hey there",
+                "annotations": []
+              }
+            }
+          ],
+          "attachments": [],
+          "metadata": {}
+        },
+        {
+          "id": "msg_7OJWwOt58j80J5zOu9022Tjc",
+          "object": "thread.message",
+          "created_at": 1721725790,
+          "assistant_id": "asst_PCXsE7XsUujgXU4HGj27sdss",
+          "thread_id": "thread_9QzJp5oRbHSGZ4T3GQwQkU6d",
+          "run_id": "run_LjUrQWsoOsuP3w4JDW9w5lMl",
           "role": "assistant",
           "content": [
             {
@@ -73,9 +163,9 @@
           "metadata": {}
         },
         {
-          "id": "msg_ZhJivlEd58RAotskMcY7CLaf",
+          "id": "msg_GORnNEVl8t2i1LLg7fx3YVd1",
           "object": "thread.message",
-          "created_at": 1721710406,
+          "created_at": 1721725788,
           "assistant_id": null,
           "thread_id": "thread_9QzJp5oRbHSGZ4T3GQwQkU6d",
           "run_id": null,
@@ -85,6 +175,316 @@
               "type": "text",
               "text": {
                 "value": "What are the key functions of an owners corporation according to the Act?",
+                "annotations": []
+              }
+            }
+          ],
+          "attachments": [],
+          "metadata": {}
+        },
+        {
+          "id": "msg_sinPypBPVVJUdQuVUA6fUpj8",
+          "object": "thread.message",
+          "created_at": 1721725679,
+          "assistant_id": "asst_PCXsE7XsUujgXU4HGj27sdss",
+          "thread_id": "thread_9QzJp5oRbHSGZ4T3GQwQkU6d",
+          "run_id": "run_JTdL6WFluGVMtagvXMZpYT3h",
+          "role": "assistant",
+          "content": [
+            {
+              "type": "text",
+              "text": {
+                "value": "According to the Owners Corporations Act 2006, the key functions of an owners corporation include:\n1. Managing and administering the common property.\n2. Repairing and maintaining the common property, related chattels, fixtures, fittings, and services.\n3. Taking out, maintaining, and paying premiums on required insurances.\n4. Keeping an owners corporation register.\n5. Providing owners corporation certificates upon request.\n6. Carrying out any other functions conferred by the Act, regulations, Subdivision Act 1988, other laws, or rules of the owners corporation【4:0†source】.",
+                "annotations": [
+                  {
+                    "type": "file_citation",
+                    "text": "【4:0†source】",
+                    "start_index": 565,
+                    "end_index": 577,
+                    "file_citation": {
+                      "file_id": "file-za6AEsOgyTcdn4xz2T1uigQg"
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "attachments": [],
+          "metadata": {}
+        },
+        {
+          "id": "msg_RDXP1GIuh4GiM250o8ts0jvq",
+          "object": "thread.message",
+          "created_at": 1721725676,
+          "assistant_id": null,
+          "thread_id": "thread_9QzJp5oRbHSGZ4T3GQwQkU6d",
+          "run_id": null,
+          "role": "user",
+          "content": [
+            {
+              "type": "text",
+              "text": {
+                "value": "What are the key functions of an owners corporation according to the Act?",
+                "annotations": []
+              }
+            }
+          ],
+          "attachments": [],
+          "metadata": {}
+        },
+        {
+          "id": "msg_A7B1tPTnG7aYO2g9DglPZ2WY",
+          "object": "thread.message",
+          "created_at": 1721725659,
+          "assistant_id": "asst_PCXsE7XsUujgXU4HGj27sdss",
+          "thread_id": "thread_9QzJp5oRbHSGZ4T3GQwQkU6d",
+          "run_id": "run_dnrU6c85oEdn3ZXOKLeBw0my",
+          "role": "assistant",
+          "content": [
+            {
+              "type": "text",
+              "text": {
+                "value": "According to the Owners Corporations Act 2006, the key functions of an owners corporation include:\n1. Managing and administering the common property.\n2. Repairing and maintaining the common property, related chattels, fixtures, fittings, and services.\n3. Taking out, maintaining, and paying premiums on required insurances.\n4. Keeping an owners corporation register.\n5. Providing owners corporation certificates upon request.\n6. Carrying out any other functions conferred by the Act, regulations, Subdivision Act 1988, other laws, or rules of the owners corporation【4:0†source】.",
+                "annotations": [
+                  {
+                    "type": "file_citation",
+                    "text": "【4:0†source】",
+                    "start_index": 565,
+                    "end_index": 577,
+                    "file_citation": {
+                      "file_id": "file-za6AEsOgyTcdn4xz2T1uigQg"
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "attachments": [],
+          "metadata": {}
+        },
+        {
+          "id": "msg_N9HG7WWJ6pPPZhl2PoqGTuWV",
+          "object": "thread.message",
+          "created_at": 1721725657,
+          "assistant_id": null,
+          "thread_id": "thread_9QzJp5oRbHSGZ4T3GQwQkU6d",
+          "run_id": null,
+          "role": "user",
+          "content": [
+            {
+              "type": "text",
+              "text": {
+                "value": "What are the key functions of an owners corporation according to the Act?",
+                "annotations": []
+              }
+            }
+          ],
+          "attachments": [],
+          "metadata": {}
+        },
+        {
+          "id": "msg_x4C2xftLtrqsD5CKlLeRBOZr",
+          "object": "thread.message",
+          "created_at": 1721725644,
+          "assistant_id": "asst_PCXsE7XsUujgXU4HGj27sdss",
+          "thread_id": "thread_9QzJp5oRbHSGZ4T3GQwQkU6d",
+          "run_id": "run_10dhMWKCSnykde0LE7cOCnVN",
+          "role": "assistant",
+          "content": [
+            {
+              "type": "text",
+              "text": {
+                "value": "Hello! How can I help you today?",
+                "annotations": []
+              }
+            }
+          ],
+          "attachments": [],
+          "metadata": {}
+        },
+        {
+          "id": "msg_n65kZliSrbwYifGwf4iHBbZ6",
+          "object": "thread.message",
+          "created_at": 1721725642,
+          "assistant_id": null,
+          "thread_id": "thread_9QzJp5oRbHSGZ4T3GQwQkU6d",
+          "run_id": null,
+          "role": "user",
+          "content": [
+            {
+              "type": "text",
+              "text": {
+                "value": "hey there",
+                "annotations": []
+              }
+            }
+          ],
+          "attachments": [],
+          "metadata": {}
+        },
+        {
+          "id": "msg_M5Z6SfPv8Nx1NjCKAgUdugC4",
+          "object": "thread.message",
+          "created_at": 1721725577,
+          "assistant_id": "asst_PCXsE7XsUujgXU4HGj27sdss",
+          "thread_id": "thread_9QzJp5oRbHSGZ4T3GQwQkU6d",
+          "run_id": "run_1AdCktrlP8IhVjuE8LuB7aQh",
+          "role": "assistant",
+          "content": [
+            {
+              "type": "text",
+              "text": {
+                "value": "Hello! How can I assist you today?",
+                "annotations": []
+              }
+            }
+          ],
+          "attachments": [],
+          "metadata": {}
+        },
+        {
+          "id": "msg_EC6K5n5qdK5bOxoZPUFBEvB8",
+          "object": "thread.message",
+          "created_at": 1721725574,
+          "assistant_id": null,
+          "thread_id": "thread_9QzJp5oRbHSGZ4T3GQwQkU6d",
+          "run_id": null,
+          "role": "user",
+          "content": [
+            {
+              "type": "text",
+              "text": {
+                "value": "hey there",
+                "annotations": []
+              }
+            }
+          ],
+          "attachments": [],
+          "metadata": {}
+        },
+        {
+          "id": "msg_YC7sBtq7qZkfnZu6oFlXayKz",
+          "object": "thread.message",
+          "created_at": 1721725508,
+          "assistant_id": "asst_PCXsE7XsUujgXU4HGj27sdss",
+          "thread_id": "thread_9QzJp5oRbHSGZ4T3GQwQkU6d",
+          "run_id": "run_Kq4rDYHuouoPEqZJzDjH02N0",
+          "role": "assistant",
+          "content": [
+            {
+              "type": "text",
+              "text": {
+                "value": "Hello! How can I help you today?",
+                "annotations": []
+              }
+            }
+          ],
+          "attachments": [],
+          "metadata": {}
+        },
+        {
+          "id": "msg_myXZDoZgFeIayKGOVlIp3hA1",
+          "object": "thread.message",
+          "created_at": 1721725506,
+          "assistant_id": null,
+          "thread_id": "thread_9QzJp5oRbHSGZ4T3GQwQkU6d",
+          "run_id": null,
+          "role": "user",
+          "content": [
+            {
+              "type": "text",
+              "text": {
+                "value": "Hi there",
+                "annotations": []
+              }
+            }
+          ],
+          "attachments": [],
+          "metadata": {}
+        },
+        {
+          "id": "msg_Zh1cEKDHjLdkVj9lgA5zaqVJ",
+          "object": "thread.message",
+          "created_at": 1721725492,
+          "assistant_id": "asst_PCXsE7XsUujgXU4HGj27sdss",
+          "thread_id": "thread_9QzJp5oRbHSGZ4T3GQwQkU6d",
+          "run_id": "run_d6hPLxBqNhwMJ8VPtZu2bIyX",
+          "role": "assistant",
+          "content": [
+            {
+              "type": "text",
+              "text": {
+                "value": "The Owners Corporations Act 2006 in Victoria provides regulations for the management, powers, and functions of owners corporations, as well as mechanisms for resolving disputes related to owners corporations. It also amends the Subdivision Act 1988 concerning the creation of owners corporations and makes provisions for other purposes【14:3†source】.",
+                "annotations": [
+                  {
+                    "type": "file_citation",
+                    "text": "【14:3†source】",
+                    "start_index": 335,
+                    "end_index": 348,
+                    "file_citation": {
+                      "file_id": "file-za6AEsOgyTcdn4xz2T1uigQg"
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "attachments": [],
+          "metadata": {}
+        },
+        {
+          "id": "msg_BWzdxghprtorMKleaqLfZBGg",
+          "object": "thread.message",
+          "created_at": 1721725489,
+          "assistant_id": null,
+          "thread_id": "thread_9QzJp5oRbHSGZ4T3GQwQkU6d",
+          "run_id": null,
+          "role": "user",
+          "content": [
+            {
+              "type": "text",
+              "text": {
+                "value": "What is this act about?",
+                "annotations": []
+              }
+            }
+          ],
+          "attachments": [],
+          "metadata": {}
+        },
+        {
+          "id": "msg_xnFTkET8OwAe0Ee1aMjOU5Ml",
+          "object": "thread.message",
+          "created_at": 1721725476,
+          "assistant_id": "asst_PCXsE7XsUujgXU4HGj27sdss",
+          "thread_id": "thread_9QzJp5oRbHSGZ4T3GQwQkU6d",
+          "run_id": "run_KsYPMHLo31gb6SjdMmHntJku",
+          "role": "assistant",
+          "content": [
+            {
+              "type": "text",
+              "text": {
+                "value": "Hello! How can I assist you today?",
+                "annotations": []
+              }
+            }
+          ],
+          "attachments": [],
+          "metadata": {}
+        },
+        {
+          "id": "msg_ymB0h7wXMOlEKvxdGAM1u9nw",
+          "object": "thread.message",
+          "created_at": 1721725474,
+          "assistant_id": null,
+          "thread_id": "thread_9QzJp5oRbHSGZ4T3GQwQkU6d",
+          "run_id": null,
+          "role": "user",
+          "content": [
+            {
+              "type": "text",
+              "text": {
+                "value": "hey there",
                 "annotations": []
               }
             }

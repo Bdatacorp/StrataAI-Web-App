@@ -64,14 +64,14 @@ export default function ChatClientFormStreaming() {
       const decoder = new TextDecoder();
       let done = false;
       let message_id;
-      let initiated = false;
+      let initiated = 0;
 
       while (!done) {
         const { value, done: readerDone } = await reader.read();
         done = readerDone;
         const chunk = decoder.decode(value, { stream: true });
 
-        if (!initiated) {
+        if (initiated === 0) {
           const slpittedChunk = chunk.split(":");
           if (slpittedChunk[0] === "thread") {
             console.log("Message Thread Initiated");
@@ -81,7 +81,6 @@ export default function ChatClientFormStreaming() {
                 id: slpittedChunk[1],
               })
             );
-            initiated = true;
           }
         } else {
           dispatch(
@@ -91,6 +90,8 @@ export default function ChatClientFormStreaming() {
             })
           );
         }
+
+        initiated++;
       }
     } catch (err) {
       console.log(err);

@@ -51,9 +51,9 @@ export default function ChatClientForm() {
   const handleFormSubmit = (formData: FormData) => {
     formData.set("token", userSession());
     formAction(formData);
-    const data = formData.get("text");
+    const data = formData.get("text") as string;
     if (data) {
-      dispatch(setUserMessage({ id: state.id, content: state.content }));
+      dispatch(setUserMessage({ id: state.id, content: data }));
     }
   };
 
