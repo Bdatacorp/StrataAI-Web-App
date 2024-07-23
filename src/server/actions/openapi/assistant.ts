@@ -79,7 +79,12 @@ export default async function askFromAssistant(
     console.log("Create Message Result : ", result.data[0].content[0]);
     await writeToJson(data, "./src/server/actions/openapi/data.json");
 
-    return createActionResponse(currentThread.id);
+    const threadMessages: OpenAI.Beta.Threads.Messages.MessagesPage =
+      await client.beta.threads.messages.list(currentThread.id);
+
+    console.log("Lateset Messages List : ", threadMessages.data);
+
+    return createActionResponse(threadMessages.data);
   } else {
     console.log("Run Status : ", run.status);
     console.log("Run Details : ", run);
@@ -89,14 +94,15 @@ export default async function askFromAssistant(
   }
 }
 
-function createActionResponse(thread_id: string) {
-  let messages: ThreadMessages[] = data.messages;
+async function createActionResponse(
+  messages: OpenAI.Beta.Threads.Messages.Message[]
+) {
+  const latestMessage = messages[0];
 
-  const latestMessage: any = messages[0].messages.find(
-    (list) => list?.thread_id === thread_id
-  );
-
-  const formattedMessage = latestMessage?.content[0].text.value;
+  const formattedMessage =
+    latestMessage.content[0].type === "text"
+      ? latestMessage.content[0].text.value
+      : "None";
 
   console.log("Latest Message : ", formattedMessage);
 
