@@ -9,7 +9,7 @@ const initialState: initialState = {
   messages: [
     {
       id: "0",
-      text: "Hello, I am a Strata chat assistant here to help you with any questions you may have regarding the document you have uploaded.",
+      text: "Hello, I am Strata Chat AI. How can I assist you today?",
       role: MessageRoles.Assistant,
     },
   ],

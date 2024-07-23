@@ -19,8 +19,8 @@ export default function ChatMessages({ messages }: { messages: message[] }) {
   }, [messages]);
 
   return (
-    <div className="w-full lg:w-[60%] py-5 px-2 lg:p-10 h-[80vh]  overflow-scroll border">
-      <div className="flex flex-col gap-4">
+    <div className="w-full py-5 lg:p-10 h-[80vh]  overflow-scroll border">
+      <div className="flex flex-col gap-4 px-4 lg:mx-20">
         {messages.map((message, index) => (
           <div
             ref={index === messages.length - 1 ? lastMessageRef : null}

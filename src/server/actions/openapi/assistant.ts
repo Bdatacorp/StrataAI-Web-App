@@ -26,6 +26,9 @@ export default async function askFromAssistant(
     assistants.push(currentAssistant);
   }
 
+  console.log("Retrieving Data from JSON : ", data.threds);
+  console.log("Data retrieved success");
+
   const user_messages = messages.find((message) => message.user_id === token);
   if (user_messages?.user_id) {
     console.log("User Session Found : ", user_messages.thread_id);

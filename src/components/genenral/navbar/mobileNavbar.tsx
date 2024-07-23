@@ -1,5 +1,11 @@
 "use client";
-import { ActionIcon, CloseButton, Drawer, Tooltip } from "@mantine/core";
+import {
+  ActionIcon,
+  Button,
+  CloseButton,
+  Drawer,
+  Tooltip,
+} from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import Link from "next/link";
 import React from "react";
@@ -13,6 +19,10 @@ import {
 } from "@/lib/provider/features/ui/ui.slice";
 import { RootState } from "@/lib/provider/store";
 import { NavBarLinkTypes } from "./type";
+import { PiPlusCircleBold } from "react-icons/pi";
+import NavBarContent from "./navBarContent";
+
+
 
 export default function MobileNavbar() {
   const opened = useSelector(
@@ -25,14 +35,12 @@ export default function MobileNavbar() {
       className={`md:hidden`}
       opened={opened}
       onClose={() => dispatch(closeMobileNavBar())}
-      size="20%"
+      size="70%"
     >
       <Drawer.Overlay />
 
       <Drawer.Content>
-        <Drawer.Body
-          className={`h-full flex flex-col items-center ${module.navbarBg}`}
-        >
+        <Drawer.Body className={`h-full flex flex-col bg-slate-800`}>
           <div className="w-full flex justify-center mb-5">
             <ActionIcon
               onClick={() => dispatch(closeMobileNavBar())}
@@ -43,19 +51,10 @@ export default function MobileNavbar() {
             </ActionIcon>
           </div>
 
-          <div className={`flex flex-col pt-5 gap-5 items-center px-4`}>
-            {NavBarLinks.map(({ Icon, label, link, type, Element }, index) => (
-              <Tooltip label={label} position="right" key={index}>
-                <ActionIcon variant="transparent">
-                  {link && (
-                    <Link href={link}>
-                      {Icon && <Icon className="text-[30px] text-white" />}
-                    </Link>
-                  )}
-                  {Element && type === NavBarLinkTypes.action && <Element />}
-                </ActionIcon>
-              </Tooltip>
-            ))}
+          <div
+            className={`w-full flex flex-col pt-5 gap-5 h-full text-white capitalize`}
+          >
+<NavBarContent/>
           </div>
         </Drawer.Body>
       </Drawer.Content>

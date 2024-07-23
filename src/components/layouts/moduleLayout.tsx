@@ -19,7 +19,7 @@ export default function ModuleLayoutElement({
         <div className="h-[10%] w-full">{header}</div>
         <div className="h-full w-full">
           <div className="flex h-full">
-            <div className="hidden md:block w-20 h-full">{navbar}</div>
+            <div className="hidden md:block w-[23%] h-full">{navbar}</div>
             <div className="hidden h-full">{mobileNavbar}</div>
             <div className="w-full">{children}</div>
           </div>

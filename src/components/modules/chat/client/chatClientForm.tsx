@@ -59,7 +59,7 @@ export default function ChatClientForm() {
 
   return (
     <ControlledForm action={handleFormSubmit}>
-      <div className="flex justify-center items-center gap-3 px-8 lg:px-20">
+      <div className="flex justify-center items-center gap-3 px-4 lg:px-20">
         <div>
           <ActionIcon size="lg" c="white" className="bg-secondary" radius={100}>
             <SiCcleaner className="text-lg" />

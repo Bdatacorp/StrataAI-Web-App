@@ -7,7 +7,7 @@ import PDFViewer from "@/components/ui/client/webViewer/pdfViewer";
 export default function ChatPage() {
   return (
     <ChatPageWrapper>
-      <ChatClientPDF />
+      {/* <ChatClientPDF /> */}
       <ChatClient />
       <ChatFooter />
     </ChatPageWrapper>
