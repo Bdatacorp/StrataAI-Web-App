@@ -9,9 +9,9 @@ import path from "path";
  */
 function directoryExistence(filePath: string): void {
   const dirname = path.dirname(filePath);
-  if (fs.existsSync(dirname)) {
-    return;
-  }
+  // if (fs.existsSync(dirname)) {
+  //   return;
+  // }
   directoryExistence(dirname);
   fs.mkdirSync(dirname);
 }

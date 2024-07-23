@@ -3,28 +3,19 @@ import zodErrorMessageFormatter from "../utils/pipes/zodErrorMessageFormatterPip
 import ResponceStatus from "../utils/config/responseStatus";
 import CacheTags from "../utils/config/cacheTags";
 import responseProcess from "../utils/helper/responseProcess";
-import chatServiceInstance, { ChatService } from "./chat.service";
 import { Chat, ChatCreateDto, ChatMessage } from "./chat.types";
 import ChatValidate from "./chat.validate";
 import askFromAssistant from "@/server/actions/openapi/assistant";
 import loadThreadMessages from "@/server/actions/openapi/messages";
 import askFromAssistantStreaming from "@/server/actions/openapi/assistantWithStreaming";
+import { Session } from "../openai/session";
 
 class ChatController {
-  private chatService: ChatService;
   private responseStatus: typeof ResponceStatus;
   private tags: string[];
   constructor() {
-    this.chatService = chatServiceInstance;
     this.responseStatus = ResponceStatus;
     this.tags = [CacheTags.CHAT];
-  }
-
-  async getAllChats(): Promise<Chat[]> {
-    "use server";
-    const res = await this.chatService.getAll(this.tags);
-
-    return res;
   }
 
   async send(message: ChatCreateDto) {
@@ -65,6 +56,16 @@ class ChatController {
     const res = await loadThreadMessages(token);
 
     return res;
+  }
+
+  /**
+   * Load Session Messages. Retreive Session Messages
+   */
+  async initiateSession(token: string) {
+    "use server";
+    Session.init(token, "/src/server/app/models/app.json");
+    const sessionMessages = await Session.getAssistant().loadSessionMessages();
+    return sessionMessages;
   }
 }
 

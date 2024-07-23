@@ -43,7 +43,6 @@ export default function ChatClientForm() {
 
   async function loadSessionMessages(token: string) {
     const messages = await loadChatMessages(token);
-    console.log(messages);
     if (messages.status) {
       dispatch(loadPreMessages(messages.payload));
     }

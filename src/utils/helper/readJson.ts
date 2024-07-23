@@ -9,13 +9,14 @@ import { setErrorLogger } from "../logger/loggerCall";
  * @returns The parsed JSON content.
  * @throws Will throw an error if the file cannot be read or parsed.
  */
-export default function readJsonFile<T>(filePath: string): T {
+export default function readJsonFile<T>(file: string): T {
   try {
-    const absolutePath = path.resolve(filePath);
-    const fileContent = fs.readFileSync(absolutePath, "utf-8");
+    const filePath = path.join(process.cwd(), file);
+
+    const fileContent = fs.readFileSync(filePath, "utf-8");
     return JSON.parse(fileContent) as T;
   } catch (error) {
-    setErrorLogger(`Error reading or parsing file at`, error, filePath);
+    setErrorLogger(`Error reading or parsing file at`, error, file);
     throw error;
   }
 }

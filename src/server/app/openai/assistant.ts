@@ -8,8 +8,13 @@ import { APPRepositary, Session, ThreadMessage } from "./type";
 import { Logger } from "@/utils/logger/logger";
 import writeToJson from "@/utils/helper/writeToJson";
 import readJsonFile from "@/utils/helper/readJson";
+import { MessagesPage } from "openai/resources/beta/threads/messages.mjs";
 
-class AssistantController {
+/**
+ * Assistant Class Help to Initiate Assisant, Initiate Session, Initiate Thread and Create
+ * Message with Streaming or without Streaming
+ */
+export class Assistant {
   private openai: OpenAI;
   private assistant?: AssistantType | null;
   private thread?: Thread;
@@ -27,18 +32,34 @@ class AssistantController {
     this.readJson = readJsonFile;
   }
 
+  /**
+   * Initiate async Assistant Class Dependancy. (OpenAi Assistant and Repositary)
+   */
   async initiate(assistantID: string = ASSISTANT_ID, respositaryPath: string) {
     this.assistant = await this.retrieveAssistant(assistantID);
     this.repository = await this.initiateRepositary(respositaryPath);
     this.logger.setInitiatedLog("Assistant");
   }
 
+  /**
+   * Read Repositary From public
+   */
+  async readRepositary(): Promise<APPRepositary> {
+    return this.repository;
+  }
+
+  /**
+   * Retrieve Assistant from OpenAI Assistant v2 by assistantID
+   */
   private async retrieveAssistant(assistantID: string) {
     const assistant = await this.openai.beta.assistants.retrieve(assistantID);
     this.logger.setCustomProcessLog("Assistant", "Retrieved");
     return assistant;
   }
 
+  /**
+   * Initiate Repositary by respositary file path (JSON)
+   */
   private async initiateRepositary(
     respositaryPath: string
   ): Promise<APPRepositary> {
@@ -47,32 +68,26 @@ class AssistantController {
     return { ...repositary, metaData: { path: respositaryPath } };
   }
 
-  private async createMessage(question: string) {
-    const message = await this.openai.beta.threads.messages.create(
-      this.thread?.id || "",
-      {
-        content: question,
-        role: "user",
-      }
-    );
-
-    this.logger.setCustomProcessLog("Messages", "Created", question);
-    return message;
-  }
-
-  private async initiateSession(sessionID: string) {
+  /**
+   * Initiate Session (With Thread) by retreiving extisting Thread or Init New Thread
+   */
+  async initiateSession(sessionID: string) {
     const session_messages = this.repository.messages.find(
       (message) => message.session_id === sessionID
     );
 
     if (session_messages?.session_id) {
-      console.log("User Session Found : ", session_messages.session_id);
+      this.logger.setCustomProcessLog(
+        "Session",
+        "Found",
+        session_messages.session_id
+      );
       this.thread = await this.openai.beta.threads.retrieve(
         session_messages.thread_id
       );
     } else {
-      console.log("User Session Not Found");
       this.thread = await this.openai.beta.threads.create();
+      this.logger.setCustomProcessLog("New Session", "Created", this.thread.id);
     }
 
     this.session = {
@@ -93,23 +108,83 @@ class AssistantController {
     this.logger.setInitiatedLog("Session", this.thread.id);
   }
 
-  private updateThreadMessageList(
-    messagesPage: OpenAI.Beta.Threads.Messages.MessagesPage
-  ) {
+  /**
+   * Load Session Messages
+   */
+  async loadSessionMessages() {
+    const session = this.repository.messages.find(
+      (message) => message.session_id === this.session?.id
+    );
+
+    if (session) {
+      this.logger.setCustomProcessLog(
+        "Session",
+        "Found",
+        session.session_id,
+        "LoadSessionMessage"
+      );
+
+      const messages = session.messages.map((item) => {
+        return {
+          id: item.id,
+          role: item.role,
+          text:
+            item.content[0].type === "text" ? item.content[0].text.value : "",
+        };
+      });
+
+      //Format messeses by reverse order
+      const formattedMessages = messages.reverse();
+
+      return {
+        status: true,
+        payload: formattedMessages,
+      };
+    } else {
+      return {
+        status: false,
+        payload: [],
+      };
+    }
+  }
+
+  /**
+   * Create New Message in thread
+   */
+  private async createMessage(question: string) {
+    const message = await this.openai.beta.threads.messages.create(
+      this.thread?.id || "",
+      {
+        content: question,
+        role: "user",
+      }
+    );
+
+    this.logger.setCustomProcessLog("Messages", "Created", question);
+    return message;
+  }
+
+  /**
+   * Save Messages List to Chat History by update Thread Messages List
+   */
+  private async updateThreadMessageList(threadID: string) {
+    const messagesList: MessagesPage =
+      await this.openai.beta.threads.messages.list(threadID);
+
     if (this.repository.messages.length === 0) {
       this.repository.messages.push({
         session_id: this.session?.id || "",
         thread_id: this.thread?.id || "",
         assistant_id: this.assistant?.id || "",
         user_id: this.session?.id || "",
-        messages: messagesPage.data,
+        messages: messagesList.data,
       });
       this.logger.setCustomProcessLog("New Thread Messages", "Created");
     } else {
       this.repository.messages.map((message) => {
         console.log("Messages List : ", message);
         if (message.thread_id === this.thread?.id) {
-          message.messages = messagesPage.data;
+          message.messages = messagesList.data;
           console.log("Messages Found");
         }
       });
@@ -121,6 +196,9 @@ class AssistantController {
     }
   }
 
+  /**
+   * Save Respositary to file. (JSON)
+   */
   private async saveRespositary() {
     await this.writeToJson(
       this.repository,
@@ -129,6 +207,9 @@ class AssistantController {
     this.logger.setCustomProcessLog("Repositary", "Saved");
   }
 
+  /**
+   * Retreive latest thread message for send client
+   */
   private getLatestMessageFromThread(threadID: string) {
     const threadMessagesList = this.repository.messages.find(
       (item) => item.thread_id === this.thread?.id
@@ -167,6 +248,9 @@ class AssistantController {
     };
   }
 
+  /**
+   * Ask Question From Initiated Assistant and Update Chat History.
+   */
   async askFromAssistant(question: string) {
     await this.createMessage(question);
 
@@ -180,16 +264,13 @@ class AssistantController {
     this.logger.setCustomProcessLog("Thread", "Run Status", this.assistant?.id);
 
     if (run.status == "completed") {
-      const messagesList: OpenAI.Beta.Threads.Messages.MessagesPage =
-        await this.openai.beta.threads.messages.list(this.thread?.id || "");
-
       // Update current threds messages list
-      this.updateThreadMessageList(messagesList);
+      this.updateThreadMessageList(this.thread?.id || "");
 
-      //save repositary
+      // Save repositary
       this.saveRespositary();
 
-      //get latest thread message
+      // Get latest thread message
       const latestThreadMessage = this.getLatestMessageFromThread(
         this.thread?.id || ""
       );
@@ -203,6 +284,9 @@ class AssistantController {
     }
   }
 
+  /**
+   * Ask Question From Initiated Assistant with Streaming
+   */
   async askFromAssistantSync(question: string) {
     await this.createMessage(question);
 
@@ -219,6 +303,8 @@ class AssistantController {
       "Running",
       this.thread?.id
     );
+
+    console.log("run", run);
 
     return run;
   }

@@ -23,7 +23,7 @@ export class Logger {
     process: string,
     note?: string,
     module?: string,
-    env: LoggerEnv = LoggerEnv.server,
+    env: LoggerEnv = LoggerEnv.server
   ) {
     "use server";
     const str = this.str({ type: LoggerTypes.initiate, process, note });
@@ -39,11 +39,12 @@ export class Logger {
     label: string,
     event: string,
     note?: string,
+    method?: string,
     module?: string,
     env: LoggerEnv = LoggerEnv.server
   ) {
     "use server";
-    const str = this.str({ type: event, process: label, note, module });
+    const str = this.str({ type: event, process: label, note, module, method });
     this.processLogFile(env, str);
   }
 
@@ -106,17 +107,20 @@ export class Logger {
   private str({
     type,
     module,
+    method,
     process,
     note,
   }: {
     type: string;
     module?: string;
+    method?: string;
     process: string;
     note?: string;
   }) {
     const str = `
     ${this.getDate()} 
     | ${module || this.module} 
+    ${method && "| " + method} 
     | ${process} ${type || this.type} ${note && " : " + note}\n`;
     return str;
   }

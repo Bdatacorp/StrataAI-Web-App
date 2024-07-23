@@ -26,6 +26,73 @@
       "response_format": "auto"
     }
   ],
-  "threds": [],
-  "messages": []
+  "threds": [
+    {
+      "id": "thread_9QzJp5oRbHSGZ4T3GQwQkU6d",
+      "object": "thread",
+      "created_at": 1721710405,
+      "metadata": {},
+      "tool_resources": {},
+      "user_id": "104189e6f00cf9b0c63e8d387b859817"
+    }
+  ],
+  "messages": [
+    {
+      "user_id": "104189e6f00cf9b0c63e8d387b859817",
+      "assistant_id": "asst_PCXsE7XsUujgXU4HGj27sdss",
+      "thread_id": "thread_9QzJp5oRbHSGZ4T3GQwQkU6d",
+      "messages": [
+        {
+          "id": "msg_aedzYusosuuKrgbvTOyi4J9C",
+          "object": "thread.message",
+          "created_at": 1721710409,
+          "assistant_id": "asst_PCXsE7XsUujgXU4HGj27sdss",
+          "thread_id": "thread_9QzJp5oRbHSGZ4T3GQwQkU6d",
+          "run_id": "run_HgRAhg0Vc8Nv3x9WRjdHRM4F",
+          "role": "assistant",
+          "content": [
+            {
+              "type": "text",
+              "text": {
+                "value": "According to the Owners Corporations Act 2006, the key functions of an owners corporation include:\n1. Managing and administering the common property.\n2. Repairing and maintaining the common property, related chattels, fixtures, fittings, and services.\n3. Taking out, maintaining, and paying premiums on required insurances.\n4. Keeping an owners corporation register.\n5. Providing owners corporation certificates upon request.\n6. Carrying out any other functions conferred by the Act, regulations, Subdivision Act 1988, other laws, or rules of the owners corporation【4:0†source】.",
+                "annotations": [
+                  {
+                    "type": "file_citation",
+                    "text": "【4:0†source】",
+                    "start_index": 565,
+                    "end_index": 577,
+                    "file_citation": {
+                      "file_id": "file-za6AEsOgyTcdn4xz2T1uigQg"
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "attachments": [],
+          "metadata": {}
+        },
+        {
+          "id": "msg_ZhJivlEd58RAotskMcY7CLaf",
+          "object": "thread.message",
+          "created_at": 1721710406,
+          "assistant_id": null,
+          "thread_id": "thread_9QzJp5oRbHSGZ4T3GQwQkU6d",
+          "run_id": null,
+          "role": "user",
+          "content": [
+            {
+              "type": "text",
+              "text": {
+                "value": "What are the key functions of an owners corporation according to the Act?",
+                "annotations": []
+              }
+            }
+          ],
+          "attachments": [],
+          "metadata": {}
+        }
+      ]
+    }
+  ]
 }

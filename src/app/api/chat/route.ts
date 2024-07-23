@@ -1,6 +1,8 @@
 import askFromAssistantStreaming from "@/server/actions/openapi/assistantWithStreaming";
+import updateThreadMessages from "@/server/actions/openapi/updateThreadMessages";
 import { AssistantResponse, OpenAIStream, StreamingTextResponse } from "ai";
 import { NextResponse } from "next/server";
+import OpenAI from "openai";
 
 export async function POST(req: Request) {
   const { text, token } = await req.json();
@@ -21,6 +23,15 @@ export async function POST(req: Request) {
             if (event.data.delta.content) {
               const content = event.data.delta.content[0];
               controller.enqueue(content.type == "text" && content.text?.value);
+            }
+          }
+
+          if (event.event === "thread.message.completed") {
+            if (event.data) {
+              await updateThreadMessages(
+                event.data.assistant_id || "",
+                event.data.thread_id
+              );
             }
           }
         }

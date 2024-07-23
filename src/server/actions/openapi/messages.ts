@@ -7,7 +7,7 @@ import { ThreadMessages } from "./types";
 
 export default async function loadThreadMessages(
   token: string
-): Promise<ChatMessage> {
+) {
   let messages: ThreadMessages[] = data.messages;
 
   const user = messages.find((message) => message.user_id === token);
