@@ -9,8 +9,6 @@ import { ThreadMessages } from "./types";
 
 const client = new OpenAI();
 
-
-
 export default async function askFromAssistant(
   question: string,
   token: string
@@ -98,9 +96,7 @@ function createActionResponse(thread_id: string) {
     (list) => list?.thread_id === thread_id
   );
 
-  const formattedMessage =
-    latestMessage?.content[0].type === "text" &&
-    latestMessage?.content[0].text.value;
+  const formattedMessage = latestMessage?.content[0].text.value;
 
   console.log("Latest Message : ", formattedMessage);
 
