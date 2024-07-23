@@ -1,4 +1,4 @@
-import writeToJson from "../helper/writeToJson";
+import writeToJson from "../../server/actions/openapi/writeToJson";
 import writeToLogFile from "../helper/writeToLog";
 import { LoggerEnv, LoggerTypes } from "./types";
 

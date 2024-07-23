@@ -2,7 +2,7 @@
 
 import OpenAI from "openai";
 import data from "./data.json";
-import writeToJson from "@/utils/helper/writeToJson";
+import writeToJson from "./writeToJson";
 import loadThreadMessages from "./messages";
 import { ASSISTANT_ID } from "./constants";
 import { ThreadMessages } from "./types";
@@ -80,7 +80,7 @@ export default async function askFromAssistant(
     }
 
     console.log("Create Message Result : ", result.data[0].content[0]);
-    await writeToJson(data, "./src/server/actions/openapi/data.json");
+    await writeToJson(data, "./data.json");
 
     const threadMessages: OpenAI.Beta.Threads.Messages.MessagesPage =
       await client.beta.threads.messages.list(currentThread.id);

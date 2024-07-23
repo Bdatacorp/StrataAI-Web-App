@@ -2,7 +2,7 @@ import { ASSISTANT_ID } from "@/server/actions/openapi/constants";
 import OpenAI from "openai";
 import { APPRepositary, Session, ThreadMessage } from "./type";
 import { Logger } from "@/utils/logger/logger";
-import writeToJson from "@/utils/helper/writeToJson";
+import writeToJson from "@/server/actions/openapi/writeToJson";
 import readJsonFile from "@/utils/helper/readJson";
 
 /**

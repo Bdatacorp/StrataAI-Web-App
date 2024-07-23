@@ -2,7 +2,7 @@
 
 import OpenAI from "openai";
 import data from "./data.json";
-import writeToJson from "@/utils/helper/writeToJson";
+import writeToJson from "./writeToJson";
 import loadThreadMessages from "./messages";
 import { ASSISTANT_ID } from "./constants";
 import { ThreadMessages } from "./types";
@@ -51,6 +51,8 @@ export default async function askFromAssistantStreaming(
     assistant_id: currentAssistant.id,
     stream: true,
   });
+
+  await writeToJson(data, "./data.json");
 
   return run;
 }
