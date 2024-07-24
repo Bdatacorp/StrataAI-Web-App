@@ -23,7 +23,14 @@ export default function NewConversation() {
   const router = useRouter();
 
   const handleClose = () => {
-    setStateError("Please select the state before continue");
+    const session_id = localStorage.getItem("session_id") as string;
+    const state = localStorage.getItem("state") as string;
+
+    if (session_id && state) {
+      dispatch(closeConversation());
+    } else {
+      setStateError("Please select the state before continue");
+    }
   };
 
   const handleContinue = () => {
@@ -55,8 +62,6 @@ export default function NewConversation() {
           duration: 200,
           timingFunction: "linear",
         }}
-        closeOnClickOutside={false}
-        closeOnEscape={false}
       >
         <div className="flex flex-col gap-5">
           <div className="text-primary font-bold">

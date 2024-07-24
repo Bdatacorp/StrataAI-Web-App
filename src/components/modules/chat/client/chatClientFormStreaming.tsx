@@ -51,7 +51,6 @@ export default function ChatClientFormStreaming() {
     if (session_id && state) {
       loadSessionMessages(session_id);
     } else {
-      console.log("hey");
       dispatch(openConversation());
     }
   }
