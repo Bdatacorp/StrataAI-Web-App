@@ -35,6 +35,7 @@ export default async function askFromAssistantStreaming(
     currentThread = await client.beta.threads.create();
     threads.push({ ...currentThread, user_id: token });
     messages.push({
+      session_id: token,
       user_id: token,
       assistant_id: currentAssistant.id,
       thread_id: currentThread.id,
@@ -52,7 +53,7 @@ export default async function askFromAssistantStreaming(
     stream: true,
   });
 
-  await writeToJson(data, "./data.json");
+  await writeToJson(data, "../data.json");
 
   return run;
 }

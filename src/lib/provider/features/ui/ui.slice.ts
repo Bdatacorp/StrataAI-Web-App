@@ -9,7 +9,7 @@ export interface initialState {
 const initialState: initialState = {
   isMobileNavBarOpened: false,
   streamingResponse: false,
-  newConversation: true,
+  newConversation: false,
 };
 
 const uiSlice = createSlice({
@@ -31,6 +31,9 @@ const uiSlice = createSlice({
     closeConversation(state) {
       state.newConversation = false;
     },
+   openConversation(state) {
+      state.newConversation = true;
+    },
   },
 });
 
@@ -40,6 +43,7 @@ export const {
   toggleStreamingResponse,
   toggleConversation,
   closeConversation,
+  openConversation
 } = uiSlice.actions;
 
 export default uiSlice.reducer;

@@ -23,7 +23,11 @@ class ChatController {
     try {
       const validated = ChatValidate.parse(message);
 
-      const res = await askFromAssistant(message.text, message.token);
+      const res = await askFromAssistant(
+        message.text,
+        message.token,
+        message.state
+      );
 
       if (res.status) {
         return {

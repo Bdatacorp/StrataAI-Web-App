@@ -11,7 +11,7 @@ const client = new OpenAI();
 
 export default async function updateThreadMessages(
   assistantID: string,
-  threadID: string,
+  threadID: string
 ) {
   let messages: ThreadMessages[] = data.messages;
   let currentThread: OpenAI.Beta.Threads.Thread;
@@ -31,6 +31,7 @@ export default async function updateThreadMessages(
       messages.push({
         thread_id: currentThread.id,
         assistant_id: currentAssistant.id,
+        session_id: "USER-1",
         user_id: "USER-1",
         messages: result.data,
       });
@@ -45,7 +46,7 @@ export default async function updateThreadMessages(
     }
 
     console.log("Create Message Result : ", result.data[0].content[0]);
-    await writeToJson(data, "./data.json");
+    await writeToJson(data, "../data.json");
 
     return true;
   }

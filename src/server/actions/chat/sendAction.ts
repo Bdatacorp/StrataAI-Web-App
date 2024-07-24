@@ -3,7 +3,6 @@
 import { ChatFormState } from "@/components/modules/chat/types";
 import chatController from "@/server/app/chat/chat.controller";
 import { ChatCreateDto } from "@/server/app/chat/chat.types";
-import askFromAssistant from "../openapi/assistant";
 
 export default async function sendAction(
   prevState: ChatFormState,
@@ -11,10 +10,12 @@ export default async function sendAction(
 ) {
   const text = formData.get("text") as string;
   const token = formData.get("token") as string;
+  const state = formData.get("state") as string;
 
   const message: ChatCreateDto = {
     text,
     token,
+    state,
   };
 
   const res: any = await chatController.send(message);

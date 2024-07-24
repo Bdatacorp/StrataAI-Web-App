@@ -8,7 +8,7 @@ import { MdClear, MdSend } from "react-icons/md";
 import { SiCcleaner } from "react-icons/si";
 import { ChatFormState } from "../types";
 import { error } from "console";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   initiateNewMessageForStream,
   loadPreMessages,
@@ -19,23 +19,40 @@ import {
 import loadChatMessages from "@/server/actions/chat/loadMessages";
 import userSession from "@/utils/generators/userSession";
 import generateMessageID from "@/utils/generators/messegaID";
+import { openConversation } from "@/lib/provider/features/ui/ui.slice";
+import { RootState } from "@/lib/provider/store";
 
 export default function ChatClientFormStreaming() {
   const inputRef = useRef<HTMLInputElement>(null);
+  const activeSession = useSelector(
+    (state: RootState) => state.chat.activeSession
+  );
   const [errors, setErrors] = useState({
     text: "",
   });
   const dispatch = useDispatch();
 
   useEffect(() => {
-    loadSessionMessages(userSession());
-  }, []);
+    initSession();
+  }, [activeSession]);
 
   async function loadSessionMessages(token: string) {
     const messages = await loadChatMessages(token);
     console.log(messages);
     if (messages.status) {
       dispatch(loadPreMessages(messages.payload));
+    }
+  }
+
+  async function initSession() {
+    const session_id = localStorage.getItem("session_id") as string;
+    const state = localStorage.getItem("state") as string;
+
+    if (session_id && state) {
+      loadSessionMessages(session_id);
+    } else {
+      console.log("hey");
+      dispatch(openConversation());
     }
   }
 

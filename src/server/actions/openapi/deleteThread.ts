@@ -24,14 +24,14 @@ export default async function deleteThread(token: string) {
 
   if (response.deleted) {
     const updatedMessges = data.messages.filter(
-      (items: ThreadMessages) => items.user_id !== token
+      (items: ThreadMessages) => items.session_id !== token
     );
     const updatedThreads = data.threds.filter(
-      (items: IThread) => items.user_id !== token
+      (items: IThread) => items.session_id !== token
     );
     data.messages = updatedMessges;
     data.threds = updatedThreads;
-    await writeToJson(data, "./data.json");
+    await writeToJson(data, "../data.json");
   }
 
   return response.deleted;

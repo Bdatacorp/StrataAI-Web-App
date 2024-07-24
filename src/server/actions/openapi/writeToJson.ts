@@ -4,8 +4,10 @@ import fs from "fs";
 import path from "path";
 
 export default async function (data: Object, file: string) {
+  const filePath = path.join(process.cwd(), "./src/server/actions/openapi/data.json");
+  console.log("JSON file path : ", filePath);
+
   try {
-    const filePath = path.join(process.cwd(), file);
     await fs.promises.writeFile(
       filePath,
       JSON.stringify(data, null, 2),

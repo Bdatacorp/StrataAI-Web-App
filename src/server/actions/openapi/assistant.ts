@@ -5,16 +5,17 @@ import data from "./data.json";
 import writeToJson from "./writeToJson";
 import loadThreadMessages from "./messages";
 import { ASSISTANT_ID } from "./constants";
-import { ThreadMessages } from "./types";
+import { IThread, ThreadMessages } from "./types";
 
 const client = new OpenAI();
 
 export default async function askFromAssistant(
   question: string,
-  token: string
+  token: string,
+  state: string
 ) {
   let assistants: any[] = data.assistants;
-  let threads: any[] = data.threds;
+  let threads: IThread[] = data.threds;
   let messages: ThreadMessages[] = data.messages;
 
   let currentThread: OpenAI.Beta.Threads.Thread;
@@ -29,15 +30,23 @@ export default async function askFromAssistant(
   console.log("Retrieving Data from JSON : ", data.threds);
   console.log("Data retrieved success");
 
-  const user_messages = messages.find((message) => message.user_id === token);
-  if (user_messages?.user_id) {
+  const user_messages = messages.find(
+    (message) => message.session_id === token
+  );
+  if (user_messages?.session_id) {
     console.log("User Session Found : ", user_messages.thread_id);
     currentThread = await client.beta.threads.retrieve(user_messages.thread_id);
   } else {
     console.log("User Session Not Found");
     currentThread = await client.beta.threads.create();
-    threads.push({ ...currentThread, user_id: token });
+    threads.push({
+      ...currentThread,
+      session_id: token,
+      state,
+      title: question,
+    });
     messages.push({
+      session_id: token,
       user_id: token,
       assistant_id: currentAssistant.id,
       thread_id: currentThread.id,
@@ -66,7 +75,8 @@ export default async function askFromAssistant(
       messages.push({
         thread_id: currentThread.id,
         assistant_id: currentAssistant.id,
-        user_id: "USER-1",
+        session_id: token,
+        user_id: token,
         messages: result.data,
       });
     } else {
@@ -79,15 +89,8 @@ export default async function askFromAssistant(
       });
     }
 
-    console.log("Create Message Result : ", result.data[0].content[0]);
-    await writeToJson(data, "./data.json");
-
-    const threadMessages: OpenAI.Beta.Threads.Messages.MessagesPage =
-      await client.beta.threads.messages.list(currentThread.id);
-
-    console.log("Lateset Messages List : ", threadMessages.data);
-
-    return createActionResponse(threadMessages.data);
+    await writeToJson(data, "'../data.json'");
+    return createActionResponse(result.data);
   } else {
     console.log("Run Status : ", run.status);
     console.log("Run Details : ", run);

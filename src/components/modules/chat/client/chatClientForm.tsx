@@ -8,7 +8,7 @@ import { MdClear, MdSend } from "react-icons/md";
 import { SiCcleaner } from "react-icons/si";
 import { ChatFormState } from "../types";
 import { error } from "console";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   loadPreMessages,
   setAssistantMessage,
@@ -16,6 +16,11 @@ import {
 } from "@/lib/provider/features/chat/chat.slice";
 import loadChatMessages from "@/server/actions/chat/loadMessages";
 import userSession from "@/utils/generators/userSession";
+import {
+  openConversation,
+  toggleConversation,
+} from "@/lib/provider/features/ui/ui.slice";
+import { RootState } from "@/lib/provider/store";
 
 const initialState: ChatFormState = {
   id: "",
@@ -28,18 +33,22 @@ const initialState: ChatFormState = {
 
 export default function ChatClientForm() {
   const [state, formAction] = useFormState(sendAction, initialState);
+  const activeSession = useSelector(
+    (state: RootState) => state.chat.activeSession
+  );
   const inputRef = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    loadSessionMessages(userSession());
+    // loadSessionMessages(userSession());
+    initSession();
     if (state.content) {
       dispatch(setAssistantMessage({ id: state.id, content: state.content }));
       if (inputRef.current) {
         inputRef.current.value = "";
       }
     }
-  }, [state]);
+  }, [state, activeSession]);
 
   async function loadSessionMessages(token: string) {
     const messages = await loadChatMessages(token);
@@ -48,8 +57,24 @@ export default function ChatClientForm() {
     }
   }
 
+  async function initSession() {
+    const session_id = localStorage.getItem("session_id") as string;
+    const state = localStorage.getItem("state") as string;
+
+    if (session_id && state) {
+      loadSessionMessages(session_id);
+    } else {
+      console.log("hey");
+      dispatch(openConversation());
+    }
+  }
+
   const handleFormSubmit = (formData: FormData) => {
-    formData.set("token", userSession());
+    formData.set("token", userSession() as string);
+
+    const session_state = localStorage.getItem("state");
+
+    formData.set("state", session_state || "");
     formAction(formData);
     const data = formData.get("text") as string;
     if (data) {

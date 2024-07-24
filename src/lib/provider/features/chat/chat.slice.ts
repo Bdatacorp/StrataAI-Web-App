@@ -3,6 +3,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface initialState {
   messages: message[];
+  activeSession: string;
 }
 
 const initialState: initialState = {
@@ -13,6 +14,7 @@ const initialState: initialState = {
       role: MessageRoles.Assistant,
     },
   ],
+  activeSession: "",
 };
 
 const chatSlice = createSlice({
@@ -65,6 +67,10 @@ const chatSlice = createSlice({
     loadPreMessages(state, action: PayloadAction<message[]>) {
       state.messages = action.payload;
     },
+    setActiveSession(state, action: PayloadAction<string>) {
+      localStorage.setItem("session_id", action.payload);
+      state.activeSession = action.payload;
+    },
   },
 });
 
@@ -74,6 +80,7 @@ export const {
   loadPreMessages,
   setAssistantMessageStream,
   initiateNewMessageForStream,
+  setActiveSession,
 } = chatSlice.actions;
 
 export default chatSlice.reducer;

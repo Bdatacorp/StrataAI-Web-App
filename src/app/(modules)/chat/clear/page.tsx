@@ -23,6 +23,7 @@ export default function ChatClearPage() {
     if (res) {
       setElements("Deleted Successfully");
       localStorage.removeItem("session_id");
+      localStorage.removeItem("state");
       router.push(Routes.CHAT);
     } else {
       setElements("Error");
