@@ -1,3 +1,5 @@
+"use client";
+
 import ReturnButton from "@/components/ui/client/returnButton/returnButton";
 import ContrlledBreadcrumbs, {
   ContrlledBreadcrumbsItems,
@@ -5,6 +7,10 @@ import ContrlledBreadcrumbs, {
 import { Button } from "@mantine/core";
 import Link from "next/link";
 import { ElementType, ReactElement, ReactNode } from "react";
+import { Colors } from "@/lib/config/colors";
+import { ActionCreatorWithoutPayload } from "@reduxjs/toolkit";
+import { useDispatch } from "react-redux";
+import { useRouter } from "next/navigation";
 
 export enum ModuleHeaderPageTypes {
   Table = "table",
@@ -15,15 +21,26 @@ export default function ModuleHeader({
   moduleName,
   breadcrumbsItems,
   buttonName,
-  buttonLink,
+  buttonAction,
   pageTypes = ModuleHeaderPageTypes.Table,
 }: {
   moduleName: string;
   breadcrumbsItems?: ContrlledBreadcrumbsItems;
   buttonName: string;
-  buttonLink: string;
+  buttonAction: string | ActionCreatorWithoutPayload;
   pageTypes?: ModuleHeaderPageTypes;
 }) {
+  const dispatch = useDispatch();
+  const router = useRouter();
+
+  const hanldeButtonClick = () => {
+    if (typeof buttonAction === "function") {
+      dispatch(buttonAction());
+    } else {
+      router.push(buttonAction);
+    }
+  };
+
   return (
     <>
       <div className="flex md:flex-row flex-col md:items-center md:gap-0 gap-4 md:justify-between">
@@ -47,12 +64,11 @@ export default function ModuleHeader({
 
         {/* BUTTON */}
         <div>
-          <Link
-            href={buttonLink}
-            className="text-white bg-primary md:py-[6px] py-[8px] flex items-center justify-center md:px-[40px] px-[50px] rounded-lg cursor-pointer hover:bg-primary/90 relative overflow-hidden isolate w-fit"
-          >
-            <span className="text-[15px]">{`New ${buttonName}`}</span>
-          </Link>
+          <Button
+            onClick={hanldeButtonClick}
+            color={Colors.primary}
+            w={150}
+          >{`New ${buttonName}`}</Button>
         </div>
       </div>
     </>

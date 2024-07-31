@@ -2,7 +2,7 @@ import zodErrorMessageFormatter from "../utils/pipes/zodErrorMessageFormatterPip
 
 import ResponceStatus from "../utils/config/responseStatus";
 import CacheTags from "../utils/config/cacheTags";
-import responseProcess from "../utils/helper/responseProcess";
+import responseProcess from "../utils/responseProcess/responseProcess";
 import { Chat, ChatCreateDto, ChatMessage } from "./chat.types";
 import ChatValidate from "./chat.validate";
 import askFromAssistant from "@/server/actions/openapi/assistant";

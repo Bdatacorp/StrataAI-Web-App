@@ -1,13 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import "@mantine/core/styles.css";
-import { ColorSchemeScript, MantineProvider } from "@mantine/core";
-import theme from "./_theme";
-import ReduxProvider from "@/lib/provider/reduxProvider";
-
-import "./index.css";
-import { ModalsProvider } from "@mantine/modals";
+import { ColorSchemeScript } from "@mantine/core";
+import LibProviders from "./_libProviders";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,11 +22,7 @@ export default function RootLayout({
         <ColorSchemeScript />
       </head>
       <body className={inter.className}>
-        <ReduxProvider>
-          <MantineProvider theme={theme}>
-            <ModalsProvider>{children}</ModalsProvider>
-          </MantineProvider>
-        </ReduxProvider>
+        <LibProviders>{children}</LibProviders>
       </body>
     </html>
   );

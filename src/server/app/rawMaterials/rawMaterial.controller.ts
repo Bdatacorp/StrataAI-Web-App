@@ -8,7 +8,7 @@ import rawMaterialServiceInstance from "./rawMaterial.service";
 import { RawMaterial } from "./rawMaterial.types";
 import RawMaterialsValidate from "./rawMaterial.validate";
 import rawMaterialSuppliersExtractPipe from "./pipes/rawMaterialSuppliersExtractPipe";
-import responseProcess from "../utils/helper/responseProcess";
+import responseProcess from "../utils/responseProcess/responseProcess";
 import rawMaterialsParseAvaragePipe from "./pipes/rawMaterialsParseAvaragePipe";
 
 class RawMaterialController {

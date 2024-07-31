@@ -4,3 +4,13 @@ export enum HttpMethod {
   PUT = "PUT",
   DELETE = "DELETE",
 }
+
+export type HttpPostReturnType = {
+  response: Response;
+  payload: any;
+};
+
+export enum HeadersType {
+  FORMDATA = "FORMDATA",
+  APPLICATION_JSON = " APPLICATION_JSON",
+}

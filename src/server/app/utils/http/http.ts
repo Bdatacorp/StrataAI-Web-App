@@ -1,67 +1,96 @@
 import httpErrorPipe from "../pipes/httpErrorPipe";
-import { HttpMethod } from "./type";
+import { HeadersType, HttpMethod, HttpPostReturnType } from "./type";
 
 export class HTTP {
-  private URL: string;
-  private token: string;
-  private headers: HeadersInit;
+  private BaseURL: string;
 
-  constructor(token: string, url: string) {
-    this.URL = url;
-    this.token = token;
-
-    this.headers = {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-      "x-api-key": this.token,
-    };
+  constructor(BaseURL: string) {
+    this.BaseURL = BaseURL;
   }
 
-  async Get(tags?: string[], id?: string) {
+  async Get(token: string, tags?: string[], id?: string, BaseURL?: string) {
     "use server";
 
-    const URL = id ? `${this.URL}/${id}` : this.URL;
+    const url = BaseURL || id ? `${this.BaseURL}/${id}` : this.BaseURL;
     const method = HttpMethod.GET;
 
-    const response = await fetch(URL, {
+    const response = await fetch(url, {
       method,
-      headers: this.headers,
+      headers: this.getHeaders(token),
       next: { tags },
     });
 
     return await this.hangleGetResponse(response);
   }
 
-  async Post(payload: Object) {
+  /**
+   * Post Request exentend with fetch
+   * @param payload data
+   * @param token Authorization Token
+   * @param BaseURL custom url
+   * @returns
+   */
+  async Post(
+    payload: Object,
+    token: string,
+    BaseURL?: string
+  ): Promise<HttpPostReturnType | void> {
     "use server";
+
+    const url = BaseURL || this.BaseURL;
+
     try {
       const method = HttpMethod.POST;
-      const response = await fetch(this.URL, {
+      const response = await fetch(url, {
         method,
-        headers: this.headers,
+        headers: this.getHeaders(token),
         body: JSON.stringify(payload),
       });
 
-      if (response.ok) {
-        const data = await response.json();
-        return {
-          status: true,
-          statusCode: response.status,
-          data: data,
-        };
-      } else {
-        return await httpErrorPipe(response, method);
-      }
+      const data = await response.json();
+      return {
+        response,
+        payload: data,
+      };
     } catch (error: any) {
-      return await httpErrorPipe(error, HttpMethod.POST);
+      return this.handleRequestError(error);
     }
   }
 
-  async Put(payload: Object) {
+  async Upload(
+    formData: FormData,
+    token: string,
+    BaseURL?: string
+  ): Promise<HttpPostReturnType | void> {
+    "use server";
+
+    const url = BaseURL || this.BaseURL;
+
     try {
-      const response = await fetch(this.URL, {
+      const method = HttpMethod.POST;
+      const response = await fetch(url, {
+        method,
+        headers: this.getHeaders(token, HeadersType.FORMDATA),
+        body: formData,
+      });
+
+      const data = await response.json();
+      return {
+        response,
+        payload: data,
+      };
+    } catch (error: any) {
+      return this.handleRequestError(error);
+    }
+  }
+
+  async Put(payload: Object, token: string, BaseURL?: string) {
+    const url = BaseURL || this.BaseURL;
+
+    try {
+      const response = await fetch(url, {
         method: "PUT",
-        headers: this.headers,
+        headers: this.getHeaders(token),
         body: JSON.stringify(payload),
       });
       if (response.ok) {
@@ -76,12 +105,13 @@ export class HTTP {
     }
   }
 
-  async Delete(id: string) {
+  async Delete(id: string, token: string, BaseURL?: string) {
+    const url = BaseURL ? `${BaseURL}/${id}` : `${this.BaseURL}/${id}`;
     try {
       const method = HttpMethod.DELETE;
-      const response = await fetch(`${this.URL}/${id}`, {
+      const response = await fetch(url, {
         method,
-        headers: this.headers,
+        headers: this.getHeaders(token),
       });
       if (response.ok) {
         const data = await response.json();
@@ -99,8 +129,33 @@ export class HTTP {
   }
 
   private handleRequestError(error: Error) {
-    console.log("error", error);
+    console.log("Handle Request Error", error);
     throw new Error(`Failed to initiate request:`);
+  }
+
+  /**
+   * Return Header
+   * @param token Authorization token
+   * @param type Content-Type
+   *  - application/json (Default)
+   *  - multipart/form-data
+   * @returns HeadersInit
+   */
+  private getHeaders(
+    token: string,
+    type: HeadersType = HeadersType.APPLICATION_JSON
+  ): HeadersInit {
+    if (type === HeadersType.APPLICATION_JSON) {
+      return {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+      };
+    } else {
+      return {
+        Authorization: `Bearer ${token}`,
+      };
+    }
   }
 
   /**

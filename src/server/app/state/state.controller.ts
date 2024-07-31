@@ -1,55 +1,78 @@
-import CacheTags from "../utils/config/cacheTags";
-import ResponceStatus from "../utils/config/responseStatus";
-import responseProcess from "../utils/helper/responseProcess";
-import zodErrorMessageFormatter from "../utils/pipes/zodErrorMessageFormatterPipe";
 import { StateService } from "./state.service";
 import StateCacheTags from "./state.tags";
-import { State } from "./state.types";
+import { State, StateCreateDto } from "./state.types";
 import StateValidate from "./state.validate";
+import ResponseProcess from "../utils/responseProcess/responseProcess";
+import { HttpPostReturnType } from "../utils/http/type";
+import ZodErrorMessage from "../utils/zodErrorMessage/zodErrorMessage";
 
 class StateController {
   private stateService: StateService;
-  private responseStatus: typeof ResponceStatus;
+  private responseProcess: ResponseProcess;
   private tags: string[];
+  private zodErrorMessage: ZodErrorMessage;
   constructor() {
     this.stateService = new StateService();
-    this.responseStatus = ResponceStatus;
     this.tags = [StateCacheTags.State];
+    this.responseProcess = new ResponseProcess(this.tags);
+    this.zodErrorMessage = new ZodErrorMessage();
   }
 
   async getAllState(): Promise<State[]> {
     "use server";
-    const states = await this.stateService.getAll(this.tags);
+    const states = await this.stateService.getAll("token", this.tags);
     return states;
   }
 
-  async createState(State: any) {
+  async createState(state: StateCreateDto, token: string) {
     "use server";
     try {
-      const validated = StateValidate.parse(State);
+      const validated = StateValidate.parse(state);
 
-      const res: any = await this.stateService.create(validated);
+      const res = await this.stateService.create(validated, token);
+      const { response, payload } = res as HttpPostReturnType;
+      
 
-      return responseProcess(res, "State", StateCacheTags.State);
+      return this.responseProcess.process({ response, payload });
     } catch (error: any) {
-      console.log(error);
-      return zodErrorMessageFormatter(error);
+      return this.zodErrorMessage.format(error);
     }
   }
 
-  async deleteState(id: string) {
+  async uploadToState(formData: FormData, token: string) {
     "use server";
     try {
-      if (!id) return false;
+      const res = await this.stateService.uploadToState(
+        formData,
+        formData.get("stateId") as string,
+        token
+      );
+      const { response, payload } = res as HttpPostReturnType;
 
-      const res: any = await this.stateService.delete(id);
-
-      return await responseProcess(res, "State", StateCacheTags.State, "deleted");
+      return this.responseProcess.process({ response, payload });
     } catch (error: any) {
-      console.log(error);
-      return zodErrorMessageFormatter(error);
+      return this.zodErrorMessage.format(error);
     }
   }
+
+  // async deleteState(id: string) {
+  //   "use server";
+  //   try {
+  //     if (!id) return false;
+
+  //     const res: any = await this.stateService.delete(id);
+
+  //     return await responseProcess(
+  //       res,
+  //       "State",
+  //       StateCacheTags.State,
+  //       "deleted"
+  //     );
+  //   } catch (error: any) {
+  //     console.log(error);
+  //     return zodErrorMessageFormatter(error);
+  //   }
+  // }
 }
 
 const statesController = new StateController();

@@ -1,6 +1,6 @@
 import CacheTags from "../utils/config/cacheTags";
 import ResponceStatus from "../utils/config/responseStatus";
-import responseProcess from "../utils/helper/responseProcess";
+import responseProcess from "../utils/responseProcess/responseProcess";
 import zodErrorMessageFormatter from "../utils/pipes/zodErrorMessageFormatterPipe";
 import ProductsValidate from "./product.validate";
 import productServiceInstance, { ProductService } from "./products.service";

@@ -4,11 +4,12 @@ import { StateFormState } from "@/components/modules/admin/state/types";
 import { StateCreateDto } from "@/server/app/state/state.types";
 import statesController from "@/server/app/state/state.controller";
 
-export default async function createStateAction(name: string, token: string) {
-  const state: StateCreateDto = {
-    name,
-  };
+export default async function uploadToStateAction(
+  formData: FormData,
+  token: string
+) {
+  console.log(formData.get("files"));
 
-  const res: any = await statesController.createState(state, token);
+  const res: any = await statesController.uploadToState(formData, token);
   return res;
 }
