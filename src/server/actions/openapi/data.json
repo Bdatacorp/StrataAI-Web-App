@@ -27,9 +27,1042 @@
     }
   ],
   "threds": [
- 
+    {
+      "id": "thread_Ot5rHBy3C7bxlL0F5zjmT4XX",
+      "object": "thread",
+      "created_at": 1721823689,
+      "metadata": {},
+      "tool_resources": {},
+      "session_id": "d092330c54205521e83c1b88156baa57",
+      "state": "Victoria",
+      "title": "hey there"
+    },
+    {
+      "id": "thread_WsIaWpEigr9obhBZyec3Hi67",
+      "object": "thread",
+      "created_at": 1721823847,
+      "metadata": {},
+      "tool_resources": {},
+      "session_id": "7d918b36682eedf3b0700c78a7f0ea72",
+      "state": "Victoria",
+      "title": "What is this act about?"
+    },
+    {
+      "id": "thread_7ylWQchfx30SZtyk3pq6yvHC",
+      "object": "thread",
+      "created_at": 1721824174,
+      "metadata": {},
+      "tool_resources": {},
+      "session_id": "cd84980f4d70b9419351f5abfe2475b9",
+      "state": "Victoria",
+      "title": "What is this act about?"
+    },
+    {
+      "id": "thread_8Jc0NGTRr9M8TbwnkfxmfTne",
+      "object": "thread",
+      "created_at": 1721824216,
+      "metadata": {},
+      "tool_resources": {},
+      "session_id": "5c3f5b74bbe5179946872a25950538bd",
+      "state": "Victoria",
+      "title": "What is this act about?"
+    },
+    {
+      "id": "thread_WkdL9MBR8gtaSH1Gc1SA6Noe",
+      "object": "thread",
+      "created_at": 1722011885,
+      "metadata": {},
+      "tool_resources": {},
+      "session_id": "2cb2153396eb480f694b945e634746e4",
+      "state": "Victoria",
+      "title": "What is this act about?"
+    },
+    {
+      "id": "thread_nnbCIR5TY9KoAauWlEkyBX1h",
+      "object": "thread",
+      "created_at": 1722011970,
+      "metadata": {},
+      "tool_resources": {},
+      "session_id": "d7a1821faac4018500f1ac8b9c1940ec",
+      "state": "Victoria",
+      "title": "What is the owners corporation ?"
+    }
   ],
   "messages": [
-
+    {
+      "session_id": "d092330c54205521e83c1b88156baa57",
+      "user_id": "d092330c54205521e83c1b88156baa57",
+      "assistant_id": "asst_PCXsE7XsUujgXU4HGj27sdss",
+      "thread_id": "thread_Ot5rHBy3C7bxlL0F5zjmT4XX",
+      "messages": [
+        {
+          "id": "msg_hLYuqQcRCCmCPDLCu5qYwHmu",
+          "object": "thread.message",
+          "created_at": 1721823690,
+          "assistant_id": "asst_PCXsE7XsUujgXU4HGj27sdss",
+          "thread_id": "thread_Ot5rHBy3C7bxlL0F5zjmT4XX",
+          "run_id": "run_CfQRBc5J98iEqNcGNUumggVm",
+          "role": "assistant",
+          "content": [
+            {
+              "type": "text",
+              "text": {
+                "value": "Hello! How can I assist you today?",
+                "annotations": []
+              }
+            }
+          ],
+          "attachments": [],
+          "metadata": {}
+        },
+        {
+          "id": "msg_0agoIFbaZ5O6NKY6lt4h7dfR",
+          "object": "thread.message",
+          "created_at": 1721823689,
+          "assistant_id": null,
+          "thread_id": "thread_Ot5rHBy3C7bxlL0F5zjmT4XX",
+          "run_id": null,
+          "role": "user",
+          "content": [
+            {
+              "type": "text",
+              "text": {
+                "value": "hey there",
+                "annotations": []
+              }
+            }
+          ],
+          "attachments": [],
+          "metadata": {}
+        }
+      ]
+    },
+    {
+      "session_id": "7d918b36682eedf3b0700c78a7f0ea72",
+      "user_id": "7d918b36682eedf3b0700c78a7f0ea72",
+      "assistant_id": "asst_PCXsE7XsUujgXU4HGj27sdss",
+      "thread_id": "thread_WsIaWpEigr9obhBZyec3Hi67",
+      "messages": [
+        {
+          "id": "msg_NIrMriw0BmjKkEr3AMCRxXOc",
+          "object": "thread.message",
+          "created_at": 1721823850,
+          "assistant_id": "asst_PCXsE7XsUujgXU4HGj27sdss",
+          "thread_id": "thread_WsIaWpEigr9obhBZyec3Hi67",
+          "run_id": "run_Vv6ANalyeaZngThhxvukjGMM",
+          "role": "assistant",
+          "content": [
+            {
+              "type": "text",
+              "text": {
+                "value": "The document you provided is the **Owners Corporations Act 2006** from Victoria, Australia. The main purposes of this act are:\n\n1. **Management and Powers**: To provide for the management, powers, and functions of owners corporations.\n2. **Dispute Resolution**: To establish appropriate mechanisms for resolving disputes related to owners corporations.\n3. **Amendments**: To amend the Subdivision Act 1988 concerning the creation of owners corporations【4:3†source】.\n\nThe act includes provisions related to the structure, roles, responsibilities, and governance of owners corporations, as well as the rights and obligations of lot owners within these corporations【4:3†source】【4:1†source】. \n\nIf you need more specific details about particular sections or provisions within the act, feel free to ask!",
+                "annotations": [
+                  {
+                    "type": "file_citation",
+                    "text": "【4:3†source】",
+                    "start_index": 452,
+                    "end_index": 464,
+                    "file_citation": {
+                      "file_id": "file-za6AEsOgyTcdn4xz2T1uigQg"
+                    }
+                  },
+                  {
+                    "type": "file_citation",
+                    "text": "【4:3†source】",
+                    "start_index": 662,
+                    "end_index": 674,
+                    "file_citation": {
+                      "file_id": "file-za6AEsOgyTcdn4xz2T1uigQg"
+                    }
+                  },
+                  {
+                    "type": "file_citation",
+                    "text": "【4:1†source】",
+                    "start_index": 674,
+                    "end_index": 686,
+                    "file_citation": {
+                      "file_id": "file-za6AEsOgyTcdn4xz2T1uigQg"
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "attachments": [],
+          "metadata": {}
+        },
+        {
+          "id": "msg_YD2FIFwUTwBuRTiHrS8I9xcb",
+          "object": "thread.message",
+          "created_at": 1721823847,
+          "assistant_id": null,
+          "thread_id": "thread_WsIaWpEigr9obhBZyec3Hi67",
+          "run_id": null,
+          "role": "user",
+          "content": [
+            {
+              "type": "text",
+              "text": {
+                "value": "What is this act about?",
+                "annotations": []
+              }
+            }
+          ],
+          "attachments": [],
+          "metadata": {}
+        }
+      ]
+    },
+    {
+      "session_id": "cd84980f4d70b9419351f5abfe2475b9",
+      "user_id": "cd84980f4d70b9419351f5abfe2475b9",
+      "assistant_id": "asst_PCXsE7XsUujgXU4HGj27sdss",
+      "thread_id": "thread_7ylWQchfx30SZtyk3pq6yvHC",
+      "messages": [
+        {
+          "id": "msg_1NFvvY21AmSH9Rs52f2ot5uz",
+          "object": "thread.message",
+          "created_at": 1721824177,
+          "assistant_id": "asst_PCXsE7XsUujgXU4HGj27sdss",
+          "thread_id": "thread_7ylWQchfx30SZtyk3pq6yvHC",
+          "run_id": "run_88JP0ritHTjrfDo8Xt3Xop1N",
+          "role": "assistant",
+          "content": [
+            {
+              "type": "text",
+              "text": {
+                "value": "The document you uploaded is the \"Owners Corporations Act 2006.\" It is legislation from Victoria, Australia, that provides for the management, powers, and functions of owners corporations, which are bodies managing the property and common areas of subdivided buildings. The Act includes mechanisms for resolving disputes related to these corporations, and amends the Subdivision Act 1988 and other Acts for various related purposes.\n\n### Key Points of the Act:\n\n1. **Management and Administration**:\n   - Establishes the powers and duties of owners corporations in managing common property.\n   - Details the process for financial management, including levying fees on lot owners for maintenance and upgrading works【4:0†source】.\n\n2. **Dispute Resolution**:\n   - Provides mechanisms for resolving disputes between lot owners and the owners corporation, as well as between owners corporations and other parties【4:1†source】.\n\n3. **Maintenance and Upgrading**:\n   - Outlines the responsibilities for maintaining and upgrading common property, and the conditions under which fees can be levied【4:0†source】.\n\n4. **Disposal of Abandoned Goods**:\n   - Allows owners corporations to dispose of goods abandoned on common property, following certain procedures and rules【4:0†source】.\n\n5. **Voting and Decision Making**:\n   - Specifies how decisions are made within the owners corporation, including the roles and rules for proxies and powers of attorney【4:3†source】【4:10†source】 .\n\n6. **Registration of Managers**:\n   - Sets out the requirements for the registration of managers of owners corporations, including eligibility and application processes. It also includes provisions for professional indemnity insurance【4:5†source】.\n\n7. **Rules and Regulations**:\n   - Empowers owners corporations to make rules regarding the use and enjoyment of common property, and the conduct of lot owners. Specific rules on proxies, external alterations, and other matters can also be established .\n\nThese points provide a comprehensive framework for the operation and governance of owners corporations in Victoria, ensuring that common property is managed effectively and disputes are resolved amicably.",
+                "annotations": [
+                  {
+                    "type": "file_citation",
+                    "text": "【4:0†source】",
+                    "start_index": 714,
+                    "end_index": 726,
+                    "file_citation": {
+                      "file_id": "file-za6AEsOgyTcdn4xz2T1uigQg"
+                    }
+                  },
+                  {
+                    "type": "file_citation",
+                    "text": "【4:1†source】",
+                    "start_index": 907,
+                    "end_index": 919,
+                    "file_citation": {
+                      "file_id": "file-za6AEsOgyTcdn4xz2T1uigQg"
+                    }
+                  },
+                  {
+                    "type": "file_citation",
+                    "text": "【4:0†source】",
+                    "start_index": 1087,
+                    "end_index": 1099,
+                    "file_citation": {
+                      "file_id": "file-za6AEsOgyTcdn4xz2T1uigQg"
+                    }
+                  },
+                  {
+                    "type": "file_citation",
+                    "text": "【4:0†source】",
+                    "start_index": 1258,
+                    "end_index": 1270,
+                    "file_citation": {
+                      "file_id": "file-za6AEsOgyTcdn4xz2T1uigQg"
+                    }
+                  },
+                  {
+                    "type": "file_citation",
+                    "text": "【4:3†source】",
+                    "start_index": 1441,
+                    "end_index": 1453,
+                    "file_citation": {
+                      "file_id": "file-za6AEsOgyTcdn4xz2T1uigQg"
+                    }
+                  },
+                  {
+                    "type": "file_citation",
+                    "text": "【4:10†source】",
+                    "start_index": 1453,
+                    "end_index": 1466,
+                    "file_citation": {
+                      "file_id": "file-za6AEsOgyTcdn4xz2T1uigQg"
+                    }
+                  },
+                  {
+                    "type": "file_citation",
+                    "text": "【4:5†source】",
+                    "start_index": 1704,
+                    "end_index": 1716,
+                    "file_citation": {
+                      "file_id": "file-za6AEsOgyTcdn4xz2T1uigQg"
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "attachments": [],
+          "metadata": {}
+        },
+        {
+          "id": "msg_wgup0YybWOcpxSFXecQ4u69q",
+          "object": "thread.message",
+          "created_at": 1721824174,
+          "assistant_id": null,
+          "thread_id": "thread_7ylWQchfx30SZtyk3pq6yvHC",
+          "run_id": null,
+          "role": "user",
+          "content": [
+            {
+              "type": "text",
+              "text": {
+                "value": "What is this act about?",
+                "annotations": []
+              }
+            }
+          ],
+          "attachments": [],
+          "metadata": {}
+        }
+      ]
+    },
+    {
+      "session_id": "5c3f5b74bbe5179946872a25950538bd",
+      "user_id": "5c3f5b74bbe5179946872a25950538bd",
+      "assistant_id": "asst_PCXsE7XsUujgXU4HGj27sdss",
+      "thread_id": "thread_8Jc0NGTRr9M8TbwnkfxmfTne",
+      "messages": [
+        {
+          "id": "msg_FpFsDmAUqLEtXaQGxmDessJ5",
+          "object": "thread.message",
+          "created_at": 1721824335,
+          "assistant_id": "asst_PCXsE7XsUujgXU4HGj27sdss",
+          "thread_id": "thread_8Jc0NGTRr9M8TbwnkfxmfTne",
+          "run_id": "run_GUFeZbCaSiWlN2tH7YKJ2xme",
+          "role": "assistant",
+          "content": [
+            {
+              "type": "text",
+              "text": {
+                "value": "According to the regulations outlined in the documents, parking on common property is subject to specific restrictions. Here are the key points:\n\n1. **General Rule**: An owner or occupier of a lot must not park or leave a vehicle on common property in a way that:\n   - Obstructs driveways, pathways, or entrances/exits to any lot.\n   - Uses parking spaces allocated for other lots without approval.\n\n2. **Emergency Exceptions**: Parking on common property is permitted only in the case of an emergency.\n\n3. **Designated Areas**: Vehicles must only be parked in areas specified for that purpose by the owners corporation【7:1†source】.\n\nIf you're considering parking in common areas, it’s essential to check with your owners corporation to understand any specific parking rules or designated areas that may apply to your situation.",
+                "annotations": [
+                  {
+                    "type": "file_citation",
+                    "text": "【7:1†source】",
+                    "start_index": 619,
+                    "end_index": 631,
+                    "file_citation": {
+                      "file_id": "file-za6AEsOgyTcdn4xz2T1uigQg"
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "attachments": [],
+          "metadata": {}
+        },
+        {
+          "id": "msg_uhKQiRVLpOvwbpymz4brJllq",
+          "object": "thread.message",
+          "created_at": 1721824331,
+          "assistant_id": "asst_PCXsE7XsUujgXU4HGj27sdss",
+          "thread_id": "thread_8Jc0NGTRr9M8TbwnkfxmfTne",
+          "run_id": "run_GUFeZbCaSiWlN2tH7YKJ2xme",
+          "role": "assistant",
+          "content": [
+            {
+              "type": "text",
+              "text": {
+                "value": "To provide an accurate answer about parking on common property, I may need to refer to specific regulations or guidelines, which could be found in the documents you've uploaded. Let me check those documents to see if there's any relevant information regarding parking on common property. \n\nPlease hold on for a moment while I search.",
+                "annotations": []
+              }
+            }
+          ],
+          "attachments": [],
+          "metadata": {}
+        },
+        {
+          "id": "msg_dagQswxK9WTHNAF6WbPsgfCS",
+          "object": "thread.message",
+          "created_at": 1721824329,
+          "assistant_id": null,
+          "thread_id": "thread_8Jc0NGTRr9M8TbwnkfxmfTne",
+          "run_id": null,
+          "role": "user",
+          "content": [
+            {
+              "type": "text",
+              "text": {
+                "value": "Can i park on common property",
+                "annotations": []
+              }
+            }
+          ],
+          "attachments": [],
+          "metadata": {}
+        },
+        {
+          "id": "msg_nkIm9xAiv425dBVO8zxhkDFw",
+          "object": "thread.message",
+          "created_at": 1721824218,
+          "assistant_id": "asst_PCXsE7XsUujgXU4HGj27sdss",
+          "thread_id": "thread_8Jc0NGTRr9M8TbwnkfxmfTne",
+          "run_id": "run_op8tOML7IgWQ1WIePhjxSxxL",
+          "role": "assistant",
+          "content": [
+            {
+              "type": "text",
+              "text": {
+                "value": "Could you please clarify which act you are referring to? If you provide me with the name or details about the act you want information on, I'll be able to assist you better. If it's related to the files you've uploaded, please specify that as well, and I can search for relevant information within them.",
+                "annotations": []
+              }
+            }
+          ],
+          "attachments": [],
+          "metadata": {}
+        },
+        {
+          "id": "msg_aZEJihnv4arKLBZGQv6fI0bP",
+          "object": "thread.message",
+          "created_at": 1721824217,
+          "assistant_id": null,
+          "thread_id": "thread_8Jc0NGTRr9M8TbwnkfxmfTne",
+          "run_id": null,
+          "role": "user",
+          "content": [
+            {
+              "type": "text",
+              "text": {
+                "value": "What is this act about?",
+                "annotations": []
+              }
+            }
+          ],
+          "attachments": [],
+          "metadata": {}
+        }
+      ]
+    },
+    {
+      "session_id": "2cb2153396eb480f694b945e634746e4",
+      "user_id": "2cb2153396eb480f694b945e634746e4",
+      "assistant_id": "asst_PCXsE7XsUujgXU4HGj27sdss",
+      "thread_id": "thread_WkdL9MBR8gtaSH1Gc1SA6Noe",
+      "messages": [
+        {
+          "id": "msg_s9mbBSyr0sI8DPQWlNvDMS9M",
+          "object": "thread.message",
+          "created_at": 1722011889,
+          "assistant_id": "asst_PCXsE7XsUujgXU4HGj27sdss",
+          "thread_id": "thread_WkdL9MBR8gtaSH1Gc1SA6Noe",
+          "run_id": "run_6FekYhDco7GfysGwuFy75WiM",
+          "role": "assistant",
+          "content": [
+            {
+              "type": "text",
+              "text": {
+                "value": "The uploaded document pertains to the \"Owners Corporations Act 2006\", enacted by the Parliament of Victoria.\n\nThe main purposes of this Act are:\n1. To provide for the management, powers, and functions of owners corporations.\n2. To establish appropriate mechanisms for the resolution of disputes relating to owners corporations.\n3. To amend the Subdivision Act 1988 in relation to the creation of owners corporations【4:0†source】【4:5†source】.",
+                "annotations": [
+                  {
+                    "type": "file_citation",
+                    "text": "【4:0†source】",
+                    "start_index": 415,
+                    "end_index": 427,
+                    "file_citation": {
+                      "file_id": "file-za6AEsOgyTcdn4xz2T1uigQg"
+                    }
+                  },
+                  {
+                    "type": "file_citation",
+                    "text": "【4:5†source】",
+                    "start_index": 427,
+                    "end_index": 439,
+                    "file_citation": {
+                      "file_id": "file-za6AEsOgyTcdn4xz2T1uigQg"
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "attachments": [],
+          "metadata": {}
+        },
+        {
+          "id": "msg_y9GgXS7eHQa5jQJxrIosElQ9",
+          "object": "thread.message",
+          "created_at": 1722011885,
+          "assistant_id": null,
+          "thread_id": "thread_WkdL9MBR8gtaSH1Gc1SA6Noe",
+          "run_id": null,
+          "role": "user",
+          "content": [
+            {
+              "type": "text",
+              "text": {
+                "value": "What is this act about?",
+                "annotations": []
+              }
+            }
+          ],
+          "attachments": [],
+          "metadata": {}
+        }
+      ]
+    },
+    {
+      "session_id": "d7a1821faac4018500f1ac8b9c1940ec",
+      "user_id": "d7a1821faac4018500f1ac8b9c1940ec",
+      "assistant_id": "asst_PCXsE7XsUujgXU4HGj27sdss",
+      "thread_id": "thread_nnbCIR5TY9KoAauWlEkyBX1h",
+      "messages": [
+        {
+          "id": "msg_TvwFUDtj3856enkcok8dhJMA",
+          "object": "thread.message",
+          "created_at": 1722013608,
+          "assistant_id": "asst_PCXsE7XsUujgXU4HGj27sdss",
+          "thread_id": "thread_nnbCIR5TY9KoAauWlEkyBX1h",
+          "run_id": "run_HTMOBLfcfSZfWqh4NQQO0AXJ",
+          "role": "assistant",
+          "content": [
+            {
+              "type": "text",
+              "text": {
+                "value": "The documents provided do not include information regarding famous songs. To get an accurate and current answer for the most famous song, it might be useful to check music charts such as the Billboard Hot 100, Spotify charts, or other music ranking services.\n\nAs of the latest information, some of the most famous songs include classics like \"Bohemian Rhapsody\" by Queen, \"Imagine\" by John Lennon, and contemporary hits like \"Shape of You\" by Ed Sheeran. For the most up-to-date information, referencing a current music chart would be ideal.",
+                "annotations": []
+              }
+            }
+          ],
+          "attachments": [],
+          "metadata": {}
+        },
+        {
+          "id": "msg_6e3k5WtYArBq5w7J58hmib4w",
+          "object": "thread.message",
+          "created_at": 1722013604,
+          "assistant_id": null,
+          "thread_id": "thread_nnbCIR5TY9KoAauWlEkyBX1h",
+          "run_id": null,
+          "role": "user",
+          "content": [
+            {
+              "type": "text",
+              "text": {
+                "value": "What is most famous song?",
+                "annotations": []
+              }
+            }
+          ],
+          "attachments": [],
+          "metadata": {}
+        },
+        {
+          "id": "msg_lg2SJNX4H6nN1jnfrU8BBiVW",
+          "object": "thread.message",
+          "created_at": 1722013461,
+          "assistant_id": "asst_PCXsE7XsUujgXU4HGj27sdss",
+          "thread_id": "thread_nnbCIR5TY9KoAauWlEkyBX1h",
+          "run_id": "run_dXKBpLXQm1KTXsslcy7PoMsW",
+          "role": "assistant",
+          "content": [
+            {
+              "type": "text",
+              "text": {
+                "value": "A subdivision body corporate, also known as an owners corporation, is an entity that is created upon the registration of a plan of subdivision or a plan of strata or cluster subdivision. This entity is responsible for managing and administering the common property shared by all lot owners within a development. Specifically, the term \"subdivision body corporate\" used in historical contexts or older legislations has been replaced by \"owners corporation\" under the Owners Corporations Act 2006【16:4†source】【16:7†source】.\n\nOn and from the implementation of the Owners Corporations Act 2006, all subdivision bodies corporate are deemed to be owners corporations and are required to follow the rules and regulations set forth under this Act【16:4†source】【16:7†source】. This includes managing common property, maintaining and repairing common infrastructure, taking out appropriate insurance, keeping a register of the owners corporation, and ensuring compliance with the Act and any other relevant legislative requirements【16:9†source】【16:12†source】.\n\nIn summary, a subdivision body corporate is essentially the same as an owners corporation, tasked with the collective management of common areas within a subdivided property.",
+                "annotations": [
+                  {
+                    "type": "file_citation",
+                    "text": "【16:4†source】",
+                    "start_index": 494,
+                    "end_index": 507,
+                    "file_citation": {
+                      "file_id": "file-za6AEsOgyTcdn4xz2T1uigQg"
+                    }
+                  },
+                  {
+                    "type": "file_citation",
+                    "text": "【16:7†source】",
+                    "start_index": 507,
+                    "end_index": 520,
+                    "file_citation": {
+                      "file_id": "file-za6AEsOgyTcdn4xz2T1uigQg"
+                    }
+                  },
+                  {
+                    "type": "file_citation",
+                    "text": "【16:4†source】",
+                    "start_index": 738,
+                    "end_index": 751,
+                    "file_citation": {
+                      "file_id": "file-za6AEsOgyTcdn4xz2T1uigQg"
+                    }
+                  },
+                  {
+                    "type": "file_citation",
+                    "text": "【16:7†source】",
+                    "start_index": 751,
+                    "end_index": 764,
+                    "file_citation": {
+                      "file_id": "file-za6AEsOgyTcdn4xz2T1uigQg"
+                    }
+                  },
+                  {
+                    "type": "file_citation",
+                    "text": "【16:9†source】",
+                    "start_index": 1019,
+                    "end_index": 1032,
+                    "file_citation": {
+                      "file_id": "file-za6AEsOgyTcdn4xz2T1uigQg"
+                    }
+                  },
+                  {
+                    "type": "file_citation",
+                    "text": "【16:12†source】",
+                    "start_index": 1032,
+                    "end_index": 1046,
+                    "file_citation": {
+                      "file_id": "file-za6AEsOgyTcdn4xz2T1uigQg"
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "attachments": [],
+          "metadata": {}
+        },
+        {
+          "id": "msg_CZVQCQ4mo4r4NfxGEBSqV9bL",
+          "object": "thread.message",
+          "created_at": 1722013457,
+          "assistant_id": null,
+          "thread_id": "thread_nnbCIR5TY9KoAauWlEkyBX1h",
+          "run_id": null,
+          "role": "user",
+          "content": [
+            {
+              "type": "text",
+              "text": {
+                "value": "What is subdivision body corporate ?",
+                "annotations": []
+              }
+            }
+          ],
+          "attachments": [],
+          "metadata": {}
+        },
+        {
+          "id": "msg_baH3xLaVRqQQZOlg70YwYciP",
+          "object": "thread.message",
+          "created_at": 1722013401,
+          "assistant_id": "asst_PCXsE7XsUujgXU4HGj27sdss",
+          "thread_id": "thread_nnbCIR5TY9KoAauWlEkyBX1h",
+          "run_id": "run_Q0bskpIDw0AkUFtrxsB80qvb",
+          "role": "assistant",
+          "content": [
+            {
+              "type": "text",
+              "text": {
+                "value": "No, you generally cannot park on common property without specific authorization. Here are the rules regarding parking on common property according to the Owners Corporations Regulations:\n\n1. **Parking in Allocated Spaces**: An owner or occupier of a lot must not park or leave a vehicle in parking spaces on common property that are allocated to other lots【12:0†source】.\n\n2. **Obstruction**: You are not allowed to park or leave a vehicle on the common property in a way that obstructs a driveway, pathway, entrance, or exit to a lot【12:0†source】.\n\n3. **Designated Parking Areas**: Parking is only permitted in designated parking areas specified for that purpose by the owners corporation【12:0†source】.\n\nTherefore, unless you have specific written approval from the owners corporation or are parking in an emergency, parking on common property is prohibited. Make sure you check the specific rules and any designated parking areas in your development to comply with these regulations.",
+                "annotations": [
+                  {
+                    "type": "file_citation",
+                    "text": "【12:0†source】",
+                    "start_index": 356,
+                    "end_index": 369,
+                    "file_citation": {
+                      "file_id": "file-za6AEsOgyTcdn4xz2T1uigQg"
+                    }
+                  },
+                  {
+                    "type": "file_citation",
+                    "text": "【12:0†source】",
+                    "start_index": 533,
+                    "end_index": 546,
+                    "file_citation": {
+                      "file_id": "file-za6AEsOgyTcdn4xz2T1uigQg"
+                    }
+                  },
+                  {
+                    "type": "file_citation",
+                    "text": "【12:0†source】",
+                    "start_index": 688,
+                    "end_index": 701,
+                    "file_citation": {
+                      "file_id": "file-za6AEsOgyTcdn4xz2T1uigQg"
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "attachments": [],
+          "metadata": {}
+        },
+        {
+          "id": "msg_WfoB4AIvp5nUY0H2UOCVmyAm",
+          "object": "thread.message",
+          "created_at": 1722013397,
+          "assistant_id": null,
+          "thread_id": "thread_nnbCIR5TY9KoAauWlEkyBX1h",
+          "run_id": null,
+          "role": "user",
+          "content": [
+            {
+              "type": "text",
+              "text": {
+                "value": "Can i park on common property ?",
+                "annotations": []
+              }
+            }
+          ],
+          "attachments": [],
+          "metadata": {}
+        },
+        {
+          "id": "msg_QAP2u5tkJj75yFaSwWUTfYEp",
+          "object": "thread.message",
+          "created_at": 1722012042,
+          "assistant_id": "asst_PCXsE7XsUujgXU4HGj27sdss",
+          "thread_id": "thread_nnbCIR5TY9KoAauWlEkyBX1h",
+          "run_id": "run_GSKOftGTLAt6KwSwJ2cCLeOb",
+          "role": "assistant",
+          "content": [
+            {
+              "type": "text",
+              "text": {
+                "value": "To make a complaint to the owners corporation, the following steps should be taken:\n\n1. **Eligibility**: A lot owner, occupier of a lot, or a manager can make a complaint regarding an alleged breach by another lot owner, occupier, or manager.\n\n2. **Written Complaint**: The complaint must be made in writing using the approved form. The owners corporation must provide a copy of the approved form upon request【8:0†source】【8:1†source】.\n\n3. **Exclusions**: Complaints cannot be made in relation to personal injury or the recovery of fees, charges, contributions, or amounts owed to the owners corporation【8:0†source】【8:1†source】.\n\n4. **Internal Decision**: Upon receiving a complaint, the owners corporation must decide whether to take action regarding the alleged breach, seek an order from the Victorian Civil and Administrative Tribunal (VCAT), or take no action. This decision must be communicated to the complainant【8:1†source】【8:10†source】.\n\n5. **Rectification Notice**: If action is to be taken, the owners corporation must issue a notice to the person alleged to have committed the breach, detailing the breach and requiring rectification within 28 days【8:5†source】【8:5†source】.\n\n6. **Follow-Up**: If the breach is not rectified within the specified time, the owners corporation may choose to give additional time, issue a final notice, or decide not to proceed【8:5†source】【8:5†source】.\n\n7. **VCAT Application**: If the final notice is not complied with, the owners corporation can apply to VCAT for an order requiring the rectification of the breach【8:5†source】【8:10†source】.\n\n8. **Dispute Resolution Process**: Before taking any action or applying to VCAT, the owners corporation must ensure that the dispute resolution process outlined in the rules has been followed and the matter remains unresolved【8:10†source】.\n\n9. **Annual Report**: The owners corporation must report to the annual general meeting on the number and nature of complaints, actions taken, and outcomes without identifying the parties involved【8:10†source】【8:13†source】.\n\n10. **Conciliation and Mediation by Director**: Any person can also complain to the Director about a matter that can be referred for conciliation or mediation【8:7†source】【8:9†source】.\n\nBy following these steps, a member can appropriately handle a complaint through the owners corporation, ensuring procedural compliance and proper resolution.",
+                "annotations": [
+                  {
+                    "type": "file_citation",
+                    "text": "【8:0†source】",
+                    "start_index": 409,
+                    "end_index": 421,
+                    "file_citation": {
+                      "file_id": "file-za6AEsOgyTcdn4xz2T1uigQg"
+                    }
+                  },
+                  {
+                    "type": "file_citation",
+                    "text": "【8:1†source】",
+                    "start_index": 421,
+                    "end_index": 433,
+                    "file_citation": {
+                      "file_id": "file-za6AEsOgyTcdn4xz2T1uigQg"
+                    }
+                  },
+                  {
+                    "type": "file_citation",
+                    "text": "【8:0†source】",
+                    "start_index": 602,
+                    "end_index": 614,
+                    "file_citation": {
+                      "file_id": "file-za6AEsOgyTcdn4xz2T1uigQg"
+                    }
+                  },
+                  {
+                    "type": "file_citation",
+                    "text": "【8:1†source】",
+                    "start_index": 614,
+                    "end_index": 626,
+                    "file_citation": {
+                      "file_id": "file-za6AEsOgyTcdn4xz2T1uigQg"
+                    }
+                  },
+                  {
+                    "type": "file_citation",
+                    "text": "【8:1†source】",
+                    "start_index": 918,
+                    "end_index": 930,
+                    "file_citation": {
+                      "file_id": "file-za6AEsOgyTcdn4xz2T1uigQg"
+                    }
+                  },
+                  {
+                    "type": "file_citation",
+                    "text": "【8:10†source】",
+                    "start_index": 930,
+                    "end_index": 943,
+                    "file_citation": {
+                      "file_id": "file-za6AEsOgyTcdn4xz2T1uigQg"
+                    }
+                  },
+                  {
+                    "type": "file_citation",
+                    "text": "【8:5†source】",
+                    "start_index": 1159,
+                    "end_index": 1171,
+                    "file_citation": {
+                      "file_id": "file-za6AEsOgyTcdn4xz2T1uigQg"
+                    }
+                  },
+                  {
+                    "type": "file_citation",
+                    "text": "【8:5†source】",
+                    "start_index": 1171,
+                    "end_index": 1183,
+                    "file_citation": {
+                      "file_id": "file-za6AEsOgyTcdn4xz2T1uigQg"
+                    }
+                  },
+                  {
+                    "type": "file_citation",
+                    "text": "【8:5†source】",
+                    "start_index": 1367,
+                    "end_index": 1379,
+                    "file_citation": {
+                      "file_id": "file-za6AEsOgyTcdn4xz2T1uigQg"
+                    }
+                  },
+                  {
+                    "type": "file_citation",
+                    "text": "【8:5†source】",
+                    "start_index": 1379,
+                    "end_index": 1391,
+                    "file_citation": {
+                      "file_id": "file-za6AEsOgyTcdn4xz2T1uigQg"
+                    }
+                  },
+                  {
+                    "type": "file_citation",
+                    "text": "【8:5†source】",
+                    "start_index": 1556,
+                    "end_index": 1568,
+                    "file_citation": {
+                      "file_id": "file-za6AEsOgyTcdn4xz2T1uigQg"
+                    }
+                  },
+                  {
+                    "type": "file_citation",
+                    "text": "【8:10†source】",
+                    "start_index": 1568,
+                    "end_index": 1581,
+                    "file_citation": {
+                      "file_id": "file-za6AEsOgyTcdn4xz2T1uigQg"
+                    }
+                  },
+                  {
+                    "type": "file_citation",
+                    "text": "【8:10†source】",
+                    "start_index": 1809,
+                    "end_index": 1822,
+                    "file_citation": {
+                      "file_id": "file-za6AEsOgyTcdn4xz2T1uigQg"
+                    }
+                  },
+                  {
+                    "type": "file_citation",
+                    "text": "【8:10†source】",
+                    "start_index": 2020,
+                    "end_index": 2033,
+                    "file_citation": {
+                      "file_id": "file-za6AEsOgyTcdn4xz2T1uigQg"
+                    }
+                  },
+                  {
+                    "type": "file_citation",
+                    "text": "【8:13†source】",
+                    "start_index": 2033,
+                    "end_index": 2046,
+                    "file_citation": {
+                      "file_id": "file-za6AEsOgyTcdn4xz2T1uigQg"
+                    }
+                  },
+                  {
+                    "type": "file_citation",
+                    "text": "【8:7†source】",
+                    "start_index": 2207,
+                    "end_index": 2219,
+                    "file_citation": {
+                      "file_id": "file-za6AEsOgyTcdn4xz2T1uigQg"
+                    }
+                  },
+                  {
+                    "type": "file_citation",
+                    "text": "【8:9†source】",
+                    "start_index": 2219,
+                    "end_index": 2231,
+                    "file_citation": {
+                      "file_id": "file-za6AEsOgyTcdn4xz2T1uigQg"
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "attachments": [],
+          "metadata": {}
+        },
+        {
+          "id": "msg_l1qjRM8te5dhXvAEj0vyipM5",
+          "object": "thread.message",
+          "created_at": 1722012038,
+          "assistant_id": null,
+          "thread_id": "thread_nnbCIR5TY9KoAauWlEkyBX1h",
+          "run_id": null,
+          "role": "user",
+          "content": [
+            {
+              "type": "text",
+              "text": {
+                "value": "How to Making a complaint?",
+                "annotations": []
+              }
+            }
+          ],
+          "attachments": [],
+          "metadata": {}
+        },
+        {
+          "id": "msg_P6DpXEaa7PYbemoXlK4cvZS9",
+          "object": "thread.message",
+          "created_at": 1722011975,
+          "assistant_id": "asst_PCXsE7XsUujgXU4HGj27sdss",
+          "thread_id": "thread_nnbCIR5TY9KoAauWlEkyBX1h",
+          "run_id": "run_QJqhJQY6PFqFAidVO9PrALvs",
+          "role": "assistant",
+          "content": [
+            {
+              "type": "text",
+              "text": {
+                "value": "An owners corporation, also known as a body corporate, is a legal entity that is created when a plan of subdivision is registered. This typically happens in developments where there are multiple units or lots that share common property, such as apartment buildings or townhouses. The main functions and powers of an owners corporation include:\n\n1. **Managing and Administering Common Property**: The owners corporation is responsible for the management and administration of the common property within the subdivision【4:1†source】.\n\n2. **Repair and Maintenance**: The owners corporation must repair and maintain the common property, as well as related fixtures, fittings, and services【4:1†source】.\n\n3. **Insurance**: The corporation is required to take out insurance for the common property and may take out additional insurance as needed【4:0†source】【4:9†source】.\n\n4. **Register Maintenance**: The owners corporation must keep a register with details such as the names and addresses of lot owners and managers, as well as other pertinent details about the subdivision and the corporation’s activities【4:4†source】【4:16†source】.\n\n5. **Provision of Services**: By special resolution, the owners corporation can decide to provide services to members or occupiers5【4:12†source】.\n\n6. **Delegation of Powers**: The owners corporation can delegate some or all of its powers and functions to a committee, manager, or others, subject to certain restrictions【4:2†source】【4:12†source】.\n\n7. **Handling Disputes**: The corporation has procedures in place for resolving disputes among its members or between the corporation and its members【4:10†source】.\n\nAn owners corporation can be self-managed by the lot owners or professionally managed by a registered owners corporation manager【4:14†source】. Additionally, it is important to note that members of the owners corporation are expected to act in good faith and with due diligence【4:1†source】. \n\nOverall, the owners corporation plays a critical role in ensuring the smooth operation, maintenance, and governance of shared spaces and services in multi-lot developments.",
+                "annotations": [
+                  {
+                    "type": "file_citation",
+                    "text": "【4:1†source】",
+                    "start_index": 517,
+                    "end_index": 529,
+                    "file_citation": {
+                      "file_id": "file-za6AEsOgyTcdn4xz2T1uigQg"
+                    }
+                  },
+                  {
+                    "type": "file_citation",
+                    "text": "【4:1†source】",
+                    "start_index": 683,
+                    "end_index": 695,
+                    "file_citation": {
+                      "file_id": "file-za6AEsOgyTcdn4xz2T1uigQg"
+                    }
+                  },
+                  {
+                    "type": "file_citation",
+                    "text": "【4:0†source】",
+                    "start_index": 837,
+                    "end_index": 849,
+                    "file_citation": {
+                      "file_id": "file-za6AEsOgyTcdn4xz2T1uigQg"
+                    }
+                  },
+                  {
+                    "type": "file_citation",
+                    "text": "【4:9†source】",
+                    "start_index": 849,
+                    "end_index": 861,
+                    "file_citation": {
+                      "file_id": "file-za6AEsOgyTcdn4xz2T1uigQg"
+                    }
+                  },
+                  {
+                    "type": "file_citation",
+                    "text": "【4:4†source】",
+                    "start_index": 1099,
+                    "end_index": 1111,
+                    "file_citation": {
+                      "file_id": "file-za6AEsOgyTcdn4xz2T1uigQg"
+                    }
+                  },
+                  {
+                    "type": "file_citation",
+                    "text": "【4:16†source】",
+                    "start_index": 1111,
+                    "end_index": 1124,
+                    "file_citation": {
+                      "file_id": "file-za6AEsOgyTcdn4xz2T1uigQg"
+                    }
+                  },
+                  {
+                    "type": "file_citation",
+                    "text": "【4:12†source】",
+                    "start_index": 1258,
+                    "end_index": 1271,
+                    "file_citation": {
+                      "file_id": "file-za6AEsOgyTcdn4xz2T1uigQg"
+                    }
+                  },
+                  {
+                    "type": "file_citation",
+                    "text": "【4:2†source】",
+                    "start_index": 1446,
+                    "end_index": 1458,
+                    "file_citation": {
+                      "file_id": "file-za6AEsOgyTcdn4xz2T1uigQg"
+                    }
+                  },
+                  {
+                    "type": "file_citation",
+                    "text": "【4:12†source】",
+                    "start_index": 1458,
+                    "end_index": 1471,
+                    "file_citation": {
+                      "file_id": "file-za6AEsOgyTcdn4xz2T1uigQg"
+                    }
+                  },
+                  {
+                    "type": "file_citation",
+                    "text": "【4:10†source】",
+                    "start_index": 1623,
+                    "end_index": 1636,
+                    "file_citation": {
+                      "file_id": "file-za6AEsOgyTcdn4xz2T1uigQg"
+                    }
+                  },
+                  {
+                    "type": "file_citation",
+                    "text": "【4:14†source】",
+                    "start_index": 1767,
+                    "end_index": 1780,
+                    "file_citation": {
+                      "file_id": "file-za6AEsOgyTcdn4xz2T1uigQg"
+                    }
+                  },
+                  {
+                    "type": "file_citation",
+                    "text": "【4:1†source】",
+                    "start_index": 1915,
+                    "end_index": 1927,
+                    "file_citation": {
+                      "file_id": "file-za6AEsOgyTcdn4xz2T1uigQg"
+                    }
+                  }
+                ]
+              }
+            }
+          ],
+          "attachments": [],
+          "metadata": {}
+        },
+        {
+          "id": "msg_IDNa99D66Esv0WS1lIBdUeOZ",
+          "object": "thread.message",
+          "created_at": 1722011971,
+          "assistant_id": null,
+          "thread_id": "thread_nnbCIR5TY9KoAauWlEkyBX1h",
+          "run_id": null,
+          "role": "user",
+          "content": [
+            {
+              "type": "text",
+              "text": {
+                "value": "What is the owners corporation ?",
+                "annotations": []
+              }
+            }
+          ],
+          "attachments": [],
+          "metadata": {}
+        }
+      ]
+    }
   ]
 }

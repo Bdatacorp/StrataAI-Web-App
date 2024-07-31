@@ -1,20 +1,16 @@
-export enum httpErrorPipeMethod {
-  POST = "POST",
-  GET = "GET",
-  PUT = "PUT",
-  DELETE = "DELETE",
-}
+import { HttpMethod } from "../http/type";
+
 
 export default async function httpErrorPipe(
   response: Response,
-  method: httpErrorPipeMethod
+  method: HttpMethod
 ) {
   "use server";
 
   if (response.status === 500) {
     const res = await response.json();
-console.log(res);
-    if (method !== httpErrorPipeMethod.GET) {
+    console.log(res);
+    if (method !== HttpMethod.GET) {
       if (res.error) {
         return {
           status: false,

@@ -1,4 +1,5 @@
-import httpErrorPipe, { httpErrorPipeMethod } from "../pipes/httpErrorPipe";
+import httpErrorPipe from "../pipes/httpErrorPipe";
+import { HttpMethod } from "./type";
 
 export class HTTP {
   private URL: string;
@@ -16,50 +17,25 @@ export class HTTP {
     };
   }
 
-  handleRequestError(error: Error) {
-    console.log(error);
-    throw new Error(`Failed to initiate request:`);
-  }
-
   async Get(tags?: string[], id?: string) {
     "use server";
-    try {
-      const URL = id ? `${this.URL}/${id}` : this.URL;
-      const method = httpErrorPipeMethod.GET;
 
-      const response = await fetch(URL, {
-        method,
-        headers: this.headers,
-        next: { tags },
-      });
+    const URL = id ? `${this.URL}/${id}` : this.URL;
+    const method = HttpMethod.GET;
 
-      if (response.ok) {
-        const data = await response.json();
+    const response = await fetch(URL, {
+      method,
+      headers: this.headers,
+      next: { tags },
+    });
 
-        if (data == null) {
-          return {
-            status: true,
-            statusCode: response.status,
-            data: [],
-          };
-        }
-        return {
-          status: true,
-          statusCode: response.status,
-          data: data,
-        };
-      } else {
-        return await httpErrorPipe(response, method);
-      }
-    } catch (error: any) {
-      this.handleRequestError(error);
-    }
+    return await this.hangleGetResponse(response);
   }
 
   async Post(payload: Object) {
     "use server";
     try {
-      const method = httpErrorPipeMethod.POST;
+      const method = HttpMethod.POST;
       const response = await fetch(this.URL, {
         method,
         headers: this.headers,
@@ -77,7 +53,7 @@ export class HTTP {
         return await httpErrorPipe(response, method);
       }
     } catch (error: any) {
-      return await httpErrorPipe(error, httpErrorPipeMethod.POST);
+      return await httpErrorPipe(error, HttpMethod.POST);
     }
   }
 
@@ -102,7 +78,7 @@ export class HTTP {
 
   async Delete(id: string) {
     try {
-      const method = httpErrorPipeMethod.DELETE;
+      const method = HttpMethod.DELETE;
       const response = await fetch(`${this.URL}/${id}`, {
         method,
         headers: this.headers,
@@ -119,6 +95,38 @@ export class HTTP {
       }
     } catch (error: any) {
       this.handleRequestError(error);
+    }
+  }
+
+  private handleRequestError(error: Error) {
+    console.log("error", error);
+    throw new Error(`Failed to initiate request:`);
+  }
+
+  /**
+   * Try Get Response JSON and if any error throw 'Failed to initiate request'.
+   * If Can parse response to json
+   *  - If response is ok, return data
+   *  - If response is not ok, throw error with response error code and  message
+   * @param response
+   * @returns response json
+   */
+  private async hangleGetResponse(response: Response) {
+    console.log("Hangle Get Response Status : ", response.status);
+    try {
+      const data = await response.json();
+      if (response.ok) {
+        return data;
+      } else {
+        throw new Error(
+          `Unknown error occurred during the process. \nError Code : [${data.statusCode}]. \nError Message : [${data.message}]`
+        );
+      }
+    } catch (err) {
+      console.log(err);
+      throw new Error(
+        `Failed to initiate request: : \nError Code[${response.status}]`
+      );
     }
   }
 }

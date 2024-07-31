@@ -2,12 +2,14 @@ import { configureStore } from "@reduxjs/toolkit";
 import uiSlice from "./features/ui/ui.slice";
 import pdfSlice from "./features/pdf/pdf.slice";
 import chatSlice from "./features/chat/chat.slice";
+import stateSlice from "./features/state/state.slice";
 
 export const store = configureStore({
   reducer: {
     ui: uiSlice,
     pdf: pdfSlice,
     chat: chatSlice,
+    state: stateSlice,
   },
 });
 

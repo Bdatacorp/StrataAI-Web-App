@@ -1,6 +1,6 @@
 "use server";
 
-import { ChatFormState } from "@/components/modules/chat/types";
+import { ChatFormState } from "@/components/modules/user/chat/types";
 import chatController from "@/server/app/chat/chat.controller";
 import { ChatCreateDto } from "@/server/app/chat/chat.types";
 

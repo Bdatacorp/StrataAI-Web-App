@@ -1,7 +1,6 @@
 import TimeStampFormatter from "../pipes/timeStampFormatterPipe";
 import { HTTP } from "../http/http";
 import StatusFormatter from "../pipes/statusFomatterPipe";
-import { APIRoute } from "../config/app";
 
 export default class Service {
   private Http: HTTP;
@@ -9,7 +8,7 @@ export default class Service {
   private statusFormatter: typeof StatusFormatter;
 
   constructor(token: string, url: string) {
-    const API = process.env.SSIAE_API || APIRoute;
+    const API = process.env.API;
 
     const URL = `${API}${url}`;
     this.Http = new HTTP(token, URL);
@@ -19,6 +18,9 @@ export default class Service {
 
   async getAll(tags: string[]) {
     const result: any = await this.Http.Get(tags);
+
+    if (!result.status) return result;
+
     //format timestamp data
     const formattedData = result?.data?.map((item: any) => ({
       ...item,

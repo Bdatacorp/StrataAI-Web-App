@@ -7,6 +7,7 @@ import theme from "./_theme";
 import ReduxProvider from "@/lib/provider/reduxProvider";
 
 import "./index.css";
+import { ModalsProvider } from "@mantine/modals";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,7 +28,9 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <ReduxProvider>
-          <MantineProvider theme={theme}>{children}</MantineProvider>
+          <MantineProvider theme={theme}>
+            <ModalsProvider>{children}</ModalsProvider>
+          </MantineProvider>
         </ReduxProvider>
       </body>
     </html>

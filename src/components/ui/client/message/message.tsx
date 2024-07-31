@@ -1,6 +1,6 @@
 "use client";
 
-import { message, MessageRoles } from "@/components/modules/chat/types";
+import { message, MessageRoles } from "@/components/modules/user/chat/types";
 import Markdown from "react-markdown";
 
 export default function ChatMessage(message: message) {
