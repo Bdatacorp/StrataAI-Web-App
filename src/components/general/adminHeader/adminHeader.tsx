@@ -5,7 +5,7 @@ import { IoMdNotifications } from "react-icons/io";
 import { FaRegCalendarAlt } from "react-icons/fa";
 import { AiOutlineLogout } from "react-icons/ai";
 import { CgMenuLeft } from "react-icons/cg";
-import { Drawer } from "@mantine/core";
+import { ActionIcon, Drawer } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { LuSearch } from "react-icons/lu";
 import { Modal } from "@mantine/core";
@@ -13,10 +13,13 @@ import SearchBox from "@/components/ui/client/searchBox/SearchBox";
 import MobileSidebar from "../adminSideBar/MobileSidebar";
 import getDate from "@/utils/services/getDate";
 import Image from "next/image";
+import { Colors } from "@/lib/config/colors";
+import { signOut } from "next-auth/react";
 
 const AdminHeader = () => {
   // NAVBAR
   const [opened, { open, close }] = useDisclosure(false);
+  const [logoutLoading, setLogoutLoading] = useState<boolean>(false);
 
   // SEARCH
   const [searchOpened, { open: openSearch, close: closeSearch }] =
@@ -66,9 +69,17 @@ const AdminHeader = () => {
         {/* NOTIFICATIONS | SETTINGS | ACCOUNT */}
         <div className="flex items-center gap-5 ">
           <div className="flex items-center gap-2">
-            <div className="bg-primary text-white p-[6px] flex items-center justify-center rounded-lg cursor-pointer hover:bg-primary/90">
+            <ActionIcon
+              loading={logoutLoading}
+              color={Colors.primary}
+              onClick={() => {
+                setLogoutLoading(true);
+                signOut();
+              }}
+              className="rounded-full w-8 h-8"
+            >
               <AiOutlineLogout className="text-2xl" />
-            </div>
+            </ActionIcon>
           </div>
         </div>
       </div>
