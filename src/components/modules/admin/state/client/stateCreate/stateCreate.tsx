@@ -6,10 +6,9 @@ import { closeCreateStateModel } from "@/lib/provider/features/state/state.slice
 import { RootState } from "@/lib/provider/store";
 import createStateAction from "@/server/actions/state/createStateAction";
 import uploadToStateAction from "@/server/actions/state/uploadToStateAction";
-import Token from "@/utils/helper/token";
+import Token from "@/utils/helper/token/clientToken";
 import { Button, Group, Modal, rem, Stepper, TextInput } from "@mantine/core";
 import { FileWithPath, PDF_MIME_TYPE } from "@mantine/dropzone";
-import { modals } from "@mantine/modals";
 import { Dispatch, SetStateAction, useState } from "react";
 import { isMobile } from "react-device-detect";
 import { TbCircleX } from "react-icons/tb";
@@ -87,7 +86,7 @@ export default function StateCreate() {
     }
 
     setUploadLoading(true);
-    const res = await uploadToStateAction(formData, Token.getAuth());
+    const res = await uploadToStateAction(formData);
     setUploadLoading(false);
 
     if (res.status == true) {
@@ -147,10 +146,6 @@ export default function StateCreate() {
               setFiles={setFiles}
             />
           </Stepper.Step>
-
-          {/* <Stepper.Completed>
-            Completed, click back button to get to previous step
-          </Stepper.Completed> */}
         </Stepper>
 
         <Group justify="center" mt="xl">

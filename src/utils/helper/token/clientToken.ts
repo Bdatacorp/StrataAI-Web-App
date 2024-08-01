@@ -1,6 +1,8 @@
-"use client";
+'use client'
 
-class Token {
+import Cookies from "js-cookie";
+
+class ClientToken {
   static getAuth(): string {
     return this.getToken("token");
   }
@@ -10,12 +12,13 @@ class Token {
   }
 
   private static setToken(name: string, token: string) {
-    localStorage.setItem(name, token);
+    Cookies.set("token", token);
   }
 
   private static getToken(name: string): string {
-    return localStorage.getItem(name) || "";
+    const token = Cookies.get(name);
+    return token as string;
   }
 }
 
-export default Token;
+export default ClientToken;

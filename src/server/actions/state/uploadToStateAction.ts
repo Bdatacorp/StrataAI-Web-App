@@ -6,10 +6,9 @@ import statesController from "@/server/app/state/state.controller";
 
 export default async function uploadToStateAction(
   formData: FormData,
-  token: string
 ) {
   console.log(formData.get("files"));
 
-  const res: any = await statesController.uploadToState(formData, token);
+  const res: any = await statesController.uploadToState(formData);
   return res;
 }

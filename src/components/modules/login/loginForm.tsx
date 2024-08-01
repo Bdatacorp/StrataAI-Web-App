@@ -3,37 +3,56 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { Button, Input, TextInput } from "@mantine/core";
 import { PasswordInput } from "@mantine/core";
-
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { Colors } from "@/lib/config/colors";
-import { Metadata } from "next";
+import { Modules } from "@/lib/config/modules";
+import logineAction from "@/server/actions/auth/loginAction";
+import { toast } from "react-toastify";
+import Token from "@/utils/helper/token/clientToken";
+import { signIn } from "next-auth/react";
+import { redirect, useRouter, useSearchParams } from "next/navigation";
+
+const initialErrors = {
+  email: { message: "" },
+  password: { message: "" },
+};
 
 const LoginForm = () => {
+  const [emailAddress, setEmailAddress] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [errors, setErrors] = useState<typeof initialErrors>(initialErrors);
+  const [loading, setLoading] = useState<boolean>(false);
+  const searchParams = useSearchParams();
   const router = useRouter();
 
-  const user = {
-    emailAddress: "user@gmail.com",
-    password: "1234",
+  const handleOnClick = async () => {
+    setErrors(initialErrors);
+    setLoading(true);
+    // const res = await logineAction(emailAddress, password);
+    console.log(searchParams.get("callbackUrl"));
+
+    const result: any = await signIn("credentials", {
+      redirect: false,
+      email: emailAddress,
+      password,
+      callbackUrl: searchParams.get("callbackUrl") || Modules.ADMIN.STATE.route,
+    });
+
+    if (result?.error) {
+      setLoading(false);
+      const res = await JSON.parse(result.error);
+      if (res && res.zodErrors) {
+        setErrors((errors) => ({ ...errors, ...res.zodErrors }));
+      } else {
+        toast.error(res.payload.message);
+      }
+    } else {
+      router.replace(
+        searchParams.get("callbackUrl") || Modules.ADMIN.STATE.route
+      );
+      setLoading(false);
+    }
   };
-
-  const [emailAddress, setEmailAddress] = useState("");
-  const [password, setPassword] = useState("");
-
-  const [success, setSuccess] = useState(false);
-  const [error, setError] = useState("");
-
-  const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    emailAddress === user.emailAddress && password === user.password
-      ? setSuccess(true)
-      : setError("Incorrect info");
-  };
-
-  useEffect(() => {
-    success === true ? router.push("/") : "";
-  }, [success, router]);
 
   return (
     <div className="pt-20 lg:pt-0 lg:h-screen flex flex-col-reverse lg:flex-row gap-5 lg:gap-0">
@@ -46,10 +65,7 @@ const LoginForm = () => {
         />
       </div>
       <div className="md:flex-[4] w-full flex justify-center items-center mr-[6%]">
-        <form
-          className="flex flex-col justify-center items-center w-full px-[3%]"
-          onSubmit={submitHandler}
-        >
+        <form className="flex flex-col justify-center items-center w-full px-[3%]">
           {/* LOGO */}
           <div className="mb-7">
             <Image
@@ -80,7 +96,7 @@ const LoginForm = () => {
                 placeholder="Email address"
                 value={emailAddress}
                 onChange={(e) => setEmailAddress(e.target.value)}
-                error={error}
+                error={errors.email.message}
               />
             </div>
 
@@ -90,13 +106,20 @@ const LoginForm = () => {
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                error={error}
+                error={errors.password.message}
               />
             </div>
 
             {/* LOGIN BUTTON */}
             <div className="grid">
-              <Button color={Colors.primary}>Login</Button>
+              <Button
+                loading={loading}
+                loaderProps={{ type: "bars" }}
+                onClick={handleOnClick}
+                color={Colors.primary}
+              >
+                Login
+              </Button>
             </div>
           </div>
 
@@ -117,9 +140,21 @@ const LoginForm = () => {
               <span className="text-[#09132080]">
                 By continuing, you agree to our
               </span>
-              <span className="text-Accent">Terms of Service</span>
+              <Link
+                target="_blank"
+                href={Modules.GUEST.TERMS.route}
+                className="text-Accent"
+              >
+                Terms of Service
+              </Link>
               <span className="text-[#09132080]">and</span>
-              <span className="text-Accent">Privacy Policy</span>
+              <Link
+                target="_blank"
+                href={Modules.GUEST.PRIVACY.route}
+                className="text-Accent"
+              >
+                Privacy Policy
+              </Link>
             </div>
 
             {/* COPYRIGHTS */}

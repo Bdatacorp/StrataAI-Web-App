@@ -4,20 +4,20 @@ export const Modules = {
     route: "admin",
     STATE: {
       name: "State",
-      description: "Strata AI By Stratapages",
-      title: "State | Strata AI Admin",
+      description: "Strata Chat AI By Stratapages",
+      title: "State | Strata Chat AI Admin",
       route: "/admin/state",
     },
     FILES: {
       name: "Files",
-      description: "Strata AI By Stratapages",
-      title: "Files | Strata AI Admin",
+      description: "Strata Chat AI By Stratapages",
+      title: "Files | Strata Chat AI Admin",
       route: "/admin/files",
     },
     USERS: {
       name: "Users",
-      description: "Strata AI By Stratapages",
-      title: "Users | Strata AI Admin",
+      description: "Strata Chat AI By Stratapages",
+      title: "Users | Strata Chat AI Admin",
       route: "/admin/users",
     },
   },
@@ -26,17 +26,31 @@ export const Modules = {
     route: "user",
     CHAT: {
       name: "Chat",
-      description: "Strata AI By Stratapages",
-      title: "Chat | Strata AI",
+      description: "Strata Chat AI By Stratapages",
+      title: "Chat | Strata Chat AI",
       route: "/chat",
     },
   },
   AUTH: {
     LOGIN: {
       name: "Login",
-      description: "Strata AI By Stratapages",
-      title: "Login | Strata AI Admin",
+      description: "Strata Chat AI By Stratapages",
+      title: "Login | Strata Chat AI Admin",
       route: "/login",
+    },
+  },
+  GUEST: {
+    TERMS: {
+      name: "Terms And Conditions",
+      description: "Terms And Conditions. Strata Chat AI By Stratapages",
+      title: "Terms And Conditions | Strata Chat AI",
+      route: "/terms-and-conditions",
+    },
+    PRIVACY: {
+      name: "Privacy Policy",
+      description: "Privacy Policy. Strata Chat AI By Stratapages",
+      title: "Privacy Policy | Strata Chat AI",
+      route: "/privacy-policy",
     },
   },
 };

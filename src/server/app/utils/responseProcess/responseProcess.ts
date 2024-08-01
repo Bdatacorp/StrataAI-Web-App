@@ -13,7 +13,7 @@ class ResponseProcess {
    * @param tags If need to validate extra tags
    * @returns
    * status : boolen
-   * data : any
+   * payload : any
    */
   async process(
     data: { response: Response; payload: any },
@@ -22,7 +22,9 @@ class ResponseProcess {
     const { response, payload } = data;
 
     if (response.ok) {
-      revalidateCache([this.tags, tags]);
+      // if (tags) {
+      //   revalidateCache([this.tags, tags]);
+      // }
       return {
         status: true,
         payload,

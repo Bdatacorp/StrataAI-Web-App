@@ -1,12 +1,11 @@
 import Service from "../utils/class/service";
 import { HTTP } from "../utils/http/http";
 import { HttpPostReturnType } from "../utils/http/type";
-import ProductsRoutes from "./state.routes";
+import StateRoutes from "./state.routes";
 
 export class StateService extends Service {
   constructor() {
-    const URL = ProductsRoutes.RESOURCE;
-    const TOKEN = ProductsRoutes.RESOURCE;
+    const URL = StateRoutes.RESOURCE;
     super(URL);
   }
 
@@ -21,9 +20,9 @@ export class StateService extends Service {
     stateID: string,
     token: string
   ): Promise<HttpPostReturnType | void> {
-    const URL = `${process.env.BASE_API_URL}/file/upload/state/${stateID}`;
+    const URL = `${process.env.BASE_API_URL}${StateRoutes.UPLOAD_TO_STATE}/${stateID}`;
     console.log(URL);
-    
+
     const res = await this.Http.Upload(formData, token, URL);
     return res;
   }

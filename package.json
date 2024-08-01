@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbo",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -17,8 +17,10 @@
     "@pdftron/pdfjs-express-viewer": "^8.7.4",
     "@reduxjs/toolkit": "^2.2.5",
     "fs-extra": "^11.2.0",
+    "js-cookie": "^3.0.5",
     "mongoose": "^8.5.1",
     "next": "14.2.4",
+    "next-auth": "^4.24.7",
     "openai": "^4.52.7",
     "react": "^18",
     "react-device-detect": "^2.2.3",
@@ -32,6 +34,8 @@
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.13",
+    "@types/dropzone": "^5.7.8",
+    "@types/js-cookie": "^3.0.6",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

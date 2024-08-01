@@ -5,8 +5,8 @@ const ValidationMessages = {
   requiredMessage() {
     return `Please enter the message`;
   },
-  requiredWithFelid(felid: string) {
-    return `This feild is required. Please enter the ${felid}`;
+  requiredWithFelid(feild: string) {
+    return `${feild} is required.`;
   },
   invalidPhoneNumber() {
     return "Please enter a valid phone number ex. 070xxxxxxx";
