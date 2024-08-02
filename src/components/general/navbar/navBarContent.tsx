@@ -3,8 +3,6 @@
 import { setActiveSession } from "@/lib/provider/features/chat/chat.slice";
 import { openConversation } from "@/lib/provider/features/ui/ui.slice";
 import { RootState } from "@/lib/provider/store";
-import loadSessions from "@/server/actions/openapi/loadSessions";
-import { IThread } from "@/server/actions/openapi/types";
 import categorizeDate from "@/utils/client/helper/timestampConvertToStringDate";
 import { Button } from "@mantine/core";
 import { useEffect, useState } from "react";
@@ -13,13 +11,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 type GroupedSession = {
   date: string;
-  sessions: Session[];
+  sessions: any[];
 };
-
-interface Session extends IThread {
-  date: string;
-  active: boolean;
-}
 
 export default function NavBarContent() {
   const [groupedByDate, setGroupedByDate] = useState<GroupedSession[]>([]);
@@ -28,12 +21,14 @@ export default function NavBarContent() {
 
   useEffect(() => {
     getThreads();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messages]);
 
   async function getThreads() {
-    const result = await loadSessions();
+    // const result = await loadSessions();
+    const result: any = {};
     const payload = result.payload;
-    const sessions = payload.map((thread: IThread) => {
+    const sessions = payload.map((thread: any) => {
       return {
         ...thread,
         active: findActive(thread.session_id),
@@ -44,12 +39,12 @@ export default function NavBarContent() {
     setGroupedByDate(grouped);
   }
 
-  function groupSessions(sessionList: Session[]) {
+  function groupSessions(sessionList: any[]) {
     return Object.values(
       sessionList.reduce(
         (
-          acc: { [key: string]: { date: string; sessions: Session[] } },
-          session: Session
+          acc: { [key: string]: { date: string; sessions: any[] } },
+          session: any
         ) => {
           if (!acc[session.date]) {
             acc[session.date] = { date: session.date, sessions: [] };
@@ -86,7 +81,7 @@ export default function NavBarContent() {
         <div key={groupIndex} className="flex flex-col gap-1">
           <div className="text-xs">{groupedSession.date}</div>
           <div className="flex flex-col gap-2">
-            {groupedSession.sessions.map((session: Session, sessionIndex) => (
+            {groupedSession.sessions.map((session: any, sessionIndex) => (
               <div className="flex flex-col gap-1 " key={sessionIndex}>
                 <div
                   className={`w-full px-2 py-1 rounded-md truncate cursor-pointer

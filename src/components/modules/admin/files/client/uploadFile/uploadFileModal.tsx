@@ -3,20 +3,11 @@
 import DropZone from "@/components/ui/client/dropzone/dropzone";
 import { Colors } from "@/lib/config/colors";
 import { closeUploadFileModal } from "@/lib/provider/features/file/file.slice";
-import {
-  closeCreateStateModel,
-  closeUploadFileToStateModal,
-} from "@/lib/provider/features/state/state.slice";
 import { RootState } from "@/lib/provider/store";
 import uploadFileAction from "@/server/actions/files/uploadFileAction";
-import createStateAction from "@/server/actions/state/createStateAction";
-import uploadToStateAction from "@/server/actions/state/uploadToStateAction";
-import Token from "@/utils/client/helper/token/clientToken";
 import { Button, Group, Modal, rem, Stepper, TextInput } from "@mantine/core";
 import { FileWithPath, PDF_MIME_TYPE } from "@mantine/dropzone";
-import { Dispatch, SetStateAction, useState } from "react";
-import { isMobile } from "react-device-detect";
-import { TbCircleX } from "react-icons/tb";
+import {  useState } from "react";
 import { VscFilePdf } from "react-icons/vsc";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";

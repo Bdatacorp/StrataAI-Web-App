@@ -1,12 +1,10 @@
 "use client";
 
-import ReturnButton from "@/components/ui/client/returnButton/returnButton";
+
 import ContrlledBreadcrumbs, {
   ContrlledBreadcrumbsItems,
 } from "@/components/ui/client/breadcrumbs/contrlledBreadcrumbs";
 import { Button } from "@mantine/core";
-import Link from "next/link";
-import { ElementType, ReactElement, ReactNode } from "react";
 import { Colors } from "@/lib/config/colors";
 import { ActionCreatorWithoutPayload } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
@@ -55,12 +53,6 @@ export default function ModuleHeader({
           {/* Breadcrumbs */}
           <ContrlledBreadcrumbs items={breadcrumbsItems} />
         </div>
-
-        {pageTypes === ModuleHeaderPageTypes.Form && (
-          <>
-            <ReturnButton label={`Return to ${moduleName}`} />
-          </>
-        )}
 
         {/* BUTTON */}
         <div>

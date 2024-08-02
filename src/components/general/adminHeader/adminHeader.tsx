@@ -1,15 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
-import { IoMdNotifications } from "react-icons/io";
 import { FaRegCalendarAlt } from "react-icons/fa";
 import { AiOutlineLogout } from "react-icons/ai";
 import { CgMenuLeft } from "react-icons/cg";
 import { ActionIcon, Drawer } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { LuSearch } from "react-icons/lu";
-import { Modal } from "@mantine/core";
-import SearchBox from "@/components/ui/client/searchBox/SearchBox";
 import MobileSidebar from "../adminSideBar/MobileSidebar";
 import getDate from "@/utils/client/services/getDate";
 import Image from "next/image";

@@ -1,14 +1,8 @@
 import zodErrorMessageFormatter from "@/utils/server/pipes/zodErrorMessageFormatterPipe";
-
 import ResponceStatus from "@/utils/server/config/responseStatus";
 import CacheTags from "@/utils/server/config/cacheTags";
-import responseProcess from "@/utils/server/responseProcess/responseProcess";
 import { Chat, ChatCreateDto, ChatMessage } from "./chat.types";
 import ChatValidate from "./chat.validate";
-import askFromAssistant from "@/server/actions/openapi/assistant";
-import loadThreadMessages from "@/server/actions/openapi/messages";
-import askFromAssistantStreaming from "@/server/actions/openapi/assistantWithStreaming";
-import { Session } from "../openai/session";
 
 class ChatController {
   private responseStatus: typeof ResponceStatus;
@@ -23,22 +17,22 @@ class ChatController {
     try {
       const validated = ChatValidate.parse(message);
 
-      const res = await askFromAssistant(
-        message.text,
-        message.token,
-        message.state
-      );
+      // const res = await askFromAssistant(
+      //   message.text,
+      //   message.token,
+      //   message.state
+      // );
 
-      if (res.status) {
-        return {
-          status: true,
-          payload: res,
-        };
-      } else {
-        return {
-          status: false,
-        };
-      }
+      // if (res.status) {
+      //   return {
+      //     status: true,
+      //     payload: res,
+      //   };
+      // } else {
+      //   return {
+      //     status: false,
+      //   };
+      // }
     } catch (error: any) {
       console.log(error);
       return zodErrorMessageFormatter(error);
@@ -48,28 +42,28 @@ class ChatController {
   async sendStream(message: ChatCreateDto) {
     "use server";
 
-    const validated = ChatValidate.parse(message);
+    // const validated = ChatValidate.parse(message);
 
-    const res = await askFromAssistantStreaming(message.text, message.token);
+    // const res = await askFromAssistantStreaming(message.text, message.token);
 
-    return res;
+    // return res;
   }
 
-  async loadMessages(token: string): Promise<ChatMessage> {
-    "use server";
-    const res = await loadThreadMessages(token);
+  async loadMessages(token: string) {
+    // "use server";
+    // const res = await loadThreadMessages(token);
 
-    return res;
+    // return res;
   }
 
   /**
    * Load Session Messages. Retreive Session Messages
    */
   async initiateSession(token: string) {
-    "use server";
-    Session.init(token, "/src/server/app/models/app.json");
-    const sessionMessages = await Session.getAssistant().loadSessionMessages();
-    return sessionMessages;
+    // "use server";
+    // Session.init(token, "/src/server/app/models/app.json");
+    // const sessionMessages = await Session.getAssistant().loadSessionMessages();
+    // return sessionMessages;
   }
 }
 

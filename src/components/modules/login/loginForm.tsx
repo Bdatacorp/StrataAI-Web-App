@@ -1,16 +1,14 @@
 "use client";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Button, Input, TextInput } from "@mantine/core";
 import { PasswordInput } from "@mantine/core";
 import Link from "next/link";
 import { Colors } from "@/lib/config/colors";
 import { Modules } from "@/lib/config/modules";
-import logineAction from "@/server/actions/auth/loginAction";
 import { toast } from "react-toastify";
-import Token from "@/utils/client/helper/token/clientToken";
 import { signIn } from "next-auth/react";
-import { redirect, useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const initialErrors = {
   email: { message: "" },
