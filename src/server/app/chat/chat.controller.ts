@@ -1,15 +1,26 @@
 import zodErrorMessageFormatter from "@/utils/server/pipes/zodErrorMessageFormatterPipe";
 import ResponceStatus from "@/utils/server/config/responseStatus";
-import CacheTags from "@/utils/server/config/cacheTags";
 import { Chat, ChatCreateDto, ChatMessage } from "./chat.types";
 import ChatValidate from "./chat.validate";
+import ChatCacheTags from "./chat.tags";
+import { ChatService } from "./chat.service";
+import ServerToken from "@/utils/server/helper/token/serverToken";
+import { HttpPostReturnType } from "@/utils/server/http/type";
+import ResponseProcess from "@/utils/server/responseProcess/responseProcess";
+import ZodErrorMessage from "@/utils/server/zodErrorMessage/zodErrorMessage";
 
 class ChatController {
-  private responseStatus: typeof ResponceStatus;
+  private chatService: ChatService;
   private tags: string[];
+  private serverToken: ServerToken;
+  private responseProcess: ResponseProcess;
+  private zodErrorMessage: ZodErrorMessage;
   constructor() {
-    this.responseStatus = ResponceStatus;
-    this.tags = [CacheTags.CHAT];
+    this.tags = [ChatCacheTags.CHAT];
+    this.chatService = new ChatService();
+    this.serverToken = new ServerToken();
+    this.responseProcess = new ResponseProcess(this.tags);
+    this.zodErrorMessage = new ZodErrorMessage();
   }
 
   async send(message: ChatCreateDto) {
@@ -39,6 +50,23 @@ class ChatController {
     }
   }
 
+  async askQuestion(message: ChatCreateDto) {
+    "use server";
+    try {
+      const validated = ChatValidate.parse(message);
+
+      const res = await this.chatService.create(
+        validated,
+        await this.serverToken.getUserToken()
+      );
+      const { response, payload } = res as HttpPostReturnType;
+
+      return this.responseProcess.process({ response, payload });
+    } catch (error: any) {
+      return this.zodErrorMessage.format(error);
+    }
+  }
+
   async sendStream(message: ChatCreateDto) {
     "use server";
 
@@ -52,7 +80,6 @@ class ChatController {
   async loadMessages(token: string) {
     // "use server";
     // const res = await loadThreadMessages(token);
-
     // return res;
   }
 

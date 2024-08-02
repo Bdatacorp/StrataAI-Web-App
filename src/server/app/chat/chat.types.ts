@@ -10,6 +10,4 @@ export interface ChatMessage {
 
 export interface ChatCreateDto {
   text: string;
-  token: string;
-  state: string;
 }

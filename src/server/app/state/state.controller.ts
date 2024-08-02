@@ -6,16 +6,19 @@ import ResponseProcess from "@/utils/server/responseProcess/responseProcess";
 import ZodErrorMessage from "@/utils/server/zodErrorMessage/zodErrorMessage";
 import { auth } from "@/utils/client/helper/auth";
 import { HttpPostReturnType } from "@/utils/server/http/type";
+import ServerToken from "@/utils/server/helper/token/serverToken";
 
 class StateController {
   private stateService: StateService;
   private responseProcess: ResponseProcess;
   private tags: string[];
   private zodErrorMessage: ZodErrorMessage;
+  private serverToken : ServerToken;
   constructor() {
     this.stateService = new StateService();
     this.tags = [StateCacheTags.State];
     this.responseProcess = new ResponseProcess(this.tags);
+    this.serverToken = new ServerToken();
     this.zodErrorMessage = new ZodErrorMessage();
   }
 
@@ -23,7 +26,7 @@ class StateController {
     "use server";
 
     const states = await this.stateService.getAll(
-      await this.getUserToken(),
+      await this.serverToken.getUserToken(),
       this.tags
     );
     return states;
@@ -36,7 +39,7 @@ class StateController {
 
       const res = await this.stateService.create(
         validated,
-        await this.getUserToken()
+        await this.serverToken.getUserToken()
       );
       const { response, payload } = res as HttpPostReturnType;
 
@@ -52,7 +55,7 @@ class StateController {
       const res = await this.stateService.uploadToState(
         formData,
         formData.get("stateId") as string,
-        await this.getUserToken()
+        await this.serverToken.getUserToken()
       );
       const { response, payload } = res as HttpPostReturnType;
 
@@ -65,7 +68,7 @@ class StateController {
   async deleteState(id: string) {
     "use server";
     try {
-      const res = await this.stateService.delete(id, await this.getUserToken());
+      const res = await this.stateService.delete(id, await this.serverToken.getUserToken());
       const { response, payload } = res as HttpPostReturnType;
 
       return this.responseProcess.process({ response, payload });
@@ -74,13 +77,6 @@ class StateController {
     }
   }
 
-  private async getUserToken(): Promise<string> {
-    const session = await auth();
-    const token = session?.user.token;
-
-    if (!token) throw Error("Unauthozied. Couldn't found user session");
-    return token;
-  }
 
 }
 
