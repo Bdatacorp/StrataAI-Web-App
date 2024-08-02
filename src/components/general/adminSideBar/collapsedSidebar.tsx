@@ -7,7 +7,7 @@ import { MdGroups } from "react-icons/md";
 import { TbSettingsUp } from "react-icons/tb";
 import { usePathname } from "next/navigation";
 import { Section } from "./Sidebar";
-import getMainPath from "@/utils/routes/getPath";
+import getMainPath from "@/utils/client/routes/getPath";
 
 interface CollapsedSidebarProps {
   links: Section[];

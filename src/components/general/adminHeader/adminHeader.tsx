@@ -11,7 +11,7 @@ import { LuSearch } from "react-icons/lu";
 import { Modal } from "@mantine/core";
 import SearchBox from "@/components/ui/client/searchBox/SearchBox";
 import MobileSidebar from "../adminSideBar/MobileSidebar";
-import getDate from "@/utils/services/getDate";
+import getDate from "@/utils/client/services/getDate";
 import Image from "next/image";
 import { Colors } from "@/lib/config/colors";
 import { signOut } from "next-auth/react";

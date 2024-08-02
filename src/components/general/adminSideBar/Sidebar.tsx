@@ -8,9 +8,11 @@ import ExpandedSidebar from "./expandedSidebar";
 import CollapsedSidebar from "./collapsedSidebar";
 import { MdGroups, MdOutlineDocumentScanner } from "react-icons/md";
 import { FaLightbulb, FaParachuteBox, FaTruck } from "react-icons/fa";
-import { PiFilesFill, PiNotepadFill } from "react-icons/pi";
+import { PiFilesFill, PiNotepadFill, PiUsersThreeLight } from "react-icons/pi";
 import { TbBuildingEstate, TbSettingsUp } from "react-icons/tb";
 import { Modules } from "@/lib/config/modules";
+import { IoChatbubblesSharp } from "react-icons/io5";
+import { FaUserCheck } from "react-icons/fa6";
 
 interface LinkItem {
   id: number;
@@ -44,6 +46,24 @@ export const navLinks: Section[] = [
         icon: <PiFilesFill className="text-xl" />,
         link: Modules.ADMIN.FILES.name,
         target: Modules.ADMIN.FILES.route,
+      },
+      {
+        id: 3,
+        icon: <PiUsersThreeLight className="text-xl" />,
+        link: Modules.ADMIN.USERS.name,
+        target: Modules.ADMIN.USERS.route,
+      },
+      {
+        id: 4,
+        icon: <IoChatbubblesSharp className="text-xl" />,
+        link: "User Chat",
+        target: "/chat",
+      },
+      {
+        id: 5,
+        icon: <FaUserCheck className="text-xl" />,
+        link: "System Users",
+        target: "/admin/system",
       },
     ],
   },

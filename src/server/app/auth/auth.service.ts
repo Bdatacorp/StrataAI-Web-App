@@ -1,6 +1,6 @@
-import Service from "../utils/class/service";
-import { HTTP } from "../utils/http/http";
-import { HttpPostReturnType } from "../utils/http/type";
+import Service from "@/utils/server/class/service";
+import { HTTP } from "@/utils/server/http/http";
+import { HttpPostReturnType } from "@/utils/server/http/type";
 import AuthRoutes from "./auth.routes";
 import { LoginDto } from "./auth.types";
 

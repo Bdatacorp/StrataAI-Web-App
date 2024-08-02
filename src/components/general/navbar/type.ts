@@ -1,4 +1,3 @@
-import { Routes } from "@/lib/config/routes";
 import { UnknownAction } from "@reduxjs/toolkit";
 import { ReactNode } from "react";
 import { IconType } from "react-icons";
@@ -15,5 +14,5 @@ export type NavbarLinkType = {
   type?: NavBarLinkTypes;
   Icon?: IconType;
   Element?: any;
-  link?: Routes | Url;
+  link?: string | Url;
 };

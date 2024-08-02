@@ -17,8 +17,8 @@ import {
   setUserMessage,
 } from "@/lib/provider/features/chat/chat.slice";
 import loadChatMessages from "@/server/actions/chat/loadMessages";
-import userSession from "@/utils/generators/userSession";
-import generateMessageID from "@/utils/generators/messegaID";
+import userSession from "@/utils/client/generators/userSession";
+import generateMessageID from "@/utils/client/generators/messegaID";
 import { openConversation } from "@/lib/provider/features/ui/ui.slice";
 import { RootState } from "@/lib/provider/store";
 

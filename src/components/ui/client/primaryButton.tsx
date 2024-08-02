@@ -1,7 +1,6 @@
 import { Button, MantineStyleProp } from "@mantine/core";
 import { ReactNode, useEffect } from "react";
 import { ButtonProps } from "./type";
-import Colors from "../../../../../colorsSchema";
 import { useFormStatus } from "react-dom";
 
 export default function PrimaryButton({
@@ -18,7 +17,7 @@ export default function PrimaryButton({
       onClick={onClick}
       w={170}
       h={40}
-      color={Colors.Primary}
+      color="blue"
       {...props}
       loading={pending}
       loaderProps={{ type: "dots" }}

@@ -1,5 +1,5 @@
 import { z } from "zod";
-import ValidationMessages from "../utils/config/validationMessages";
+import ValidationMessages from "@/utils/server/config/validationMessages";
 
 const RawMaterialsValidate = z.object({
   title: z.string().min(1, {

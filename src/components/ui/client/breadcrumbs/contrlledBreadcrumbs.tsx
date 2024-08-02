@@ -30,7 +30,7 @@ export default function ContrlledBreadcrumbs({
         </Breadcrumbs>
       ) : (
         <Breadcrumbs>
-          <Anchor c="dark" href={routes.RAW_MATERIALS}>
+          <Anchor c="dark" href={""}>
             Home
           </Anchor>
           {pathnameArray.map(

@@ -38,7 +38,7 @@ export default function StateClientTable({
     element: (
       <Tooltip color="gray" label="Upload New Documents">
         <Button variant="light" color="cyan">
-          Upload File
+          Upload Files
         </Button>
       </Tooltip>
     ),

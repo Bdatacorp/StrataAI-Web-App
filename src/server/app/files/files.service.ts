@@ -1,5 +1,5 @@
-import Service from "../utils/class/service";
-import { HttpPostReturnType } from "../utils/http/type";
+import Service from "@/utils/server/class/service";
+import { HttpPostReturnType } from "@/utils/server/http/type";
 import FilesRoute from "./files.routes";
 
 

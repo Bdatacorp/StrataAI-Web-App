@@ -1,14 +1,14 @@
 import supplierServiceInstance, {
   RawMaterialService,
 } from "./rawMaterial.service";
-import zodErrorMessageFormatter from "../utils/pipes/zodErrorMessageFormatterPipe";
-import ResponceStatus from "../utils/config/responseStatus";
-import CacheTags from "../utils/config/cacheTags";
+import zodErrorMessageFormatter from "@/utils/server/pipes/zodErrorMessageFormatterPipe";
+import ResponceStatus from "@/utils/server/config/responseStatus";
+import CacheTags from "@/utils/server/config/cacheTags";
 import rawMaterialServiceInstance from "./rawMaterial.service";
 import { RawMaterial } from "./rawMaterial.types";
 import RawMaterialsValidate from "./rawMaterial.validate";
 import rawMaterialSuppliersExtractPipe from "./pipes/rawMaterialSuppliersExtractPipe";
-import responseProcess from "../utils/responseProcess/responseProcess";
+import responseProcess from "@/utils/server/responseProcess/responseProcess";
 import rawMaterialsParseAvaragePipe from "./pipes/rawMaterialsParseAvaragePipe";
 
 class RawMaterialController {

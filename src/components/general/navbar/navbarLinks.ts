@@ -1,18 +1,18 @@
 import { NavbarLinkType, NavBarLinkTypes } from "./type";
-import { Routes } from "@/lib/config/routes";
 import { PiFilePdfFill } from "react-icons/pi";
 import {
   IoChatbubbleEllipsesOutline,
   IoSettingsOutline,
 } from "react-icons/io5";
 import PDFNavlink from './pdfNavlink';
+import { Modules } from "@/lib/config/modules";
 
 
 const NavBarLinks: NavbarLinkType[] = [
   {
     label: "Conversations",
     Icon: IoChatbubbleEllipsesOutline,
-    link: Routes.CHAT,
+    link: Modules.USER.CHAT.route,
   },
   {
     label: "Show PDF",
@@ -22,7 +22,7 @@ const NavBarLinks: NavbarLinkType[] = [
   {
     label: "Settings",
     Icon: IoSettingsOutline,
-    link: Routes.SETTINGS,
+    link:"",
   },
 ];
 

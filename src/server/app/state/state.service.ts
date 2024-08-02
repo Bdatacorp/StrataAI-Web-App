@@ -1,6 +1,6 @@
-import Service from "../utils/class/service";
-import { HTTP } from "../utils/http/http";
-import { HttpPostReturnType } from "../utils/http/type";
+import Service from "@/utils/server/class/service";
+import { HTTP } from "@/utils/server/http/http";
+import { HttpPostReturnType } from "@/utils/server/http/type";
 import StateRoutes from "./state.routes";
 
 export class StateService extends Service {

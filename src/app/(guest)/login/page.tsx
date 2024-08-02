@@ -1,6 +1,6 @@
 import LoginForm from "@/components/modules/login/loginForm";
 import { Modules } from "@/lib/config/modules";
-import { auth } from "@/utils/helper/auth";
+import { auth } from "@/utils/client/helper/auth";
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
 

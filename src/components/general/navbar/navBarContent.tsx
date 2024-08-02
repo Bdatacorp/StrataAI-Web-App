@@ -5,7 +5,7 @@ import { openConversation } from "@/lib/provider/features/ui/ui.slice";
 import { RootState } from "@/lib/provider/store";
 import loadSessions from "@/server/actions/openapi/loadSessions";
 import { IThread } from "@/server/actions/openapi/types";
-import categorizeDate from "@/utils/helper/timestampConvertToStringDate";
+import categorizeDate from "@/utils/client/helper/timestampConvertToStringDate";
 import { Button } from "@mantine/core";
 import { useEffect, useState } from "react";
 import { PiPlusCircleBold } from "react-icons/pi";

@@ -15,7 +15,7 @@ export const Modules = {
       route: "/admin/files",
     },
     USERS: {
-      name: "Users",
+      name: "User Entries",
       description: "Strata Chat AI By Stratapages",
       title: "Users | Strata Chat AI Admin",
       route: "/admin/users",

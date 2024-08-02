@@ -1,7 +1,7 @@
 import StateValidate from "./auth.validate";
-import ResponseProcess from "../utils/responseProcess/responseProcess";
-import { HttpPostReturnType } from "../utils/http/type";
-import ZodErrorMessage from "../utils/zodErrorMessage/zodErrorMessage";
+import ResponseProcess from "@/utils/server/responseProcess/responseProcess";
+import { HttpPostReturnType } from "@/utils/server/http/type";
+import ZodErrorMessage from "@/utils/server/zodErrorMessage/zodErrorMessage";
 import AuthLoginValidate from "./auth.validate";
 import { AuthService } from "./auth.service";
 import { LoginDto } from "./auth.types";

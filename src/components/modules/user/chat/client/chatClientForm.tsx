@@ -15,7 +15,7 @@ import {
   setUserMessage,
 } from "@/lib/provider/features/chat/chat.slice";
 import loadChatMessages from "@/server/actions/chat/loadMessages";
-import userSession from "@/utils/generators/userSession";
+import userSession from "@/utils/client/generators/userSession";
 import {
   openConversation,
   toggleConversation,

@@ -1,4 +1,4 @@
-import Service from "../utils/class/service";
+import Service from "@/utils/server/class/service";
 import RawMaterialRoutes from "./rawMaterial.routes";
 
 export class RawMaterialService extends Service {

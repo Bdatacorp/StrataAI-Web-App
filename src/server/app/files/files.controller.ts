@@ -1,9 +1,9 @@
 import { FileService } from "./files.service";
 import { File } from "./files.types";
-import ResponseProcess from "../utils/responseProcess/responseProcess";
-import { HttpPostReturnType } from "../utils/http/type";
-import ZodErrorMessage from "../utils/zodErrorMessage/zodErrorMessage";
-import ServerToken from "../utils/helper/token/serverToken";
+import ResponseProcess from "@/utils/server/responseProcess/responseProcess";
+import { HttpPostReturnType } from "@/utils/server/http/type";
+import ZodErrorMessage from "@/utils/server/zodErrorMessage/zodErrorMessage";
+import ServerToken from "@/utils/server/helper/token/serverToken";
 import FilesCacheTags from "./files.tags";
 
 class FilesController {

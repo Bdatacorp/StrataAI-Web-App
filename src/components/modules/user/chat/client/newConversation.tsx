@@ -3,10 +3,10 @@
 import { setActiveSession } from "@/lib/provider/features/chat/chat.slice";
 import { closeConversation } from "@/lib/provider/features/ui/ui.slice";
 import { RootState } from "@/lib/provider/store";
-import generateRandomToken from "@/utils/generators/randomToken";
+import generateRandomToken from "@/utils/client/generators/randomToken";
 import userSession, {
   UserSessionMethods,
-} from "@/utils/generators/userSession";
+} from "@/utils/client/generators/userSession";
 import { Button, Modal, Select } from "@mantine/core";
 import Image from "next/image";
 import React, { useState } from "react";

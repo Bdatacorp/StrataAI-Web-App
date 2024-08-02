@@ -1,6 +1,4 @@
 "use client";
-
-import { Routes } from "@/lib/config/routes";
 import deleteThread from "@/server/actions/openapi/deleteThread";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -24,7 +22,7 @@ export default function ChatClearPage() {
       setElements("Deleted Successfully");
       localStorage.removeItem("session_id");
       localStorage.removeItem("state");
-      router.push(Routes.CHAT);
+      // router.push(Routes.CHAT);
     } else {
       setElements("Error");
     }
