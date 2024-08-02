@@ -54,7 +54,7 @@ export default function StateCreate() {
     setStateInputError("");
 
     setStateNameLoading(true);
-    const res = await createStateAction(stateName, Token.getAuth());
+    const res = await createStateAction(stateName);
     setStateNameLoading(false);
 
     if (res.zodErrors) {

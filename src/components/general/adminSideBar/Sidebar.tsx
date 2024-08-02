@@ -8,8 +8,8 @@ import ExpandedSidebar from "./expandedSidebar";
 import CollapsedSidebar from "./collapsedSidebar";
 import { MdGroups, MdOutlineDocumentScanner } from "react-icons/md";
 import { FaLightbulb, FaParachuteBox, FaTruck } from "react-icons/fa";
-import { PiNotepadFill } from "react-icons/pi";
-import { TbSettingsUp } from "react-icons/tb";
+import { PiFilesFill, PiNotepadFill } from "react-icons/pi";
+import { TbBuildingEstate, TbSettingsUp } from "react-icons/tb";
 import { Modules } from "@/lib/config/modules";
 
 interface LinkItem {
@@ -29,38 +29,42 @@ export interface Section {
   }[];
 }
 
+export const navLinks: Section[] = [
+  {
+    title: "",
+    items: [
+      {
+        id: 1,
+        icon: <TbBuildingEstate className="text-xl" />,
+        link: Modules.ADMIN.STATE.name,
+        target: Modules.ADMIN.STATE.route,
+      },
+      {
+        id: 2,
+        icon: <PiFilesFill className="text-xl" />,
+        link: Modules.ADMIN.FILES.name,
+        target: Modules.ADMIN.FILES.route,
+      },
+    ],
+  },
+];
+
 const AdminSidebar: React.FC = () => {
   const dispatch = useDispatch();
   const isSidebarExpanded = useSelector(
     (state: RootState) => state.ui.slideBarExpanded
   );
 
-  const links: Section[] = [
-    {
-      title: "",
-      items: [
-        {
-          id: 1,
-          icon: <MdOutlineDocumentScanner className="text-xl" />,
-          link: "State",
-          target: Modules.ADMIN.STATE.route,
-        },
-      ],
-    },
-  ];
-
   return (
     <div
       className={`h-screen relative hidden md:hidden lg:block sidebar-transition border-r`}
       style={{ width: isSidebarExpanded ? "20%" : "10%" }}
     >
-
-    {isSidebarExpanded ? (
-      <ExpandedSidebar links={links} />
-    ) : (
-      <CollapsedSidebar links={links} />
-    )}
-
+      {isSidebarExpanded ? (
+        <ExpandedSidebar links={navLinks} />
+      ) : (
+        <CollapsedSidebar links={navLinks} />
+      )}
 
       <div className=" absolute top-8 right-[-15px]">
         <div

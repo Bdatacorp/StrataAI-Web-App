@@ -17,11 +17,12 @@ export default function getDate() {
   const now = new Date();
 
   const options: any = {
+    timeZone: "Australia/Melbourne",
     weekday: "long",
     month: "long",
     day: "numeric",
   };
-  const formattedDateEnglish = now.toLocaleDateString("en-LK", options);
+  const formattedDateEnglish = now.toLocaleDateString("en-AU", options);
 
   return { formattedDateEnglish, greeting: getGreeting() };
 }

@@ -97,6 +97,8 @@ const LoginForm = () => {
                 value={emailAddress}
                 onChange={(e) => setEmailAddress(e.target.value)}
                 error={errors.email.message}
+                name="email"
+                aria-label="email"
               />
             </div>
 

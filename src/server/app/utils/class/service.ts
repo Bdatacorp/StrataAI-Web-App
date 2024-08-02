@@ -19,12 +19,9 @@ export default class Service {
   async getAll(token: string, tags: string[]) {
     const result = await this.Http.Get(token, tags);
 
-    if (!result.status) return result;
-
     //format timestamp data
-    const formattedData = result?.data?.map((item: any) => ({
+    const formattedData = result?.map((item: any) => ({
       ...item,
-      status: this.statusFormatter(item.status),
       createdAt: this.timeStampFormatter(item.createdAt),
       updatedAt: this.timeStampFormatter(item.updatedAt),
     }));

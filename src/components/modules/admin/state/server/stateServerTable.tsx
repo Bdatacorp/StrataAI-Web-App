@@ -6,23 +6,20 @@ import statesController from "@/server/app/state/state.controller";
 import StateClientTable from "../client/stateClientTable";
 import Token from "@/utils/helper/token/clientToken";
 import { cookies } from "next/headers";
-import ServerToken from "@/utils/helper/token/serverToken";
+
 
 const cloumns: TableColumns[] = [
   {
     label: "State",
     dataColumn: StateColumnEnum.name,
-    maxWidth: 80,
   },
   {
-    label: "Create at",
+    label: "Created at",
     dataColumn: StateColumnEnum.createdAt,
-    maxWidth: 80,
   },
   {
-    label: "Status",
-    dataColumn: StateColumnEnum.status,
-    center: true,
+    label: "Updated at",
+    dataColumn: StateColumnEnum.updatedAt,
   },
 ];
 

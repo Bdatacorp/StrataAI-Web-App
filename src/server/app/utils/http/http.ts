@@ -113,16 +113,11 @@ export class HTTP {
         method,
         headers: this.getHeaders(token),
       });
-      if (response.ok) {
-        const data = await response.json();
-        return {
-          status: true,
-          statusCode: response.status,
-          data: data,
-        };
-      } else {
-        return await httpErrorPipe(response, method);
-      }
+      const data = await response.json();
+      return {
+        response,
+        payload: data,
+      };
     } catch (error: any) {
       this.handleRequestError(error);
     }

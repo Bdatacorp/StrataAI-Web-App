@@ -1,8 +1,8 @@
 import revalidateCache from "../actions/revalidateCache";
 
 class ResponseProcess {
-  private tags: string | string[];
-  constructor(tags: string | string[]) {
+  private tags: string[] = [];
+  constructor(tags: string[]) {
     this.tags = tags;
   }
 
@@ -15,16 +15,11 @@ class ResponseProcess {
    * status : boolen
    * payload : any
    */
-  async process(
-    data: { response: Response; payload: any },
-    tags?: string | string[]
-  ) {
+  async process(data: { response: Response; payload: any }, tags?: string[]) {
     const { response, payload } = data;
 
     if (response.ok) {
-      // if (tags) {
-      //   revalidateCache([this.tags, tags]);
-      // }
+      revalidateCache(tags ? this.tags.concat(tags) : this.tags);
       return {
         status: true,
         payload,

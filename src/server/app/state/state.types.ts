@@ -12,6 +12,7 @@ export enum StateColumnEnum {
   name = "name",
   files = "files",
   createdAt = "createdAt",
+  updatedAt = "updatedAt",
   status = "status",
 }
 

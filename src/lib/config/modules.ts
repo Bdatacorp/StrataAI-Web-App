@@ -3,10 +3,10 @@ export const Modules = {
     name: "Admin",
     route: "admin",
     STATE: {
-      name: "State",
+      name: "States",
       description: "Strata Chat AI By Stratapages",
-      title: "State | Strata Chat AI Admin",
-      route: "/admin/state",
+      title: "States | Strata Chat AI Admin",
+      route: "/admin/states",
     },
     FILES: {
       name: "Files",

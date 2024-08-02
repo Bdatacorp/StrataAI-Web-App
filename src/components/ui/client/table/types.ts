@@ -29,6 +29,16 @@ export interface TableActionIconsProps {
     dispatchAction?: any;
     navigationRoute?: string;
   };
-  deleteAction?: (id?: any) => Promise<void>;
-  disableAction?: (id?: any) => Promise<void>;
+  deleteAction?: RowAction;
+  disableAction?: RowAction;
 }
+
+export type RowAction = {
+  confirmMessage?: string;
+  action: (id?: any) => Promise<void>;
+};
+
+export type RowActionButton = {
+  element: ReactNode;
+  action: (id?: any) => Promise<void>;
+};

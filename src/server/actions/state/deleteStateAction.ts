@@ -4,11 +4,7 @@ import { StateFormState } from "@/components/modules/admin/state/types";
 import { StateCreateDto } from "@/server/app/state/state.types";
 import statesController from "@/server/app/state/state.controller";
 
-export default async function createStateAction(name: string) {
-  const state: StateCreateDto = {
-    name,
-  };
-
-  const res: any = await statesController.createState(state);
+export default async function deleteStateAction(id: string) {
+  const res: any = await statesController.deleteState(id);
   return res;
 }

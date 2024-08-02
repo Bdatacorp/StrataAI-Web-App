@@ -1,11 +1,11 @@
 import Service from "../utils/class/service";
-import { HTTP } from "../utils/http/http";
 import { HttpPostReturnType } from "../utils/http/type";
-import StateRoutes from "./state.routes";
+import FilesRoute from "./files.routes";
 
-export class StateService extends Service {
+
+export class FileService extends Service {
   constructor() {
-    const URL = StateRoutes.RESOURCE;
+    const URL = FilesRoute.RESOURCE;
     super(URL);
   }
 
@@ -15,12 +15,11 @@ export class StateService extends Service {
    * @param stateID
    * @returns Response
    */
-  async uploadToState(
+  async upload(
     formData: FormData,
-    stateID: string,
     token: string
   ): Promise<HttpPostReturnType | void> {
-    const URL = `${process.env.BASE_API_URL}${StateRoutes.UPLOAD_TO_STATE}/${stateID}`;
+    const URL = `${process.env.BASE_API_URL}${FilesRoute.UPLOAD}`;
     const res = await this.Http.Upload(formData, token, URL);
     return res;
   }

@@ -63,6 +63,18 @@ class StateController {
     }
   }
 
+  async deleteState(id: string) {
+    "use server";
+    try {
+      const res = await this.stateService.delete(id, await this.getUserToken());
+      const { response, payload } = res as HttpPostReturnType;
+
+      return this.responseProcess.process({ response, payload });
+    } catch (error: any) {
+      return this.zodErrorMessage.format(error);
+    }
+  }
+
   private async getUserToken(): Promise<string> {
     const session = await auth();
     const token = session?.user.token;
@@ -71,24 +83,6 @@ class StateController {
     return token;
   }
 
-  // async deleteState(id: string) {
-  //   "use server";
-  //   try {
-  //     if (!id) return false;
-
-  //     const res: any = await this.stateService.delete(id);
-
-  //     return await responseProcess(
-  //       res,
-  //       "State",
-  //       StateCacheTags.State,
-  //       "deleted"
-  //     );
-  //   } catch (error: any) {
-  //     console.log(error);
-  //     return zodErrorMessageFormatter(error);
-  //   }
-  // }
 }
 
 const statesController = new StateController();

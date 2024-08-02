@@ -3,6 +3,7 @@ import uiSlice from "./features/ui/ui.slice";
 import pdfSlice from "./features/pdf/pdf.slice";
 import chatSlice from "./features/chat/chat.slice";
 import stateSlice from "./features/state/state.slice";
+import fileSclice from "./features/file/file.slice";
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     pdf: pdfSlice,
     chat: chatSlice,
     state: stateSlice,
+    file: fileSclice,
   },
 });
 

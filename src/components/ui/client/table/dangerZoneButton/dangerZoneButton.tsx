@@ -14,15 +14,21 @@ export default function DangerZoneButton({
   disableAction,
 }: {
   id?: string;
-  deleteAction?: (id?: any) => Promise<void>;
-  disableAction?: (id?: any) => Promise<void>;
+  deleteAction?: {
+    confirmMessage?: string;
+    action: (id?: any) => Promise<void>;
+  };
+  disableAction?: {
+    confirmMessage?: string;
+    action: (id?: any) => Promise<void>;
+  };
 }) {
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [disableLoading, setDisableLoading] = useState(false);
 
   async function deleteData() {
     setDeleteLoading(true);
-    const deleted: any = id && deleteAction && (await deleteAction(id));
+    const deleted: any = id && deleteAction && (await deleteAction.action(id));
 
     if (deleted.status) {
       toast.success(deleted.message);
@@ -39,8 +45,9 @@ export default function DangerZoneButton({
       centered: true,
       children: (
         <Text size="sm">
-          Are you sure you want to delete? This action is destructive and you
-          will have to contact support to restore your data.
+          {deleteAction?.confirmMessage
+            ? deleteAction.confirmMessage
+            : "Are you sure you want to delete? This action is destructive and you will have to contact support to restore your data."}
         </Text>
       ),
       labels: { confirm: "Delete", cancel: "No don't delete it" },
@@ -54,7 +61,7 @@ export default function DangerZoneButton({
       <Menu.Target>
         <ActionIcon variant="transparent">
           <div>
-          <BsThreeDotsVertical />
+            <BsThreeDotsVertical className="text-primary" />
           </div>
         </ActionIcon>
       </Menu.Target>
@@ -62,7 +69,7 @@ export default function DangerZoneButton({
       <Menu.Dropdown>
         <Menu.Label>Danger zone</Menu.Label>
 
-        {disableAction && (
+        {disableAction?.action && (
           <Menu.Item>
             <Button
               color="red"
@@ -78,7 +85,7 @@ export default function DangerZoneButton({
           </Menu.Item>
         )}
 
-        {deleteAction && (
+        {deleteAction?.action && (
           <Menu.Item onClick={openDeleteModal}>
             <Button
               color="red"
