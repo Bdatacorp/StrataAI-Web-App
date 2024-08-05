@@ -8,7 +8,7 @@ export default async function logineAction(email: string, password: string) {
     email,
     password,
   };
-  const res: any = await authController.login(loginDto);
+  const res: any = await authController.adminLogin(loginDto);
   console.log(res);
   
   return res;

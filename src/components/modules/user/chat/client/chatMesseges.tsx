@@ -1,11 +1,15 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
-import { message, MessageRoles } from "../types";
+import { ClientMessage } from "../types";
 import ChatMessage from "@/components/ui/client/message/message";
 import { ScrollArea } from "@mantine/core";
 
-export default function ChatMessages({ messages }: { messages: message[] }) {
+export default function ChatMessages({
+  messages,
+}: {
+  messages: ClientMessage[];
+}) {
   const lastMessageRef = useRef<HTMLDivElement | null>(null);
 
   const scrollToLastMessage = () => {

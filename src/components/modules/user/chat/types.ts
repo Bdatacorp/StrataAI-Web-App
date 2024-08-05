@@ -9,7 +9,7 @@ export type ChatFormState = {
   errors: ChatFormErrors;
 };
 
-export type message = {
+export type ClientMessage = {
   id: string;
   text: string;
   role: string;

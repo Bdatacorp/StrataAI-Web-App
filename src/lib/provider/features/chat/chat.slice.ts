@@ -1,8 +1,8 @@
-import { message, MessageRoles } from "@/components/modules/user/chat/types";
+import { ClientMessage, MessageRoles } from "@/components/modules/user/chat/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface initialState {
-  messages: message[];
+  messages: ClientMessage[];
   activeSession: string;
 }
 
@@ -64,7 +64,7 @@ const chatSlice = createSlice({
         role: MessageRoles.User,
       });
     },
-    loadPreMessages(state, action: PayloadAction<message[]>) {
+    loadPreMessages(state, action: PayloadAction<ClientMessage[]>) {
       state.messages = action.payload;
     },
     setActiveSession(state, action: PayloadAction<string>) {

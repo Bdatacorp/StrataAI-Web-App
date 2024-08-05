@@ -21,38 +21,6 @@ type GroupedSession = {
   sessions: ClientSession[];
 };
 
-const sessionList: ClientSession[] = [
-  {
-    id: 1,
-    title: "Hello! How can I help you today?",
-    state: "victoria",
-    date: "today",
-    active: true,
-  },
-  {
-    id: 2,
-    title: "Hello! How can I help you todayyyyyyyyy?",
-    state: "sidney",
-    date: "yesterday",
-    active: false,
-  },
-];
-
-const groupedByDate: GroupedSession[] = Object.values(
-  sessionList.reduce(
-    (
-      acc: { [key: string]: { date: string; sessions: ClientSession[] } },
-      session: ClientSession
-    ) => {
-      if (!acc[session.date]) {
-        acc[session.date] = { date: session.date, sessions: [] };
-      }
-      acc[session.date].sessions.push(session);
-      return acc;
-    },
-    {}
-  )
-);
 
 export default function Navbar() {
   return (

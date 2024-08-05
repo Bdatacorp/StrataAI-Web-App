@@ -61,6 +61,7 @@ class ChatController {
       );
       const { response, payload } = res as HttpPostReturnType;
 
+
       return this.responseProcess.process({ response, payload });
     } catch (error: any) {
       return this.zodErrorMessage.format(error);

@@ -27,16 +27,16 @@ export default function NavBarContent() {
   async function getThreads() {
     // const result = await loadSessions();
     const result: any = {};
-    const payload = result.payload;
-    const sessions = payload.map((thread: any) => {
-      return {
-        ...thread,
-        active: findActive(thread.session_id),
-        date: categorizeDate(thread.created_at),
-      };
-    });
-    const grouped = groupSessions(sessions);
-    setGroupedByDate(grouped);
+    // const payload = result.payload;
+    // const sessions = payload.map((thread: any) => {
+    //   return {
+    //     ...thread,
+    //     active: findActive(thread.session_id),
+    //     date: categorizeDate(thread.created_at),
+    //   };
+    // });
+    // const grouped = groupSessions(sessions);
+    // setGroupedByDate(grouped);
   }
 
   function groupSessions(sessionList: any[]) {

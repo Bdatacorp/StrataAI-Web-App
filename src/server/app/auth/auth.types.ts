@@ -4,8 +4,8 @@ export interface LoginDto {
 }
 
 export enum UserRoles {
-  ADMIN = 'admin',
-  USER = 'user',
+  ADMIN = "Admin",
+  USER = "User",
 }
 
 export enum UserStatus {
@@ -14,9 +14,9 @@ export enum UserStatus {
 }
 
 export enum UserType {
-  MANAGER = 'manager',
-  OWNER = 'owner',
-  ADMIN = 'admin',
+  MANAGER = "Manager",
+  OWNER = "Owner",
+  ADMIN = "Admin",
 }
 
 export type UserPayload = {
@@ -27,4 +27,13 @@ export type UserPayload = {
   type: UserType;
   phone: string;
   token: string;
+  sessionToken?: string;
 };
+
+export interface CreateUserDto {
+  name: string;
+  email: string;
+  type: string;
+  phone: string;
+  stateId: string;
+}

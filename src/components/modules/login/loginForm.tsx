@@ -26,14 +26,14 @@ const LoginForm = () => {
   const handleOnClick = async () => {
     setErrors(initialErrors);
     setLoading(true);
-    // const res = await logineAction(emailAddress, password);
-    console.log(searchParams.get("callbackUrl"));
+    const callbackUrl =
+      searchParams.get("callbackUrl") || Modules.ADMIN.STATE.route;
 
     const result: any = await signIn("credentials", {
       redirect: false,
       email: emailAddress,
       password,
-      callbackUrl: searchParams.get("callbackUrl") || Modules.ADMIN.STATE.route,
+      callbackUrl,
     });
 
     if (result?.error) {
@@ -41,13 +41,13 @@ const LoginForm = () => {
       const res = await JSON.parse(result.error);
       if (res && res.zodErrors) {
         setErrors((errors) => ({ ...errors, ...res.zodErrors }));
+      } else if (res?.payload?.message) {
+        toast.error(res?.payload?.message);
       } else {
-        toast.error(res.payload.message);
+        toast.error("Origin is unreachable");
       }
     } else {
-      router.replace(
-        searchParams.get("callbackUrl") || Modules.ADMIN.STATE.route
-      );
+      router.replace(callbackUrl);
       setLoading(false);
     }
   };
@@ -57,7 +57,7 @@ const LoginForm = () => {
       <div className="md:flex-[6] flex justify-center items-center">
         <Image
           alt="Strata Login Bg"
-          src={"/img/login/bg1.png"}
+          src={"/img/chatbot.png"}
           width={500}
           height={100}
         />
@@ -67,10 +67,10 @@ const LoginForm = () => {
           {/* LOGO */}
           <div className="mb-7">
             <Image
-              src={"/img/Strata-Logo.png"}
+              src={"/img/strata-ai.png"}
               alt="Strata"
-              width={40}
-              height={10}
+              width={200}
+              height={30}
             />
           </div>
 
@@ -87,6 +87,7 @@ const LoginForm = () => {
               </p>
             </div>
           </div>
+
           <div className="flex flex-col gap-6 mt-6 w-full">
             {/* EMAIL ADDRESS */}
             <div className="w-full">

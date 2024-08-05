@@ -1,5 +1,11 @@
 import authController from "@/server/app/auth/auth.controller";
-import { LoginDto, UserPayload } from "@/server/app/auth/auth.types";
+import {
+  CreateUserDto,
+  LoginDto,
+  UserPayload,
+  UserRoles,
+  UserType,
+} from "@/server/app/auth/auth.types";
 import type {
   GetServerSidePropsContext,
   NextApiRequest,
@@ -21,7 +27,9 @@ export const config = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, req) {
-        const res: any = await authController.login(credentials as LoginDto);
+        const res: any = await authController.adminLogin(
+          credentials as LoginDto
+        );
 
         if (res.zodErrors || !res.status) {
           throw new Error(JSON.stringify(res));
@@ -34,6 +42,34 @@ export const config = {
         }
 
         // Return null if user data could not be retrieved
+        return null;
+      },
+    }),
+    CredentialsProvider({
+      id: "register",
+      name: "RegisterUser",
+      credentials: {
+        id: { type: "text" },
+        name: { type: "text" },
+        email: { type: "text" },
+        type: { type: "text" },
+        phone: { type: "text" },
+        stateId: { type: "text" },
+      },
+      async authorize(credentials, req) {
+        const res: any = await authController.registerUser(
+          credentials as CreateUserDto
+        );
+
+        if (res.zodErrors || !res.status) {
+          throw new Error(JSON.stringify(res));
+        }
+
+        if (res.payload.data) {
+          const userPayload: UserPayload = res.payload.data;
+          return userPayload;
+        }
+
         return null;
       },
     }),

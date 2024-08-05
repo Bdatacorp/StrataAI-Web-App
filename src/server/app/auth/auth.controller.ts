@@ -1,10 +1,9 @@
-import StateValidate from "./auth.validate";
+import { AuthLoginValidate, AuthRegiterValidate } from "./auth.validate";
 import ResponseProcess from "@/utils/server/responseProcess/responseProcess";
 import { HttpPostReturnType } from "@/utils/server/http/type";
 import ZodErrorMessage from "@/utils/server/zodErrorMessage/zodErrorMessage";
-import AuthLoginValidate from "./auth.validate";
 import { AuthService } from "./auth.service";
-import { LoginDto } from "./auth.types";
+import { CreateUserDto, LoginDto } from "./auth.types";
 
 class AuthController {
   private authService: AuthService;
@@ -18,12 +17,27 @@ class AuthController {
     this.zodErrorMessage = new ZodErrorMessage();
   }
 
-  async login(loginDto: LoginDto) {
+  async adminLogin(loginDto: LoginDto) {
     "use server";
     try {
       const validated = AuthLoginValidate.parse(loginDto);
 
-      const res = await this.authService.login(validated);
+      const res = await this.authService.adminLlogin(validated);
+      const { response, payload } = res as HttpPostReturnType;
+
+      return this.responseProcess.process({ response, payload });
+    } catch (error: any) {
+      return this.zodErrorMessage.format(error);
+    }
+  }
+
+  async registerUser(createUserDto: CreateUserDto) {
+    "use server";
+    try {
+      const validated = AuthRegiterValidate.parse(createUserDto);
+
+      const res = await this.authService.registerUser(validated);
+
       const { response, payload } = res as HttpPostReturnType;
 
       return this.responseProcess.process({ response, payload });

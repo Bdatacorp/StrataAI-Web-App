@@ -1,7 +1,7 @@
 export const Modules = {
   ADMIN: {
     name: "Admin",
-    route: "admin",
+    route: "/admin",
     STATE: {
       name: "States",
       description: "Strata Chat AI By Stratapages",
@@ -23,7 +23,7 @@ export const Modules = {
   },
   USER: {
     name: "User",
-    route: "user",
+    route: "/user",
     CHAT: {
       name: "Chat",
       description: "Strata Chat AI By Stratapages",
@@ -37,6 +37,12 @@ export const Modules = {
       description: "Strata Chat AI By Stratapages",
       title: "Login | Strata Chat AI Admin",
       route: "/login",
+    },
+    USER_REGISTER: {
+      name: "Getting Started",
+      description: "Strata Chat AI By Stratapages",
+      title: "Getting Started | Strata Chat AI Admin",
+      route: "/getting-started",
     },
   },
   GUEST: {

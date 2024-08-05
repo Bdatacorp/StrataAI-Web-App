@@ -13,7 +13,7 @@ class StateController {
   private responseProcess: ResponseProcess;
   private tags: string[];
   private zodErrorMessage: ZodErrorMessage;
-  private serverToken : ServerToken;
+  private serverToken: ServerToken;
   constructor() {
     this.stateService = new StateService();
     this.tags = [StateCacheTags.State];
@@ -25,10 +25,7 @@ class StateController {
   async getAllState(): Promise<State[]> {
     "use server";
 
-    const states = await this.stateService.getAll(
-      await this.serverToken.getUserToken(),
-      this.tags
-    );
+    const states = await this.stateService.getAll("", this.tags);
     return states;
   }
 
@@ -68,7 +65,10 @@ class StateController {
   async deleteState(id: string) {
     "use server";
     try {
-      const res = await this.stateService.delete(id, await this.serverToken.getUserToken());
+      const res = await this.stateService.delete(
+        id,
+        await this.serverToken.getUserToken()
+      );
       const { response, payload } = res as HttpPostReturnType;
 
       return this.responseProcess.process({ response, payload });
@@ -76,8 +76,6 @@ class StateController {
       return this.zodErrorMessage.format(error);
     }
   }
-
-
 }
 
 const statesController = new StateController();

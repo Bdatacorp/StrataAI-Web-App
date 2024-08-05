@@ -31,14 +31,11 @@ export default function Header() {
       <div className="w-full md:w-auto flex justify-center md:justify-start gap-3 items-center px-5">
         <div>
           <Image
-            src={"/img/Strata-Logo.png"}
+            src={"/img/strata-ai.png"}
             alt="Strata Logo"
-            width={35}
+            width={120}
             height={35}
           />
-        </div>
-        <div className="font-bold text-secondary">
-          Strata <span className="text-primary">Chat AI</span>
         </div>
       </div>
       <div className="hidden md:block px-10">

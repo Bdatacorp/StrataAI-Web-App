@@ -4,7 +4,7 @@ export interface initialState {
   isMobileNavBarOpened: boolean;
   streamingResponse: boolean;
   newConversation: boolean;
-  slideBarExpanded:boolean
+  slideBarExpanded:boolean;
 }
 
 const initialState: initialState = {

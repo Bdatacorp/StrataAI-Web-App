@@ -2,7 +2,7 @@ import Service from "@/utils/server/class/service";
 import { HTTP } from "@/utils/server/http/http";
 import { HttpPostReturnType } from "@/utils/server/http/type";
 import AuthRoutes from "./auth.routes";
-import { LoginDto } from "./auth.types";
+import { CreateUserDto, LoginDto } from "./auth.types";
 
 export class AuthService extends Service {
   constructor() {
@@ -16,9 +16,15 @@ export class AuthService extends Service {
    * @param stateID
    * @returns Response
    */
-  async login(loginDto: LoginDto): Promise<HttpPostReturnType | void> {
+  async adminLlogin(loginDto: LoginDto): Promise<HttpPostReturnType | void> {
     const URL = `${process.env.BASE_API_URL}/auth/login`;
     const res = await this.Http.Post(loginDto, "", URL);
+    return res;
+  }
+
+  async registerUser(createUserDto: CreateUserDto) {
+    const URL = `${process.env.BASE_API_URL}${AuthRoutes.REGISTER}`;
+    const res = await this.Http.Post(createUserDto, "", URL);
     return res;
   }
 }

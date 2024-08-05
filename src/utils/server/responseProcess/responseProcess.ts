@@ -18,17 +18,25 @@ class ResponseProcess {
   async process(data: { response: Response; payload: any }, tags?: string[]) {
     const { response, payload } = data;
 
+    let formattedPayload: any;
+    if (Array.isArray(payload?.message)) {
+      formattedPayload = { ...payload, message: payload?.message[0] };
+    } else {
+      formattedPayload = payload;
+    }
+
     if (response.ok) {
       revalidateCache(tags ? this.tags.concat(tags) : this.tags);
+
       return {
         status: true,
-        payload,
+        payload: formattedPayload,
       };
     }
 
     return {
       status: false,
-      payload,
+      payload: formattedPayload,
     };
   }
 }
