@@ -1,6 +1,7 @@
 import authController from "@/server/app/auth/auth.controller";
 import {
   CreateUserDto,
+  InitSessionDto,
   LoginDto,
   UserPayload,
   UserRoles,
@@ -59,6 +60,29 @@ export const config = {
       async authorize(credentials, req) {
         const res: any = await authController.registerUser(
           credentials as CreateUserDto
+        );
+
+        if (res.zodErrors || !res.status) {
+          throw new Error(JSON.stringify(res));
+        }
+
+        if (res.payload.data) {
+          const userPayload: UserPayload = res.payload.data;
+          return userPayload;
+        }
+
+        return null;
+      },
+    }),
+    CredentialsProvider({
+      id: "initSession",
+      name: "Init Session By State",
+      credentials: {
+        stateId: { type: "text" },
+      },
+      async authorize(credentials, req) {
+        const res: any = await authController.createSession(
+          credentials as InitSessionDto
         );
 
         if (res.zodErrors || !res.status) {

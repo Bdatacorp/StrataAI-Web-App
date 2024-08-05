@@ -26,10 +26,7 @@ export default function ChatMessages({
     <div className="w-full py-5 lg:p-10 h-[80vh]  overflow-scroll border">
       <div className="flex flex-col gap-4 px-4 lg:mx-20">
         {messages.map((message, index) => (
-          <div
-            ref={index === messages.length - 1 ? lastMessageRef : null}
-            key={index}
-          >
+          <div key={index}>
             <ChatMessage
               text={message.text}
               role={message.role}
@@ -37,6 +34,7 @@ export default function ChatMessages({
             />
           </div>
         ))}
+        <div ref={lastMessageRef}></div>
       </div>
     </div>
   );

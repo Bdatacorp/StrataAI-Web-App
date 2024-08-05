@@ -37,3 +37,7 @@ export interface CreateUserDto {
   phone: string;
   stateId: string;
 }
+
+export interface InitSessionDto {
+  stateId: string;
+}

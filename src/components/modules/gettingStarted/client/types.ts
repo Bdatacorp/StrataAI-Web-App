@@ -14,3 +14,5 @@ export type GettingStartedProps = {
   UserTypesData: string[];
   StatesData: { value: string; label: string }[];
 };
+
+

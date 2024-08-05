@@ -8,6 +8,6 @@ export interface ChatMessage {
   payload: { id:string, role: any; text: string }[];
 }
 
-export interface ChatCreateDto {
+export interface CreateChatDto {
   text: string;
 }

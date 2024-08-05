@@ -1,6 +1,6 @@
 import zodErrorMessageFormatter from "@/utils/server/pipes/zodErrorMessageFormatterPipe";
 import ResponceStatus from "@/utils/server/config/responseStatus";
-import { Chat, ChatCreateDto, ChatMessage } from "./chat.types";
+import { Chat, CreateChatDto, ChatMessage } from "./chat.types";
 import ChatValidate from "./chat.validate";
 import ChatCacheTags from "./chat.tags";
 import { ChatService } from "./chat.service";
@@ -23,75 +23,41 @@ class ChatController {
     this.zodErrorMessage = new ZodErrorMessage();
   }
 
-  async send(message: ChatCreateDto) {
+  async askQuestion(message: CreateChatDto) {
     "use server";
     try {
       const validated = ChatValidate.parse(message);
 
-      // const res = await askFromAssistant(
-      //   message.text,
-      //   message.token,
-      //   message.state
-      // );
+      const sessionToken = await this.serverToken.getSessionToken();
 
-      // if (res.status) {
-      //   return {
-      //     status: true,
-      //     payload: res,
-      //   };
-      // } else {
-      //   return {
-      //     status: false,
-      //   };
-      // }
-    } catch (error: any) {
-      console.log(error);
-      return zodErrorMessageFormatter(error);
-    }
-  }
-
-  async askQuestion(message: ChatCreateDto) {
-    "use server";
-    try {
-      const validated = ChatValidate.parse(message);
-
-      const res = await this.chatService.create(
-        validated,
-        await this.serverToken.getUserToken()
+      const res = await this.chatService.createMessage(
+        sessionToken,
+        await this.serverToken.getUserToken(),
+        validated
       );
       const { response, payload } = res as HttpPostReturnType;
 
-
-      return this.responseProcess.process({ response, payload });
+      return this.responseProcess.process(
+        { response, payload },
+        { allowDefaultTags: false, tags: [sessionToken] }
+      );
     } catch (error: any) {
       return this.zodErrorMessage.format(error);
     }
   }
 
-  async sendStream(message: ChatCreateDto) {
+  async loadMessages() {
     "use server";
 
-    // const validated = ChatValidate.parse(message);
+    const sessionToken = await this.serverToken.getSessionToken();
 
-    // const res = await askFromAssistantStreaming(message.text, message.token);
+    const messages = await this.chatService.getSessionMessages(
+      sessionToken,
+      await this.serverToken.getUserToken(),
+      [sessionToken]
+    );
 
-    // return res;
-  }
-
-  async loadMessages(token: string) {
-    // "use server";
-    // const res = await loadThreadMessages(token);
-    // return res;
-  }
-
-  /**
-   * Load Session Messages. Retreive Session Messages
-   */
-  async initiateSession(token: string) {
-    // "use server";
-    // Session.init(token, "/src/server/app/models/app.json");
-    // const sessionMessages = await Session.getAssistant().loadSessionMessages();
-    // return sessionMessages;
+    return messages;
   }
 }
 

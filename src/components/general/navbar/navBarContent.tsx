@@ -16,13 +16,12 @@ type GroupedSession = {
 
 export default function NavBarContent() {
   const [groupedByDate, setGroupedByDate] = useState<GroupedSession[]>([]);
-  const messages = useSelector((state: RootState) => state.chat.messages);
   const dispatch = useDispatch();
 
   useEffect(() => {
     getThreads();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [messages]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   async function getThreads() {
     // const result = await loadSessions();

@@ -1,6 +1,5 @@
 "use client";
 
-import { setActiveSession } from "@/lib/provider/features/chat/chat.slice";
 import { closeConversation } from "@/lib/provider/features/ui/ui.slice";
 import { RootState } from "@/lib/provider/store";
 import generateRandomToken from "@/utils/client/generators/randomToken";
@@ -12,10 +11,17 @@ import Image from "next/image";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
+import { toast } from "react-toastify";
 
-export default function NewConversation() {
+export default function NewConversation({
+  statesData,
+}: {
+  statesData: { value: string; label: string }[];
+}) {
   const [stateError, setStateError] = useState("");
-  const [input, setInput] = useState<any>();
+  const [stateId, setStateId] = useState<any>();
+  const [loading, setLoading] = useState<boolean>(false);
   const newConversationOpend = useSelector(
     (state: RootState) => state.ui.newConversation
   );
@@ -33,14 +39,30 @@ export default function NewConversation() {
     }
   };
 
-  const handleContinue = () => {
-    if (!input) {
-      return setStateError("Please select the state before continue");
+  const handleContinue = async () => {
+    setLoading(true);
+    setStateError("");
+
+    const result: any = await signIn("initSession", {
+      redirect: false,
+      stateId,
+    });
+
+    if (result?.error) {
+      setLoading(false);
+      const res = await JSON.parse(result.error);
+      if (res && res.zodErrors) {
+        setStateError(res.zodErrors?.stateId?.message);
+      } else if (res?.payload?.message) {
+        toast.error(res?.payload?.message);
+      } else {
+        toast.error("Origin is unreachable");
+      }
+    } else {
+      dispatch(closeConversation());
+      setLoading(false);
+      window.location.reload();
     }
-    const session = userSession(UserSessionMethods.generate, input) as string;
-    dispatch(setActiveSession(session));
-    dispatch(closeConversation());
-    window.location.reload();
   };
 
   return (
@@ -69,12 +91,13 @@ export default function NewConversation() {
           </div>
           <Select
             placeholder="Select State"
-            data={["Victoria", "Sidney"]}
+            data={statesData}
             searchable
-            onChange={(e) => setInput(e)}
+            onChange={(e) => setStateId(e)}
             error={stateError}
           />
           <Button
+            loading={loading}
             onClick={handleContinue}
             className="bg-primary hover:bg-primary hover:opacity-90"
           >

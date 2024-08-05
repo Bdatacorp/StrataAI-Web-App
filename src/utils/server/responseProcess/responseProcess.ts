@@ -1,4 +1,5 @@
 import revalidateCache from "../actions/revalidateCache";
+import { ResponseProcessOptions } from "./type";
 
 class ResponseProcess {
   private tags: string[] = [];
@@ -10,12 +11,17 @@ class ResponseProcess {
    * Process Response
    * @requires response : Response
    * @param response
-   * @param tags If need to validate extra tags
+   * @param options ResponseProcessOptions
+   *  - allowDefaultTags - allowing revalidate default tags (Default True)
+   *  - addtitional tags
    * @returns
    * status : boolen
    * payload : any
    */
-  async process(data: { response: Response; payload: any }, tags?: string[]) {
+  async process(
+    data: { response: Response; payload: any },
+    options: ResponseProcessOptions = { allowDefaultTags: true }
+  ) {
     const { response, payload } = data;
 
     let formattedPayload: any;
@@ -26,7 +32,11 @@ class ResponseProcess {
     }
 
     if (response.ok) {
-      revalidateCache(tags ? this.tags.concat(tags) : this.tags);
+      if (options?.allowDefaultTags) {
+        options?.tags && revalidateCache(this.tags.concat(options?.tags));
+      } else {
+        options?.tags && revalidateCache(options?.tags);
+      }
 
       return {
         status: true,
