@@ -32,22 +32,6 @@ class UsersController {
     return states;
   }
 
-
-
-  // async deleteFile(id: string) {
-  //   "use server";
-  //   try {
-  //     const res = await this.usersService.delete(
-  //       id,
-  //       await this.serverToken.getUserToken()
-  //     );
-  //     const { response, payload } = res as HttpPostReturnType;
-
-  //     return this.responseProcess.process({ response, payload });
-  //   } catch (error: any) {
-  //     return this.zodErrorMessage.format(error);
-  //   }
-  // }
 }
 
 const usersController = new UsersController();

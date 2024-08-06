@@ -1,9 +1,10 @@
 "use server";
 
+import authController from "@/server/app/auth/auth.controller";
+import { CreateUserDto } from "@/server/app/auth/auth.types";
 import usersController from "@/server/app/users/users.controller";
-import { UserCreateDto } from "@/server/app/users/users.types";
 
-export default async function createUserAction(createUserDto: UserCreateDto) {
-  const res: any = await usersController.registerUser(createUserDto);
+export default async function createUserAction(createUserDto: CreateUserDto) {
+  const res: any = await authController.registerUser(createUserDto);
   return res;
 }
