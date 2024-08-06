@@ -1,75 +1,61 @@
-import zodErrorMessageFormatter from "../utils/pipes/zodErrorMessageFormatterPipe";
-
-import ResponceStatus from "../utils/config/responseStatus";
-import CacheTags from "../utils/config/cacheTags";
-import responseProcess from "../utils/helper/responseProcess";
-import { Chat, ChatCreateDto, ChatMessage } from "./chat.types";
+import zodErrorMessageFormatter from "@/utils/server/pipes/zodErrorMessageFormatterPipe";
+import ResponceStatus from "@/utils/server/config/responseStatus";
+import { Chat, CreateChatDto, ChatMessage } from "./chat.types";
 import ChatValidate from "./chat.validate";
-import askFromAssistant from "@/server/actions/openapi/assistant";
-import loadThreadMessages from "@/server/actions/openapi/messages";
-import askFromAssistantStreaming from "@/server/actions/openapi/assistantWithStreaming";
-import { Session } from "../openai/session";
+import ChatCacheTags from "./chat.tags";
+import { ChatService } from "./chat.service";
+import ServerToken from "@/utils/server/helper/token/serverToken";
+import { HttpPostReturnType } from "@/utils/server/http/type";
+import ResponseProcess from "@/utils/server/responseProcess/responseProcess";
+import ZodErrorMessage from "@/utils/server/zodErrorMessage/zodErrorMessage";
 
 class ChatController {
-  private responseStatus: typeof ResponceStatus;
+  private chatService: ChatService;
   private tags: string[];
+  private serverToken: ServerToken;
+  private responseProcess: ResponseProcess;
+  private zodErrorMessage: ZodErrorMessage;
   constructor() {
-    this.responseStatus = ResponceStatus;
-    this.tags = [CacheTags.CHAT];
+    this.tags = [ChatCacheTags.CHAT];
+    this.chatService = new ChatService();
+    this.serverToken = new ServerToken();
+    this.responseProcess = new ResponseProcess(this.tags);
+    this.zodErrorMessage = new ZodErrorMessage();
   }
 
-  async send(message: ChatCreateDto) {
+  async askQuestion(message: CreateChatDto) {
     "use server";
     try {
       const validated = ChatValidate.parse(message);
 
-      const res = await askFromAssistant(
-        message.text,
-        message.token,
-        message.state
-      );
+      const sessionToken = await this.serverToken.getSessionToken();
 
-      if (res.status) {
-        return {
-          status: true,
-          payload: res,
-        };
-      } else {
-        return {
-          status: false,
-        };
-      }
+      const res = await this.chatService.createMessage(
+        sessionToken,
+        await this.serverToken.getUserToken(),
+        validated
+      );
+      const { response, payload } = res as HttpPostReturnType;
+
+      return this.responseProcess.process(
+        { response, payload },
+        { allowDefaultTags: false, tags: [sessionToken] }
+      );
     } catch (error: any) {
-      console.log(error);
-      return zodErrorMessageFormatter(error);
+      return this.zodErrorMessage.format(error);
     }
   }
 
-  async sendStream(message: ChatCreateDto) {
+  async loadMessages() {
     "use server";
+    const sessionToken = await this.serverToken.getSessionToken();
+    const messages = await this.chatService.getSessionMessages(
+      sessionToken,
+      await this.serverToken.getUserToken(),
+      [sessionToken]
+    );
 
-    const validated = ChatValidate.parse(message);
-
-    const res = await askFromAssistantStreaming(message.text, message.token);
-
-    return res;
-  }
-
-  async loadMessages(token: string): Promise<ChatMessage> {
-    "use server";
-    const res = await loadThreadMessages(token);
-
-    return res;
-  }
-
-  /**
-   * Load Session Messages. Retreive Session Messages
-   */
-  async initiateSession(token: string) {
-    "use server";
-    Session.init(token, "/src/server/app/models/app.json");
-    const sessionMessages = await Session.getAssistant().loadSessionMessages();
-    return sessionMessages;
+    return messages;
   }
 }
 

@@ -1,12 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import "@mantine/core/styles.css";
-import { ColorSchemeScript, MantineProvider } from "@mantine/core";
-import theme from "./_theme";
-import ReduxProvider from "@/lib/provider/reduxProvider";
-
-import "./index.css";
+import { ColorSchemeScript } from "@mantine/core";
+import LibProviders from "./_libProviders";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,11 +20,14 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <ColorSchemeScript />
+        <link
+          rel="shortcut icon"
+          href="/img/Strata-Logo.png"
+          type="image/png"
+        />
       </head>
       <body className={inter.className}>
-        <ReduxProvider>
-          <MantineProvider theme={theme}>{children}</MantineProvider>
-        </ReduxProvider>
+        <LibProviders>{children}</LibProviders>
       </body>
     </html>
   );

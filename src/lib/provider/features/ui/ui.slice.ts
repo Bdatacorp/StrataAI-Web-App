@@ -4,12 +4,14 @@ export interface initialState {
   isMobileNavBarOpened: boolean;
   streamingResponse: boolean;
   newConversation: boolean;
+  slideBarExpanded:boolean;
 }
 
 const initialState: initialState = {
   isMobileNavBarOpened: false,
   streamingResponse: false,
   newConversation: false,
+  slideBarExpanded:true,
 };
 
 const uiSlice = createSlice({
@@ -34,6 +36,9 @@ const uiSlice = createSlice({
    openConversation(state) {
       state.newConversation = true;
     },
+    updateSideBar: (state) => {
+      state.slideBarExpanded = !state.slideBarExpanded;
+    },
   },
 });
 
@@ -43,7 +48,8 @@ export const {
   toggleStreamingResponse,
   toggleConversation,
   closeConversation,
-  openConversation
+  openConversation,
+  updateSideBar
 } = uiSlice.actions;
 
 export default uiSlice.reducer;
