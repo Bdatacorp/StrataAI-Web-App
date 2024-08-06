@@ -31,8 +31,8 @@ jobs:
           username: ${{ secrets.VPS_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            cd /home/strata-ai
+            cd /home/strata-ai-webapp
             git pull origin main
             npm install
             npm run build
-            pm2 restart strata-ai
+            pm2 restart strata-ai-webapp
