@@ -46,6 +46,11 @@ export class MiddlewareUtils {
           if (middleware.sucessUrl) {
             console.log(middleware.sucessUrl);
             return this.redirectTo(middleware.sucessUrl, this.request);
+          } else if (middleware.sucessUrlWithToken) {
+            return this.redirectTo(
+              `${middleware.sucessUrlWithToken}/${retrivedToken?.user.sessionToken}`,
+              this.request
+            );
           }
         }
       }

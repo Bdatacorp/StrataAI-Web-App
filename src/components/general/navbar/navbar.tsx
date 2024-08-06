@@ -1,11 +1,7 @@
-import Link from "next/link";
-import module from "./navbar.module.css";
-import { ActionIcon, Button, Tooltip } from "@mantine/core";
-import NavBarLinks from "./navbarLinks";
-import { useDispatch } from "react-redux";
-import { NavBarLinkTypes } from "./type";
-import { PiPlus, PiPlusCircle, PiPlusCircleBold } from "react-icons/pi";
+import authController from "@/server/app/auth/auth.controller";
 import NavBarContent from "./navBarContent";
+import { Suspense } from "react";
+import ElementLoading from "@/components/ui/client/loading/elementLoading";
 
 export interface ClientSession {
   id: number;
@@ -21,13 +17,22 @@ type GroupedSession = {
   sessions: ClientSession[];
 };
 
+async function FetchSessions() {
+  "use server";
+  const sessions = await authController.loadAllSessions();
+  console.log(sessions);
+
+  return <NavBarContent sessions={sessions} />;
+}
 
 export default function Navbar() {
   return (
     <div
       className={`w-full flex flex-col pt-5 gap-5 px-4 bg-slate-800 h-full text-white capitalize`}
     >
-      <NavBarContent />
+      <Suspense fallback={<ElementLoading />}>
+        <FetchSessions />
+      </Suspense>
     </div>
   );
 }

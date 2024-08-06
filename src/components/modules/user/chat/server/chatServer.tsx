@@ -25,8 +25,6 @@ async function FetchTable() {
     text: message.content.value,
   }));
 
-  console.log(formattedMessages);
-
   return (
     <ChatClient
       states={formattedStates}

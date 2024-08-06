@@ -75,10 +75,26 @@ class AuthController {
     }
   }
 
+  async retrieveSession(sessionId: string) {
+    "use server";
+    try {
+      const userToken = await this.getUserToken();
+
+      const res = await this.authService.retrieveSessionBySessionId(
+        sessionId,
+        userToken
+      );
+
+      return res;
+    } catch (error: any) {
+      return this.zodErrorMessage.format(error);
+    }
+  }
+
   async loadAllSessions() {
     "use server";
     const userToken = await this.getUserToken();
-    const res = await this.authService.getAll(userToken, [userToken]);
+    const res = await this.authService.loadAllSessions(userToken, [userToken]);
     return res;
   }
 

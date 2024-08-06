@@ -97,6 +97,27 @@ export const config = {
         return null;
       },
     }),
+    CredentialsProvider({
+      id: "retrieveSession",
+      name: "Retrieve Session By Session ID",
+      credentials: {
+        sessionId: { type: "text" },
+      },
+      async authorize(credentials, req) {
+        if (!credentials?.sessionId) return null;
+
+        const res: any = await authController.retrieveSession(
+          credentials?.sessionId
+        );
+
+        if (res.status && res.data) {
+          const userPayload: UserPayload = res.data;
+          return userPayload;
+        }
+
+        return null;
+      },
+    }),
   ],
   pages: {
     signIn: "/login",

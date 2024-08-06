@@ -13,7 +13,6 @@ const chatSlice = createSlice({
   initialState,
   reducers: {
     setActiveSession(state, action: PayloadAction<string>) {
-      localStorage.setItem("session_id", action.payload);
       state.activeSession = action.payload;
     },
   },

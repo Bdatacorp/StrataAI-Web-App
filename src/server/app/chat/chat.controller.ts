@@ -48,9 +48,7 @@ class ChatController {
 
   async loadMessages() {
     "use server";
-
     const sessionToken = await this.serverToken.getSessionToken();
-
     const messages = await this.chatService.getSessionMessages(
       sessionToken,
       await this.serverToken.getUserToken(),

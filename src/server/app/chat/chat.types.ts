@@ -5,7 +5,7 @@ export interface Chat {
 
 export interface ChatMessage {
   status: boolean;
-  payload: { id:string, role: any; text: string }[];
+  payload: { id: string; role: any; text: string }[];
 }
 
 export interface CreateChatDto {

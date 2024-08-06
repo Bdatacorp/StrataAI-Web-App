@@ -69,9 +69,9 @@ export default function GetStarted({ states }: { states: string[] }) {
 
   useEffect(() => {
     async function getSesstion() {
-      const retreived = await getSession();
-      setSession(retreived);
-      if (!retreived) {
+      const retrieved = await getSession();
+      setSession(retrieved);
+      if (!retrieved) {
         dispatch(setIsNewUser(true));
       }
     }

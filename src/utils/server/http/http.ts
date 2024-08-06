@@ -8,10 +8,15 @@ export class HTTP {
     this.BaseURL = BaseURL;
   }
 
-  async Get(token: string, tags?: string[], id?: string, BaseURL?: string) {
+  async Get(
+    token: string,
+    tags?: string[],
+    id?: string | null,
+    BaseURL?: string
+  ) {
     "use server";
 
-    const url = BaseURL || id ? `${this.BaseURL}/${id}` : this.BaseURL;
+    const url = BaseURL ? BaseURL : id ? `${this.BaseURL}/${id}` : this.BaseURL;
     const method = HttpMethod.GET;
 
     const response = await fetch(url, {

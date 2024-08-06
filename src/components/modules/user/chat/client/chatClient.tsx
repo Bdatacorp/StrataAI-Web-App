@@ -6,10 +6,12 @@ import NewConversation from "./newConversation";
 
 import GetStarted from "../../getStarted/getStarted";
 import ChatFooter from "../server/chatFooter";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ClientMessage, MessageRoles } from "../types";
 import { toast } from "react-toastify";
 import askQuestionAction from "@/server/actions/chat/askQuestionAction";
+import { useSelector } from "react-redux";
+import { RootState } from "@/lib/provider/store";
 
 export default function ChatClient({
   messages,
@@ -43,9 +45,9 @@ export default function ChatClient({
     } else {
       if (res?.status) {
         const message: ClientMessage = {
-          id: res?.payload?.data?.assistant.id,
+          id: res?.payload?.data?.assistant?.id,
           role: MessageRoles.Assistant,
-          text: res?.payload?.data?.assistant.message,
+          text: res?.payload?.data?.assistant?.message,
         };
         setClientMessages((prevMessages) => [...prevMessages, message]);
       }

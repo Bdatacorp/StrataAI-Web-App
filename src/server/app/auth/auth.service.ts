@@ -33,4 +33,16 @@ export class AuthService extends Service {
     const res = await this.Http.Post(initSessionDto, token, URL);
     return res;
   }
+
+  async retrieveSessionBySessionId(sessionId: string, token: string) {
+    const URL = `${process.env.BASE_API_URL}${AuthRoutes.SESSION}/${sessionId}`;
+    const res = await this.Http.Get(token, [sessionId], null, URL);
+    return res;
+  }
+
+  async loadAllSessions(token: string, tags: string[]) {
+    const URL = `${process.env.BASE_API_URL}${AuthRoutes.SESSION}`;
+    const res = await this.Http.Get(token, tags, null, URL);
+    return res;
+  }
 }

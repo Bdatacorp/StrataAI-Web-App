@@ -39,4 +39,5 @@ export type MiddlewareUtilConfig = {
    *  - Optional
    */
   sucessUrl?: string;
+  sucessUrlWithToken?: string;
 };
