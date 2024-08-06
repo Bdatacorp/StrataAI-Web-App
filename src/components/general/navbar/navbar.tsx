@@ -20,9 +20,8 @@ type GroupedSession = {
 async function FetchSessions() {
   "use server";
   const sessions = await authController.loadAllSessions();
-  console.log(sessions);
-
-  return <NavBarContent sessions={sessions} />;
+  const activeSession = await authController.findActiveSession();
+  return <NavBarContent activeSession={activeSession} sessions={sessions} />;
 }
 
 export default function Navbar() {

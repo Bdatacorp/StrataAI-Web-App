@@ -15,9 +15,14 @@ type GroupedSession = {
   sessions: any[];
 };
 
-export default function NavBarContent({ sessions }: { sessions: any[] }) {
+export default function NavBarContent({
+  sessions,
+  activeSession,
+}: {
+  sessions: any[];
+  activeSession: string;
+}) {
   const [groupedByDate, setGroupedByDate] = useState<GroupedSession[]>([]);
-  const [activeSession, setActiveSession] = useState<string>();
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -60,13 +65,13 @@ export default function NavBarContent({ sessions }: { sessions: any[] }) {
     return sessionId === currentSessionID;
   }
 
-  const hanldeSetActiveSession = async (sessionToken: string) => {
+  const hanldeSetActiveSession = async (sessionId: string) => {
     const result: any = await signIn("retrieveSession", {
       redirect: false,
-      sessionToken,
+      sessionId,
     });
     if (!result?.error) {
-      setActiveSession(sessionToken);
+      window.location.reload();
     }
   };
 

@@ -45,4 +45,10 @@ export class AuthService extends Service {
     const res = await this.Http.Get(token, tags, null, URL);
     return res;
   }
+
+  async findActive(sessionToken: string, token: string) {
+    const URL = `${process.env.BASE_API_URL}${AuthRoutes.FIND_SESSION_ACTIVE}/${sessionToken}`;
+    const res = await this.Http.Get(token, [sessionToken], null, URL);
+    return res;
+  }
 }

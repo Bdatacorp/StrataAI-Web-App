@@ -98,12 +98,28 @@ class AuthController {
     return res;
   }
 
+  async findActiveSession() {
+    "use server";
+    const sessionToken = await this.getSessionToken();
+    const token = await this.getUserToken();
+    const res = await this.authService.findActive(sessionToken, token);
+    return res;
+  }
+
   private async getUserToken(): Promise<string> {
     const session = await auth();
     const token = session?.user.token;
 
     if (!token) throw Error("Unauthozied. Couldn't found user");
     return token;
+  }
+
+  private async getSessionToken(): Promise<string> {
+    const session = await auth();
+    const sessionToken = session?.user.sessionToken;
+
+    if (!sessionToken) throw Error("Couldn't found user session");
+    return sessionToken;
   }
 }
 
