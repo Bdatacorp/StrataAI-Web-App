@@ -1,9 +1,12 @@
 "use client";
 
-import { message, MessageRoles } from "@/components/modules/user/chat/types";
+import {
+  ClientMessage,
+  MessageRoles,
+} from "@/components/modules/user/chat/types";
 import Markdown from "react-markdown";
 
-export default function ChatMessage(message: message) {
+export default function ChatMessage(message: ClientMessage) {
   return (
     <div className="w-full">
       {message.role === MessageRoles.Assistant ? (
