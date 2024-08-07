@@ -1,16 +1,21 @@
 "use client";
+import { Colors } from "@/lib/config/colors";
 import {
   initialState,
   toggleMobileNavBar,
   toggleStreamingResponse,
 } from "@/lib/provider/features/ui/ui.slice";
 import { RootState } from "@/lib/provider/store";
-import { Burger, Switch, Text, Tooltip } from "@mantine/core";
+import { ActionIcon, Burger, Switch, Text, Tooltip } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+import { signOut } from "next-auth/react";
 import Image from "next/image";
+import { useState } from "react";
+import { AiOutlineLogout } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function Header() {
+  const [logoutLoading, setLogoutLoading] = useState(false);
   const mobileNavbarOpend = useSelector(
     (state: RootState) => state.ui.isMobileNavBarOpened
   );
@@ -38,7 +43,7 @@ export default function Header() {
           />
         </div>
       </div>
-      <div className="hidden md:block px-10">
+      <div className="hidden md:flex justify-center items-center gap-3 px-10">
         <Switch
           color="gray"
           labelPosition="left"
@@ -46,6 +51,19 @@ export default function Header() {
           onChange={() => dispatch(toggleStreamingResponse())}
           label="Streaming Response"
         />
+        <Tooltip color="gray" label="Logout">
+          <ActionIcon
+            loading={logoutLoading}
+            color={Colors.primary}
+            onClick={() => {
+              setLogoutLoading(true);
+              signOut();
+            }}
+            className="rounded-full w-8 h-8"
+          >
+            <AiOutlineLogout className="text-2xl" />
+          </ActionIcon>
+        </Tooltip>
       </div>
       <div className="md:hidden px-10">
         <Tooltip label="Streaming Response" refProp="rootRef">

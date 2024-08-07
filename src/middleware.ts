@@ -4,17 +4,20 @@ import { MiddlewareUtils } from "./utils/server/middlewareUtils/middleware";
 import { MiddlewareUtilConfig } from "./utils/server/middlewareUtils/middleware.types";
 import { Modules } from "./lib/config/modules";
 import { UserRoles } from "./server/app/auth/auth.types";
+import { signOut } from "next-auth/react";
+import { cookies } from "next/headers";
 
-export function middleware(request: NextRequest) {
+export function middleware(request: NextRequest, response: NextResponse) {
   const configMiddlewares: MiddlewareUtilConfig[] = [
-    // {
-    //   identifier: "Validate Login Page | If request has session, skip login",
-    //   matcherPathnames: [Modules.AUTH.LOGIN.route],
-    //   condition: (token) => {
-    //     return true;
-    //   },
-    //   failedUrl: Modules.ADMIN.STATE.route,
-    // },
+    {
+      identifier: "Validate Login Page | If request has session, skip login",
+      matcherPathnames: [Modules.AUTH.LOGIN.route],
+      condition: (token) => {
+        const result = token?.user?.role !== UserRoles.ADMIN;
+        return result;
+      },
+      failedUrl: Modules.ADMIN.STATE.route,
+    },
     {
       identifier: "Validate Admin Pages",
       matcherPathnames: [],
@@ -22,12 +25,7 @@ export function middleware(request: NextRequest) {
         Modules.ADMIN.route
       ),
       condition: (token) => {
-        const result =
-          token?.user?.token && token?.user?.role === UserRoles.ADMIN
-            ? true
-            : false;
-        console.log(result);
-
+        const result = token?.user?.role === UserRoles.ADMIN;
         return result;
       },
       failedUrl: Modules.AUTH.LOGIN.route,
@@ -36,8 +34,12 @@ export function middleware(request: NextRequest) {
     {
       identifier: "Validate Getting Started Page",
       matcherPathnames: [Modules.AUTH.USER_REGISTER.route],
-      condition: (token) =>
-        token?.user?.token && token?.user?.sessionToken ? false : true,
+      condition: (token) => {
+        const result =
+          token?.user?.token && token?.user?.sessionToken ? false : true;
+        return result;
+      },
+
       failedUrl: Modules.USER.CHAT.route,
     },
     {
@@ -50,6 +52,8 @@ export function middleware(request: NextRequest) {
   ];
 
   const middlewareUtils = new MiddlewareUtils(configMiddlewares, request);
+  console.log(request.nextUrl.pathname);
+
   return middlewareUtils.process();
 }
 
