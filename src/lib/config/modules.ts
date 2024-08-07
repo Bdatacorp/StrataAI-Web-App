@@ -30,6 +30,12 @@ export const Modules = {
       title: "Chat | Strata Chat AI",
       route: "/chat",
     },
+    NEW_SESSION: {
+      name: "New Session",
+      description: "Strata Chat AI By Stratapages",
+      title: "New Session | Strata Chat AI",
+      route: "/session/new",
+    },
   },
   AUTH: {
     LOGIN: {

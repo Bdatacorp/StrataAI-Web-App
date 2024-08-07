@@ -1,17 +1,19 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface initialState {
   isMobileNavBarOpened: boolean;
   streamingResponse: boolean;
   newConversation: boolean;
-  slideBarExpanded:boolean;
+  newSession: boolean;
+  slideBarExpanded: boolean;
 }
 
 const initialState: initialState = {
   isMobileNavBarOpened: false,
   streamingResponse: false,
   newConversation: false,
-  slideBarExpanded:true,
+  newSession: false,
+  slideBarExpanded: true,
 };
 
 const uiSlice = createSlice({
@@ -33,11 +35,14 @@ const uiSlice = createSlice({
     closeConversation(state) {
       state.newConversation = false;
     },
-   openConversation(state) {
+    openConversation(state) {
       state.newConversation = true;
     },
     updateSideBar: (state) => {
       state.slideBarExpanded = !state.slideBarExpanded;
+    },
+    setNewSession: (state, action: PayloadAction<boolean>) => {
+      state.newSession = action.payload;
     },
   },
 });
@@ -49,7 +54,8 @@ export const {
   toggleConversation,
   closeConversation,
   openConversation,
-  updateSideBar
+  updateSideBar,
+  setNewSession,
 } = uiSlice.actions;
 
 export default uiSlice.reducer;

@@ -9,6 +9,7 @@ import ElementLoading from "@/components/ui/client/loading/elementLoading";
 import chatController from "@/server/app/chat/chat.controller";
 import { ClientMessage, MessageRoles } from "../types";
 import { initialSessionMessages } from "@/lib/config/messages";
+import NewSession from "../../session/client/newSessionClient";
 
 async function FetchTable() {
   const messages = await chatController.loadMessages();

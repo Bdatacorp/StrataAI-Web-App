@@ -2,7 +2,7 @@
 
 import ChatMessages from "./chatMesseges";
 
-import NewConversation from "./newConversation";
+import NewConversation from "./newConversation/newConversation";
 
 import GetStarted from "../../getStarted/getStarted";
 import ChatFooter from "../server/chatFooter";
@@ -12,6 +12,7 @@ import { toast } from "react-toastify";
 import askQuestionAction from "@/server/actions/chat/askQuestionAction";
 import { useSelector } from "react-redux";
 import { RootState } from "@/lib/provider/store";
+import NewSession from "../../session/client/newSessionClient";
 
 export default function ChatClient({
   messages,

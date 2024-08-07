@@ -1,20 +1,24 @@
 "use client";
 
-import { closeConversation } from "@/lib/provider/features/ui/ui.slice";
+import { setNewSession } from "@/lib/provider/features/ui/ui.slice";
 import { RootState } from "@/lib/provider/store";
-import generateRandomToken from "@/utils/client/generators/randomToken";
-import userSession, {
-  UserSessionMethods,
-} from "@/utils/client/generators/userSession";
 import { Button, Modal, Select } from "@mantine/core";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { toast } from "react-toastify";
+import { Modules } from "@/lib/config/modules";
 
-export default function NewConversation({
+/**
+ * New Conversatio Modal
+ *  - Create new sessin Token with state
+ *  - Cannot close
+ * @param {statesData}
+ * @returns
+ */
+export default function NewSessionClient({
   statesData,
 }: {
   statesData: { value: string; label: string }[];
@@ -22,18 +26,22 @@ export default function NewConversation({
   const [stateError, setStateError] = useState("");
   const [stateId, setStateId] = useState<any>();
   const [loading, setLoading] = useState<boolean>(false);
-  const newConversationOpend = useSelector(
-    (state: RootState) => state.ui.newConversation
+  const newSessionOpend = useSelector(
+    (state: RootState) => state.ui.newSession
   );
   const dispatch = useDispatch();
   const router = useRouter();
+  const searchParams = useSearchParams();
 
-  const handleClose = () => {
-    const session_id = localStorage.getItem("session_id") as string;
-    const state = localStorage.getItem("state") as string;
+  useEffect(() => {
+    if (searchParams.get("session") === "new") {
+      dispatch(setNewSession(true));
+    }
+  }, [searchParams, dispatch]);
 
-    if (session_id && state) {
-      dispatch(closeConversation());
+  const handleClose = async () => {
+    if (stateId) {
+      await handleContinue();
     } else {
       setStateError("Please select the state before continue");
     }
@@ -59,16 +67,16 @@ export default function NewConversation({
         toast.error("Origin is unreachable");
       }
     } else {
-      dispatch(closeConversation());
+      dispatch(setNewSession(false));
       setLoading(false);
-      window.location.reload();
+      router.push(Modules.USER.CHAT.route);
     }
   };
 
   return (
     <>
       <Modal
-        opened={newConversationOpend}
+        opened={newSessionOpend}
         onClose={handleClose}
         title={
           <Image
@@ -84,6 +92,8 @@ export default function NewConversation({
           duration: 200,
           timingFunction: "linear",
         }}
+        closeOnClickOutside={false}
+        closeOnEscape={false}
       >
         <div className="flex flex-col gap-5">
           <div className="text-primary font-bold">

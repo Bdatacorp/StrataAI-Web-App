@@ -45,9 +45,24 @@ export function middleware(request: NextRequest, response: NextResponse) {
     {
       identifier: "Validate User Chat",
       matcherPathnames: [Modules.USER.CHAT.route],
-      condition: (token) =>
-        token?.user?.token && token?.user?.sessionToken ? true : false,
+      condition: (token) => (token?.user?.token ? true : false),
       failedUrl: Modules.AUTH.USER_REGISTER.route,
+    },
+    {
+      identifier: "Validate User Chat Session",
+      matcherPathnames: [Modules.USER.CHAT.route],
+      condition: (token) => {
+        let result: boolean;
+
+        if (request.nextUrl.searchParams.get("session") === "new") {
+          result = true;
+        } else {
+          result = token?.user?.sessionToken ? true : false;
+        }
+
+        return result;
+      },
+      failedUrl: `${Modules.USER.NEW_SESSION.route}?session=new`,
     },
   ];
 
