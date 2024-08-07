@@ -32,7 +32,7 @@ export type MiddlewareUtilConfig = {
   /**
    * Append searchParams as ?callbackUrl=
    */
-  failedUrlWithCallback?:boolean
+  failedUrlWithCallback?: boolean;
 
   /**
    * If Condition true redirect url

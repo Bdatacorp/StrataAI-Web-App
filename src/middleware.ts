@@ -7,24 +7,29 @@ import { UserRoles } from "./server/app/auth/auth.types";
 
 export function middleware(request: NextRequest) {
   const configMiddlewares: MiddlewareUtilConfig[] = [
-    {
-      identifier: "Validate Login Page | If request has session, skip login",
-      matcherPathnames: [Modules.AUTH.LOGIN.route],
-      condition: (token) => (token?.user.token ? false : true),
-      failedUrl: Modules.ADMIN.STATE.route,
-    },
+    // {
+    //   identifier: "Validate Login Page | If request has session, skip login",
+    //   matcherPathnames: [Modules.AUTH.LOGIN.route],
+    //   condition: (token) => {
+    //     return true;
+    //   },
+    //   failedUrl: Modules.ADMIN.STATE.route,
+    // },
     {
       identifier: "Validate Admin Pages",
       matcherPathnames: [],
       matcherCondition: request.nextUrl.pathname.startsWith(
         Modules.ADMIN.route
       ),
-      condition: (token) =>
-        token?.user &&
-        token?.user?.token &&
-        token?.user?.role === UserRoles.ADMIN
-          ? true
-          : false,
+      condition: (token) => {
+        const result =
+          token?.user?.token && token?.user?.role === UserRoles.ADMIN
+            ? true
+            : false;
+        console.log(result);
+
+        return result;
+      },
       failedUrl: Modules.AUTH.LOGIN.route,
       failedUrlWithCallback: true,
     },
