@@ -11,21 +11,19 @@ class FilesController {
   private responseProcess: ResponseProcess;
   private tags: string[];
   private zodErrorMessage: ZodErrorMessage;
-  private serverToken: ServerToken;
 
   constructor() {
     this.fileService = new FileService();
     this.tags = [FilesCacheTags.Files];
     this.responseProcess = new ResponseProcess(this.tags);
     this.zodErrorMessage = new ZodErrorMessage();
-    this.serverToken = new ServerToken();
   }
 
   async getAllFiles(): Promise<File[]> {
     "use server";
 
     const states = await this.fileService.getAll(
-      await this.serverToken.getUserToken(),
+      await ServerToken.getUserToken(),
       this.tags
     );
     return states;
@@ -36,7 +34,7 @@ class FilesController {
     try {
       const res = await this.fileService.upload(
         formData,
-        await this.serverToken.getUserToken()
+        await ServerToken.getUserToken()
       );
       const { response, payload } = res as HttpPostReturnType;
 
@@ -51,7 +49,7 @@ class FilesController {
     try {
       const res = await this.fileService.delete(
         id,
-        await this.serverToken.getUserToken()
+        await ServerToken.getUserToken()
       );
       const { response, payload } = res as HttpPostReturnType;
 

@@ -13,12 +13,10 @@ class StateController {
   private responseProcess: ResponseProcess;
   private tags: string[];
   private zodErrorMessage: ZodErrorMessage;
-  private serverToken: ServerToken;
   constructor() {
     this.stateService = new StateService();
     this.tags = [StateCacheTags.State];
     this.responseProcess = new ResponseProcess(this.tags);
-    this.serverToken = new ServerToken();
     this.zodErrorMessage = new ZodErrorMessage();
   }
 
@@ -36,7 +34,7 @@ class StateController {
 
       const res = await this.stateService.create(
         validated,
-        await this.serverToken.getUserToken()
+        await ServerToken.getUserToken()
       );
       const { response, payload } = res as HttpPostReturnType;
 
@@ -52,7 +50,7 @@ class StateController {
       const res = await this.stateService.uploadToState(
         formData,
         formData.get("stateId") as string,
-        await this.serverToken.getUserToken()
+        await ServerToken.getUserToken()
       );
       const { response, payload } = res as HttpPostReturnType;
 
@@ -67,7 +65,7 @@ class StateController {
     try {
       const res = await this.stateService.delete(
         id,
-        await this.serverToken.getUserToken()
+        await ServerToken.getUserToken()
       );
       const { response, payload } = res as HttpPostReturnType;
 

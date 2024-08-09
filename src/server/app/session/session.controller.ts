@@ -13,13 +13,11 @@ class SessionController {
   private responseProcess: ResponseProcess;
   private tags: string[];
   private zodErrorMessage: ZodErrorMessage;
-  private serverToken: ServerToken;
   constructor() {
     this.sessionService = new SessionService();
     this.tags = [];
     this.responseProcess = new ResponseProcess(this.tags);
     this.zodErrorMessage = new ZodErrorMessage();
-    this.serverToken = new ServerToken();
   }
 
   async createSession(initSessionDto: InitSessionDto) {
@@ -27,7 +25,7 @@ class SessionController {
     try {
       const validated = InitSessionValidate.parse(initSessionDto);
 
-      const userToken = await this.serverToken.getUserToken();
+      const userToken = await ServerToken.getUserToken();
 
       const res = await this.sessionService.initSessionByState(
         validated,
@@ -48,7 +46,7 @@ class SessionController {
   async retrieveSession(sessionId: string) {
     "use server";
     try {
-      const userToken = await this.serverToken.getUserToken();
+      const userToken = await ServerToken.getUserToken();
 
       const res = await this.sessionService.retrieveSessionBySessionId(
         sessionId,
@@ -63,7 +61,7 @@ class SessionController {
 
   async loadAllSessions() {
     "use server";
-    const userToken = await this.serverToken.getUserToken();
+    const userToken = await ServerToken.getUserToken();
     const res = await this.sessionService.loadAllSessions(userToken, [
       userToken,
     ]);
@@ -72,22 +70,22 @@ class SessionController {
 
   async findActiveSession() {
     "use server";
-    const sessionToken = await this.serverToken.getSessionToken();
-    const token = await this.serverToken.getUserToken();
+    const sessionToken = await ServerToken.getSessionToken();
+    const token = await ServerToken.getUserToken();
     const res = await this.sessionService.findActive(sessionToken, token);
     return res;
   }
 
   async revalidateSessionMessages() {
-    const sessionToken = await this.serverToken.getSessionToken();
+    const sessionToken = await ServerToken.getSessionToken();
     return revalidateCache([sessionToken]);
   }
 
   async deleteSession(sessionId: string) {
     "use server";
     try {
-      const userToken = await this.serverToken.getUserToken();
-      const sessionToken = await this.serverToken.getSessionToken();
+      const userToken = await ServerToken.getUserToken();
+      const sessionToken = await ServerToken.getSessionToken();
       const res = await this.sessionService.delete(sessionId, userToken);
       const { response, payload } = res as HttpPostReturnType;
 

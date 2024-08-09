@@ -20,7 +20,7 @@ export default class Service {
     const result = await this.Http.Get(token, tags);
 
     //format timestamp data
-    const formattedData = result?.map((item: any) => ({
+    const formattedData = await result?.map((item: any) => ({
       ...item,
       createdAt: this.timeStampFormatter(item.createdAt),
       updatedAt: this.timeStampFormatter(item.updatedAt),

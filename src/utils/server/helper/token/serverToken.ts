@@ -1,7 +1,7 @@
 import { auth } from "@/utils/client/helper/auth";
 
 export default class ServerToken {
-  async getUserToken(): Promise<string> {
+  static async getUserToken(): Promise<string> {
     "use server";
     const session = await auth();
     const token = session?.user.token;
@@ -10,7 +10,7 @@ export default class ServerToken {
     return token;
   }
 
-  async getSessionToken(): Promise<string> {
+  static async getSessionToken(): Promise<string> {
     "use server";
     const session = await auth();
     const sessionToken = session?.user.sessionToken;

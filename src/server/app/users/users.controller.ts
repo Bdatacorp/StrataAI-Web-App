@@ -12,26 +12,23 @@ class UsersController {
   private responseProcess: ResponseProcess;
   private tags: string[];
   private zodErrorMessage: ZodErrorMessage;
-  private serverToken: ServerToken;
 
   constructor() {
     this.usersService = new UsersService();
     this.tags = [UsersCacheTags.Users];
     this.responseProcess = new ResponseProcess(this.tags);
     this.zodErrorMessage = new ZodErrorMessage();
-    this.serverToken = new ServerToken();
   }
 
   async getAllUsers(): Promise<File[]> {
     "use server";
 
     const states = await this.usersService.getAll(
-      await this.serverToken.getUserToken(),
+      await ServerToken.getUserToken(),
       this.tags
     );
     return states;
   }
-
 }
 
 const usersController = new UsersController();

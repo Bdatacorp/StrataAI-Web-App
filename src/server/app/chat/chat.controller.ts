@@ -14,13 +14,11 @@ import revalidateCache from "@/utils/server/actions/revalidateCache";
 class ChatController {
   private chatService: ChatService;
   private tags: string[];
-  private serverToken: ServerToken;
   private responseProcess: ResponseProcess;
   private zodErrorMessage: ZodErrorMessage;
   constructor() {
     this.tags = [ChatCacheTags.CHAT];
     this.chatService = new ChatService();
-    this.serverToken = new ServerToken();
     this.responseProcess = new ResponseProcess(this.tags);
     this.zodErrorMessage = new ZodErrorMessage();
   }
@@ -30,11 +28,11 @@ class ChatController {
     try {
       const validated = ChatValidate.parse(message);
 
-      const sessionToken = await this.serverToken.getSessionToken();
+      const sessionToken = await  ServerToken.getSessionToken();
 
       const res = await this.chatService.createMessage(
         sessionToken,
-        await this.serverToken.getUserToken(),
+        await  ServerToken.getUserToken(),
         validated
       );
       const { response, payload } = res as HttpPostReturnType;
@@ -50,13 +48,13 @@ class ChatController {
 
   async loadMessages() {
     "use server";
-    const sessionToken = await this.serverToken.getSessionToken();
+    const sessionToken = await ServerToken.getSessionToken();
 
     if (!sessionToken) return [];
 
     const messages = await this.chatService.getSessionMessages(
       sessionToken,
-      await this.serverToken.getUserToken(),
+      await  ServerToken.getUserToken(),
       [sessionToken]
     );
 
