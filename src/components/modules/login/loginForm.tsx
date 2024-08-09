@@ -27,7 +27,7 @@ const LoginForm = () => {
     setErrors(initialErrors);
     setLoading(true);
     const callbackUrl =
-      searchParams.get("callbackUrl") || Modules.ADMIN.STATE.route;
+      searchParams?.get("callbackUrl") || Modules.ADMIN.STATE.route;
 
     const result: any = await signIn("credentials", {
       redirect: false,

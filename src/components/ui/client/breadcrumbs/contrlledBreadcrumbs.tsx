@@ -14,8 +14,8 @@ export default function ContrlledBreadcrumbs({
   const pathname = usePathname();
 
   useEffect(() => {
-    const splittedPathname = pathname.split("/");
-    setPathnameArray(splittedPathname);
+    const splittedPathname = pathname?.split("/");
+    setPathnameArray(splittedPathname || []);
   }, [pathname]);
 
   return (
@@ -36,7 +36,7 @@ export default function ContrlledBreadcrumbs({
           {pathnameArray.map(
             (item, index) =>
               index !== 0 && (
-                <Anchor c="dark" href={pathname} key={index}>
+                <Anchor c="dark" href={pathname || ""} key={index}>
                   {item}
                 </Anchor>
               )
