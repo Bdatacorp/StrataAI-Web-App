@@ -13,6 +13,7 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { MdDelete } from "react-icons/md";
 import { PiPlusCircleBold } from "react-icons/pi";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 type GroupedSession = {
   date: string;
@@ -152,7 +153,9 @@ export default function NavBarContent({
                         className="grid p-2"
                         color="gray"
                         onClick={() =>
-                          openDeleteModal(session._id, sessionIndex)
+                          findActive(session._id)
+                            ? toast.error("Couldn't delete active session.")
+                            : openDeleteModal(session._id, sessionIndex)
                         }
                       >
                         <Button
