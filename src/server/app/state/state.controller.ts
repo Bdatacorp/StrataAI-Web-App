@@ -1,7 +1,7 @@
 import { StateService } from "./state.service";
 import StateCacheTags from "./state.tags";
 import { State, StateCreateDto } from "./state.types";
-import StateValidate from "./state.validate";
+import { StateValidate, UnAssignFileValidate } from "./state.validate";
 import ResponseProcess from "@/utils/server/responseProcess/responseProcess";
 import ZodErrorMessage from "@/utils/server/zodErrorMessage/zodErrorMessage";
 import { auth } from "@/utils/client/helper/auth";
@@ -27,6 +27,17 @@ class StateController {
     return states;
   }
 
+  async getAssociatedFiles(stateId: string): Promise<State[]> {
+    "use server";
+
+    const states = await this.stateService.getFiles(
+      stateId,
+      await ServerToken.getUserToken(),
+      [stateId]
+    );
+    return states;
+  }
+
   async createState(state: StateCreateDto) {
     "use server";
     try {
@@ -38,7 +49,10 @@ class StateController {
       );
       const { response, payload } = res as HttpPostReturnType;
 
-      return this.responseProcess.process({ response, payload });
+      return this.responseProcess.process(
+        { response, payload },
+        { tags: [payload.data.id] }
+      );
     } catch (error: any) {
       return this.zodErrorMessage.format(error);
     }
@@ -47,14 +61,20 @@ class StateController {
   async uploadToState(formData: FormData) {
     "use server";
     try {
+      const stateId = formData.get("stateId") as string;
       const res = await this.stateService.uploadToState(
         formData,
-        formData.get("stateId") as string,
+        stateId,
         await ServerToken.getUserToken()
       );
       const { response, payload } = res as HttpPostReturnType;
 
-      return this.responseProcess.process({ response, payload });
+      return this.responseProcess.process(
+        { response, payload },
+        {
+          tags: [stateId],
+        }
+      );
     } catch (error: any) {
       return this.zodErrorMessage.format(error);
     }
@@ -69,7 +89,31 @@ class StateController {
       );
       const { response, payload } = res as HttpPostReturnType;
 
-      return this.responseProcess.process({ response, payload });
+      return this.responseProcess.process(
+        { response, payload },
+        { tags: [id] }
+      );
+    } catch (error: any) {
+      return this.zodErrorMessage.format(error);
+    }
+  }
+
+  async unAssignFiles(fileIds: string[], stateId: string) {
+    "use server";
+    try {
+      const validated = UnAssignFileValidate.parse({ fileIds, stateId });
+
+      const res = await this.stateService.unassignFile(
+        validated.fileIds,
+        validated.stateId,
+        await ServerToken.getUserToken()
+      );
+      const { response, payload } = res as HttpPostReturnType;
+
+      return this.responseProcess.process(
+        { response, payload },
+        { tags: [stateId] }
+      );
     } catch (error: any) {
       return this.zodErrorMessage.format(error);
     }

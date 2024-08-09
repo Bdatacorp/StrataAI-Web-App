@@ -28,7 +28,7 @@ const CollapsedSidebar: React.FC<CollapsedSidebarProps> = ({ links }) => {
           href={link.target}
           key={index}
           className={`w-full py-3 2xl:py-6 flex flex-col items-center justify-center gap-1 rounded-lg cursor-pointer text-center text-xs 2xl:text-sm ${
-            pathName === link.target
+            pathName.startsWith(link.target)
               ? "bg-primary text-white hover:bg-primary/90"
               : "bg-white text-black hover:bg-primary hover:text-white"
           }`}

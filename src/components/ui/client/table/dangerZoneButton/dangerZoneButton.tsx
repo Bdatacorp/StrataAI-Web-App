@@ -6,11 +6,13 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { modals } from "@mantine/modals";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import { DangerZoneElement } from "../types";
 
 export default function DangerZoneButton({
   id,
   deleteAction,
   disableAction,
+  elements,
 }: {
   id?: string;
   deleteAction?: {
@@ -21,6 +23,7 @@ export default function DangerZoneButton({
     confirmMessage?: string;
     action: (id?: any) => Promise<void>;
   };
+  elements?: DangerZoneElement[];
 }) {
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [disableLoading, setDisableLoading] = useState(false);
@@ -54,6 +57,27 @@ export default function DangerZoneButton({
       onCancel: () => console.log("Cancel"),
       onConfirm: () => deleteData(),
     });
+
+  const openElementModal = (element: DangerZoneElement) =>
+    modals.openConfirmModal({
+      title: element.label,
+      centered: true,
+      children: <Text size="sm">{element.confirmMessage}</Text>,
+      labels: { confirm: element.label, cancel: "Cancel" },
+      confirmProps: { color: "red" },
+      onCancel: () => console.log("Cancel"),
+      onConfirm: async () => elemetConfirm(element),
+    });
+
+  const elemetConfirm = async (element: DangerZoneElement) => {
+    const deleted: any = id && element && (await element.action(id));
+
+    if (deleted.status) {
+      toast.success(deleted.message);
+    } else {
+      toast.error(deleted.message || "Request Failed");
+    }
+  };
 
   return (
     <Menu shadow="md" width={180}>
@@ -99,6 +123,22 @@ export default function DangerZoneButton({
             </Button>
           </Menu.Item>
         )}
+
+        {elements &&
+          elements.map((element, index) => (
+            <Menu.Item key={index} onClick={() => openElementModal(element)}>
+              <Button
+                color="red"
+                size="compact-xs"
+                variant="transparent"
+                loaderProps={{ type: "bars" }}
+                leftSection={element.icon}
+                fullWidth
+              >
+                {element.label}
+              </Button>
+            </Menu.Item>
+          ))}
       </Menu.Dropdown>
     </Menu>
   );

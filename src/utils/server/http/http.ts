@@ -18,6 +18,8 @@ export class HTTP {
 
     const url = BaseURL ? BaseURL : id ? `${this.BaseURL}/${id}` : this.BaseURL;
     const method = HttpMethod.GET;
+    console.log(url);
+    
 
     const response = await fetch(url, {
       method,

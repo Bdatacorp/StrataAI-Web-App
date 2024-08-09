@@ -8,6 +8,12 @@ export const Modules = {
       title: "States | Strata Chat AI Admin",
       route: "/admin/states",
     },
+    FILES_ACCOCIATED_STATE: {
+      name: "States",
+      description: "Strata Chat AI By Stratapages",
+      title: "States | Strata Chat AI Admin",
+      route: "/admin/states",
+    },
     FILES: {
       name: "Files",
       description: "Strata Chat AI By Stratapages",
@@ -65,7 +71,7 @@ export const Modules = {
       route: "/privacy-policy",
     },
   },
-  API:{
-    CHAT_STREAM:'/api/chat/stream'
-  }
+  API: {
+    CHAT_STREAM: "/api/chat/stream",
+  },
 };

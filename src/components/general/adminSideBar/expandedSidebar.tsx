@@ -42,7 +42,7 @@ const ExpandedSidebar: React.FC<ExpandedSidebarProps> = ({ links }) => {
                   href={link.target}
                   key={index}
                   className={`flex items-center gap-4 py-2 px-4 rounded-lg overflow-hidden cursor-pointer w-full font-semibold ${
-                    pathName === link.target
+                    pathName.startsWith(link.target)
                       ? "bg-primary text-white hover:bg-primary/90"
                       : "bg-white text-black hover:bg-primary hover:text-white"
                   }`}

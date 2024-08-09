@@ -24,4 +24,36 @@ export class StateService extends Service {
     const res = await this.Http.Upload(formData, token, URL);
     return res;
   }
+
+  /**
+   * Get Associated Files
+   *  - format timestamp
+   * @param stateId
+   * @param token
+   * @param tags
+   * @returns
+   */
+  async getFiles(stateId: string, token: string, tags: string[]) {
+    const result = await this.Http.Get(token, tags, stateId);
+    const formattedFiles = await result?.files?.map((item: any) => ({
+      ...item,
+      createdAt: this.timeStampFormatter(item.createdAt),
+      updatedAt: this.timeStampFormatter(item.updatedAt),
+    }));
+    return { ...result, files: formattedFiles };
+  }
+
+  /**
+   * Get Associated Files
+   *  - format timestamp
+   * @param stateId
+   * @param token
+   * @param tags
+   * @returns
+   */
+  async unassignFile(fileIds: string[], stateId: string, token: string) {
+    const URL = `${process.env.BASE_API_URL}${StateRoutes.UNASSIGN_FILE}`;
+    const res = await this.Http.Post({ fileIds, stateId }, token, URL);
+    return res;
+  }
 }

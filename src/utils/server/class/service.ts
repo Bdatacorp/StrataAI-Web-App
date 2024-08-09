@@ -5,7 +5,7 @@ import { HttpPostReturnType } from "../http/type";
 
 export default class Service {
   protected Http: HTTP;
-  private timeStampFormatter: typeof TimeStampFormatter;
+  public timeStampFormatter: typeof TimeStampFormatter;
   private statusFormatter: typeof StatusFormatter;
 
   constructor(ResourceURL: string) {

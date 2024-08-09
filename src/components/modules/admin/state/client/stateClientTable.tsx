@@ -8,6 +8,7 @@ import {
   TableRows,
   TableRowsActionTypes,
 } from "@/components/ui/client/table/types";
+import { Modules } from "@/lib/config/modules";
 import { openUploadFileToStateModal } from "@/lib/provider/features/state/state.slice";
 import deleteStateAction from "@/server/actions/state/deleteStateAction";
 import { Button, Tooltip } from "@mantine/core";
@@ -25,7 +26,7 @@ export default function StateClientTable({
   const actions: TableActionIconsProps = {
     view: {
       type: TableRowsActionTypes.NAVIGATION,
-      navigationRoute: "",
+      navigationRoute: Modules.ADMIN.FILES_ACCOCIATED_STATE.route,
     },
     deleteAction: {
       action: deleteStateAction,
@@ -66,7 +67,7 @@ export default function StateClientTable({
         actions={actions}
         columns={columns}
         rows={rows}
-        actionButtons={[actionButton1,actionButton2]}
+        actionButtons={[actionButton1, actionButton2]}
       />
     </>
   );

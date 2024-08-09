@@ -23,6 +23,7 @@ export interface TableActionIconsProps {
     type: TableRowsActionTypes;
     dispatchAction?: any;
     navigationRoute?: string;
+    queryParameters?: string[];
   };
   edit?: {
     type: TableRowsActionTypes;
@@ -41,4 +42,12 @@ export type RowAction = {
 export type RowActionButton = {
   element: ReactNode;
   action: (id?: any) => Promise<void>;
+  loading?: boolean;
+};
+
+export type DangerZoneElement = {
+  label: string;
+  icon: ReactNode;
+  action: (id?: any) => Promise<void>;
+  confirmMessage?: string;
 };

@@ -4,6 +4,7 @@ import {
   Badge,
   Button,
   Checkbox,
+  LoadingOverlay,
   Progress,
   RingProgress,
   Table,
@@ -11,6 +12,7 @@ import {
   Tooltip,
 } from "@mantine/core";
 import {
+  DangerZoneElement,
   RowActionButton,
   TableActionIconsProps,
   TableColumns,
@@ -24,17 +26,20 @@ import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 import { IoMdEye } from "react-icons/io";
 import { BiEdit } from "react-icons/bi";
+import ElementLoading from "../loading/elementLoading";
 
 export default function TableDataRows({
   columns,
   rows,
   actions,
   actionButtons,
+  elements,
 }: {
   columns: TableColumns[];
   rows: TableRows;
   actions?: TableActionIconsProps;
   actionButtons?: RowActionButton[];
+  elements?: DangerZoneElement[];
 }) {
   const { data } = rows;
 
@@ -85,8 +90,16 @@ export default function TableDataRows({
                   : "justify-start"
               } items-center gap-4`}
             >
-              {actionButtons?.map(({ element, action }, index) => (
-                <div key={index} onClick={() => action(rowData)}>
+              {actionButtons?.map(({ element, action, loading }, index) => (
+                <div
+                  key={index}
+                  onClick={() => {
+                    if (!loading) {
+                      action(rowData);
+                    }
+                  }}
+                  className="relative"
+                >
                   {element}
                 </div>
               ))}
@@ -131,6 +144,7 @@ export default function TableDataRows({
                 deleteAction={actions?.deleteAction}
                 disableAction={actions?.disableAction}
                 id={rowData._id}
+                elements={elements}
               />
             </div>
           </Table.Td>
