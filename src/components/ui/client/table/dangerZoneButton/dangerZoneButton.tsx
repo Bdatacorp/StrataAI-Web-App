@@ -56,7 +56,7 @@ export default function DangerZoneButton({
     });
 
   return (
-    <Menu shadow="md" width={200}>
+    <Menu shadow="md" width={180}>
       <Menu.Target>
         <ActionIcon variant="transparent">
           <div>

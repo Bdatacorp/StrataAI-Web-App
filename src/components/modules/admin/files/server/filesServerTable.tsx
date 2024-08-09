@@ -9,6 +9,7 @@ const cloumns: TableColumns[] = [
   {
     label: "Filename",
     dataColumn: FileColumnEnum.filename,
+    maxWidth: 10,
   },
   {
     label: "File Id",

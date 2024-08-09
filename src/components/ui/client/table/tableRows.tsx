@@ -47,7 +47,7 @@ export default function TableDataRows({
     <>
       {data.map((rowData, supplierIndex) => (
         <Table.Tr key={supplierIndex}>
-          <Table.Td className="max-w-[80px]">
+          <Table.Td className="w-5">
             <Checkbox aria-label="Select row" />
           </Table.Td>
 
@@ -55,42 +55,16 @@ export default function TableDataRows({
             ({ dataColumn, width, maxWidth, center, noWrap, label }, index) => (
               <React.Fragment key={index}>
                 {dataColumn === "index" && (
-                  <Table.Td className="max-w-[80px] text-ellipsis overflow-hidden whitespace-nowrap">
+                  <Table.Td className="max-w-[5px] text-ellipsis overflow-hidden whitespace-nowrap">
                     {index}
                   </Table.Td>
                 )}
 
                 {dataColumn !== "status" && dataColumn !== "index" && (
-                  <Table.Td className={``}>
-                    {label !== "Stock" ? (
-                      typeof rowData[dataColumn] === "object" ? (
-                        JSON.stringify(rowData[dataColumn])
-                      ) : (
-                        rowData[dataColumn]
-                      )
-                    ) : (
-                      <RingProgress
-                        size={90}
-                        thickness={8}
-                        label={
-                          <Text size="md" ta="center">
-                            {rowData["availbleQuantity"]}
-                          </Text>
-                        }
-                        sections={[
-                          {
-                            value: rowData["averageQuantity"],
-                            color: "green",
-                            tooltip: "Avaiable Quantity",
-                          },
-                          {
-                            value: rowData["averageUsedQuantity"],
-                            color: "red",
-                            tooltip: "Used Quantity",
-                          },
-                        ]}
-                      />
-                    )}
+                  <Table.Td className={`lg:max-w-3 whitespace-nowrap truncate`}>
+                    {typeof rowData[dataColumn] === "object"
+                      ? JSON.stringify(rowData[dataColumn])
+                      : rowData[dataColumn]}
                   </Table.Td>
                 )}
               </React.Fragment>
@@ -103,13 +77,13 @@ export default function TableDataRows({
             </Badge>
           </Table.Td> */}
 
-          <Table.Td>
+          <Table.Td className={`w-16`}>
             <div
               className={`flex ${
                 actionButtons && actionButtons.length !== 0
                   ? "justify-between"
                   : "justify-start"
-              } items-center gap-2`}
+              } items-center gap-4`}
             >
               {actionButtons?.map(({ element, action }, index) => (
                 <div key={index} onClick={() => action(rowData)}>
