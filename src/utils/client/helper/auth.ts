@@ -18,7 +18,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 
 // You'll need to import and pass this
 // to `NextAuth` in `app/api/auth/[...nextauth]/route.ts`
-export const config = {
+export const authConfig = {
   providers: [
     CredentialsProvider({
       id: "credentials",
@@ -149,5 +149,5 @@ export function auth(
     | [NextApiRequest, NextApiResponse]
     | []
 ) {
-  return getServerSession(...args, config);
+  return getServerSession(...args, authConfig);
 }

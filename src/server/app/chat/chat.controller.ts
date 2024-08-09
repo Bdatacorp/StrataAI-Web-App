@@ -5,9 +5,12 @@ import ChatValidate from "./chat.validate";
 import ChatCacheTags from "./chat.tags";
 import { ChatService } from "./chat.service";
 import ServerToken from "@/utils/server/helper/token/serverToken";
-import { HttpPostReturnType } from "@/utils/server/http/type";
+import { HttpMethod, HttpPostReturnType } from "@/utils/server/http/type";
 import ResponseProcess from "@/utils/server/responseProcess/responseProcess";
 import ZodErrorMessage from "@/utils/server/zodErrorMessage/zodErrorMessage";
+import ChatRoute from "./chat.routes";
+import { from } from "rxjs";
+import revalidateCache from "@/utils/server/actions/revalidateCache";
 
 class ChatController {
   private chatService: ChatService;
@@ -41,6 +44,17 @@ class ChatController {
         { response, payload },
         { allowDefaultTags: false, tags: [sessionToken] }
       );
+    } catch (error: any) {
+      return this.zodErrorMessage.format(error);
+    }
+  }
+
+  async askQuestionStream(message: CreateChatDto) {
+    "use server";
+    try {
+      const validated = ChatValidate.parse(message);
+
+
     } catch (error: any) {
       return this.zodErrorMessage.format(error);
     }
