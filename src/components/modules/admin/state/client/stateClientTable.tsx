@@ -39,27 +39,18 @@ export default function StateClientTable({
     dispatch(openUploadFileToStateModal(rowData._id));
   };
 
-  const actionButton1: RowActionButton = {
-    element: (
-      <Tooltip color="gray" label="Upload New Documents">
-        <Button variant="light" color="cyan">
-          Upload Files
-        </Button>
-      </Tooltip>
-    ),
-    action: handleUploadFileOnClick,
-  };
-
-  const actionButton2: RowActionButton = {
-    element: (
-      <Tooltip color="gray" label="Assign Pre Uploaded Documents">
-        <Button variant="light" color="cyan">
-          Assign Files
-        </Button>
-      </Tooltip>
-    ),
-    action: handleUploadFileOnClick,
-  };
+  const actionButtons: RowActionButton[] = [
+    {
+      element: (
+        <Tooltip color="gray" label="Upload New Documents">
+          <Button variant="light" color="cyan">
+            Upload Files
+          </Button>
+        </Tooltip>
+      ),
+      action: handleUploadFileOnClick,
+    },
+  ];
 
   return (
     <>
@@ -67,7 +58,7 @@ export default function StateClientTable({
         actions={actions}
         columns={columns}
         rows={rows}
-        actionButtons={[actionButton1, actionButton2]}
+        actionButtons={actionButtons}
       />
     </>
   );

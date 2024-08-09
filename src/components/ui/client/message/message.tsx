@@ -20,7 +20,7 @@ export default function ChatMessage(message: ClientMessage) {
               src="/img/strata-ai.png"
               alt="Strata AI Assistant"
               width={70}
-              height={40}
+              height={30}
             />
           </div>
 
@@ -46,7 +46,7 @@ export default function ChatMessage(message: ClientMessage) {
           </div>
         </div>
       ) : (
-        <div className="float-right bg-primary p-5 text-white rounded-3xl w-3/4 lg:w-7/12">
+        <div className="float-right bg-primary p-5 text-white rounded-2xl w-3/4 lg:w-7/12">
           <article className="prose text-white">
             <Markdown>{message.text}</Markdown>
           </article>
