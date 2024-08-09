@@ -23,12 +23,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <link rel="icon" href="/favicon.ico" sizes="any" />
         <ColorSchemeScript />
-        <link
-          rel="shortcut icon"
-          href="/img/Strata-Logo.png"
-          type="image/png"
-        />
       </head>
       <body className={inter.className}>
         <LibProviders>{children}</LibProviders>

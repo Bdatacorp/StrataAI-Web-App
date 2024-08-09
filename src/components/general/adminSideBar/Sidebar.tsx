@@ -31,7 +31,7 @@ export interface Section {
   }[];
 }
 
-export const navLinks: Section[] = [
+export const sidebarNavLinks: Section[] = [
   {
     title: "",
     items: [
@@ -81,9 +81,9 @@ const AdminSidebar: React.FC = () => {
       style={{ width: isSidebarExpanded ? "20%" : "10%" }}
     >
       {isSidebarExpanded ? (
-        <ExpandedSidebar links={navLinks} />
+        <ExpandedSidebar links={sidebarNavLinks} />
       ) : (
-        <CollapsedSidebar links={navLinks} />
+        <CollapsedSidebar links={sidebarNavLinks} />
       )}
 
       <div className=" absolute top-8 right-[-15px]">

@@ -154,7 +154,9 @@ export default function NavBarContent({
                         color="gray"
                         onClick={() =>
                           findActive(session._id)
-                            ? toast.error("Couldn't delete active session.")
+                            ? toast.warning(
+                                "Unable to delete the active session."
+                              )
                             : openDeleteModal(session._id, sessionIndex)
                         }
                       >

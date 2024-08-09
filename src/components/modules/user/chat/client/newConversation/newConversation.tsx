@@ -72,9 +72,9 @@ export default function NewConversation({
         onClose={handleClose}
         title={
           <Image
-            width={35}
-            height={35}
-            src="/img/Strata-Logo.png"
+            width={100}
+            height={50}
+            src="/img/strata-ai.png"
             alt="Strata-Logo"
           />
         }

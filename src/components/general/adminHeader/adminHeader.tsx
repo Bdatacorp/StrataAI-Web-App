@@ -26,17 +26,12 @@ const AdminHeader = () => {
   return (
     <div className="flex items-center lg:justify-between py-[10px] px-4 lg:px-6">
       <div className="grow md:w-auto flex md:justify-start gap-3 items-center">
-        <div>
-          <Image
-            src={"/img/Strata-Logo.png"}
-            alt="Strata Logo"
-            width={35}
-            height={35}
-          />
-        </div>
-        <div className="font-bold text-secondary">
-          Strata <span className="text-primary">AI Admin</span>
-        </div>
+        <Image
+          src={"/img/strata-ai.png"}
+          alt="Strata Logo"
+          width={150}
+          height={80}
+        />
       </div>
 
       <div className="grow flex justify-end gap-4">
@@ -57,7 +52,19 @@ const AdminHeader = () => {
             <CgMenuLeft className="text-3xl" />
           </div>
 
-          <Drawer opened={opened} size="70%" onClose={close}>
+          <Drawer
+            opened={opened}
+            size="70%"
+            onClose={close}
+            title={
+              <Image
+                width={100}
+                height={50}
+                src="/img/strata-ai.png"
+                alt="Strata-Logo"
+              />
+            }
+          >
             <MobileSidebar />
           </Drawer>
         </div>
