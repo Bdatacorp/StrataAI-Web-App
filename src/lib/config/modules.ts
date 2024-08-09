@@ -65,4 +65,7 @@ export const Modules = {
       route: "/privacy-policy",
     },
   },
+  API:{
+    CHAT_STREAM:'/api/chat/stream'
+  }
 };

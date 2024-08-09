@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
-import { ClientMessage } from "../types";
+import { ClientMessage, MessageRoles } from "../types";
 import ChatMessage from "@/components/ui/client/message/message";
 import { ScrollArea } from "@mantine/core";
 

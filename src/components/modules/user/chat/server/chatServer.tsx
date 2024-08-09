@@ -9,7 +9,7 @@ import ElementLoading from "@/components/ui/client/loading/elementLoading";
 import chatController from "@/server/app/chat/chat.controller";
 import { ClientMessage, MessageRoles } from "../types";
 import { initialSessionMessages } from "@/lib/config/messages";
-import ChatClientStream from "../client/chatClientStream";
+import ChatClientWrapper from "../client/chatClientWrapper";
 
 async function FetchTable() {
   const messages = await chatController.loadMessages();
@@ -27,7 +27,7 @@ async function FetchTable() {
   }));
 
   return (
-    <ChatClientStream
+    <ChatClientWrapper
       states={formattedStates}
       messages={
         formattedMessages.length === 0

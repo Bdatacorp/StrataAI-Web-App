@@ -49,17 +49,6 @@ class ChatController {
     }
   }
 
-  async askQuestionStream(message: CreateChatDto) {
-    "use server";
-    try {
-      const validated = ChatValidate.parse(message);
-
-
-    } catch (error: any) {
-      return this.zodErrorMessage.format(error);
-    }
-  }
-
   async loadMessages() {
     "use server";
     const sessionToken = await this.serverToken.getSessionToken();

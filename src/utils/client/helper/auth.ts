@@ -1,12 +1,13 @@
 import authController from "@/server/app/auth/auth.controller";
 import {
   CreateUserDto,
-  InitSessionDto,
   LoginDto,
   UserPayload,
   UserRoles,
   UserType,
 } from "@/server/app/auth/auth.types";
+import sessionController from "@/server/app/session/session.controller";
+import { InitSessionDto } from "@/server/app/session/session.types";
 import type {
   GetServerSidePropsContext,
   NextApiRequest,
@@ -81,7 +82,7 @@ export const authConfig = {
         stateId: { type: "text" },
       },
       async authorize(credentials, req) {
-        const res: any = await authController.createSession(
+        const res: any = await sessionController.createSession(
           credentials as InitSessionDto
         );
 
@@ -106,7 +107,7 @@ export const authConfig = {
       async authorize(credentials, req) {
         if (!credentials?.sessionId) return null;
 
-        const res: any = await authController.retrieveSession(
+        const res: any = await sessionController.retrieveSession(
           credentials?.sessionId
         );
 

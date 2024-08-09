@@ -2,7 +2,7 @@ import Service from "@/utils/server/class/service";
 import { HTTP } from "@/utils/server/http/http";
 import { HttpPostReturnType } from "@/utils/server/http/type";
 import AuthRoutes from "./auth.routes";
-import { CreateUserDto, InitSessionDto, LoginDto } from "./auth.types";
+import { CreateUserDto, LoginDto } from "./auth.types";
 
 export class AuthService extends Service {
   constructor() {
@@ -25,30 +25,6 @@ export class AuthService extends Service {
   async registerUser(createUserDto: CreateUserDto) {
     const URL = `${process.env.BASE_API_URL}${AuthRoutes.REGISTER}`;
     const res = await this.Http.Post(createUserDto, "", URL);
-    return res;
-  }
-
-  async initSessionByState(initSessionDto: InitSessionDto, token: string) {
-    const URL = `${process.env.BASE_API_URL}${AuthRoutes.SESSION}`;
-    const res = await this.Http.Post(initSessionDto, token, URL);
-    return res;
-  }
-
-  async retrieveSessionBySessionId(sessionId: string, token: string) {
-    const URL = `${process.env.BASE_API_URL}${AuthRoutes.SESSION}/${sessionId}`;
-    const res = await this.Http.Get(token, [sessionId], null, URL);
-    return res;
-  }
-
-  async loadAllSessions(token: string, tags: string[]) {
-    const URL = `${process.env.BASE_API_URL}${AuthRoutes.SESSION}`;
-    const res = await this.Http.Get(token, tags, null, URL);
-    return res;
-  }
-
-  async findActive(sessionToken: string, token: string) {
-    const URL = `${process.env.BASE_API_URL}${AuthRoutes.FIND_SESSION_ACTIVE}/${sessionToken}`;
-    const res = await this.Http.Get(token, [sessionToken], null, URL);
     return res;
   }
 }

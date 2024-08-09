@@ -34,7 +34,7 @@ export default function NewSessionClient({
   const searchParams = useSearchParams();
 
   useEffect(() => {
-    if (searchParams.get("session") === "new") {
+    if (searchParams?.get("session") === "new") {
       dispatch(setNewSession(true));
     }
   }, [searchParams, dispatch]);

@@ -13,8 +13,13 @@ import askQuestionAction from "@/server/actions/chat/askQuestionAction";
 import { useSelector } from "react-redux";
 import { RootState } from "@/lib/provider/store";
 import NewSession from "../../session/client/newSessionClient";
-import askQuestionActionStream from "@/server/actions/chat/askQuestionActionStream";
+import askQuestionActionStream from "@/server/actions/chat/revalidateSessionAction";
 import { HttpMethod } from "@/utils/server/http/type";
+import { Modules } from "@/lib/config/modules";
+import { getToken } from "next-auth/jwt";
+import { getSession } from "next-auth/react";
+import ChatRoute from "@/server/app/chat/chat.routes";
+import revalidateSessionAction from "@/server/actions/chat/revalidateSessionAction";
 
 export default function ChatClientStream({
   messages,
@@ -39,33 +44,68 @@ export default function ChatClientStream({
         },
       ]);
     } else {
-      setMessageInputError("Please enter the question");
+      return setMessageInputError("Please enter the question");
     }
     setMessageInputError("");
     setLoading(true);
-    setLoading(false);
 
-    const response = await fetch("/api/chat/stream", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        text,
-      }),
-    });
+    const token = await getSession();
+
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API_URL}${ChatRoute.STREAM_MESSAGE}/${token?.user.sessionToken}`,
+      {
+        method: HttpMethod.POST,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token?.user.token}`,
+        },
+        body: JSON.stringify({
+          text,
+        }),
+      }
+    );
 
     if (response.ok && response.body) {
       const reader = response.body
         .pipeThrough(new TextDecoderStream())
         .getReader();
+
+      const id = Date.now().toString();
       while (true) {
         const { value, done } = await reader.read();
         if (done) {
+          revalidateSessionAction();
+          setLoading(false);
           break;
         }
-        console.log("received: ", value);
+        setClientMessages((prevMessages) => {
+          const existingMessage = prevMessages.find(
+            (message) => message.id === id
+          );
+
+          if (existingMessage) {
+            console.log("existingMessage", existingMessage);
+
+            return prevMessages.map((message) =>
+              message.id === id
+                ? { ...message, text: message.text + value }
+                : message
+            );
+          } else {
+            return [
+              ...prevMessages,
+              {
+                id,
+                role: MessageRoles.Assistant,
+                text: value,
+              },
+            ];
+          }
+        });
       }
+    } else {
+      setLoading(false);
+      setMessageInputError("Error");
     }
   };
 

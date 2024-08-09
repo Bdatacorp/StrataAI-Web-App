@@ -10,7 +10,7 @@ export interface initialState {
 
 const initialState: initialState = {
   isMobileNavBarOpened: false,
-  streamingResponse: false,
+  streamingResponse: true,
   newConversation: false,
   newSession: false,
   slideBarExpanded: true,

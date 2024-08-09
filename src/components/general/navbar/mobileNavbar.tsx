@@ -1,12 +1,13 @@
-import authController from "@/server/app/auth/auth.controller";
+
 import MobileNavbarClient from "./mobileNavbarClient";
 import { Suspense } from "react";
 import ElementLoading from "@/components/ui/client/loading/elementLoading";
+import sessionController from "@/server/app/session/session.controller";
 
 async function FetchSessions() {
   "use server";
-  const sessions = await authController.loadAllSessions();
-  const activeSession = await authController.findActiveSession();
+  const sessions = await sessionController.loadAllSessions();
+  const activeSession = await sessionController.findActiveSession();
   return (
     <MobileNavbarClient activeSession={activeSession} sessions={sessions} />
   );

@@ -24,24 +24,7 @@ export default async function handler(
       );
 
       if (response.ok && response.body) {
-        res.setHeader("Content-Type", "text/event-stream");
-        res.setHeader("Cache-Control", "no-cache");
-        res.setHeader("Connection", "keep-alive");
-        res.flushHeaders();
-
-        const reader = response.body
-          .pipeThrough(new TextDecoderStream())
-          .getReader();
-
-        while (true) {
-          const { value, done } = await reader.read();
-          if (done) {
-            break;
-          }
-          res.write(value);
-        }
-
-        res.end();
+        res.send(response.body);
       } else {
         res.status(response.status).json({ error: "Failed to fetch stream" });
       }
