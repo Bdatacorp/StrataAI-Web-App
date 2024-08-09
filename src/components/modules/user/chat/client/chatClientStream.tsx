@@ -54,7 +54,6 @@ export default function ChatClientStream({
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_API_URL}${ChatRoute.STREAM_MESSAGE}/${token?.user.sessionToken}`,
       {
-        mode:"no-cors",
         method: HttpMethod.POST,
         headers: {
           "Content-Type": "application/json",
