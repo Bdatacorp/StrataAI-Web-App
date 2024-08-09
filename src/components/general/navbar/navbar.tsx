@@ -26,7 +26,7 @@ async function FetchSessions() {
 export default function Navbar() {
   return (
     <div
-      className={`w-full flex flex-col pt-5 gap-5 px-3 bg-slate-800 h-full text-white capitalize`}
+      className={`overflow-x-auto w-full flex flex-col pt-5 gap-5 px-2 bg-slate-800 h-full text-white capitalize`}
     >
       <Suspense>
         <FetchSessions />

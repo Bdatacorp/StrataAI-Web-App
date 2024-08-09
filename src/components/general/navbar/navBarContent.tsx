@@ -4,11 +4,12 @@ import { openConversation } from "@/lib/provider/features/ui/ui.slice";
 import { RootState } from "@/lib/provider/store";
 import deleteSessionAction from "@/server/actions/session/deleteSessionAction";
 import categorizeDate from "@/utils/client/helper/timestampConvertToStringDate";
-import { ActionIcon, Button, ScrollArea, Text } from "@mantine/core";
+import { ActionIcon, Button, Menu, ScrollArea, Text } from "@mantine/core";
 import { modals } from "@mantine/modals";
 import { signIn } from "next-auth/react";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { BsThreeDotsVertical } from "react-icons/bs";
 import { MdDelete } from "react-icons/md";
 import { PiPlusCircleBold } from "react-icons/pi";
 import { useDispatch, useSelector } from "react-redux";
@@ -123,42 +124,68 @@ export default function NavBarContent({
         </Button>
       </div>
 
-      <ScrollArea className="grow">
-        {groupedByDate.map((groupedSession: GroupedSession, groupIndex) => (
-          <div key={groupIndex} className="flex flex-col gap-1 mb-4">
-            <div className="text-xs">{groupedSession.date}</div>
-            <div className="flex flex-col gap-2">
-              {groupedSession.sessions.map((session: any, sessionIndex) => (
+      {groupedByDate.map((groupedSession: GroupedSession, groupIndex) => (
+        <div key={groupIndex} className="flex flex-col gap-1 mb-4">
+          <div className="text-xs">{groupedSession.date}</div>
+          <div className="flex flex-col gap-2">
+            {groupedSession.sessions.map((session: any, sessionIndex) => (
+              <div className="group flex gap-1" key={sessionIndex}>
                 <div
-                  className="group flex flex-col gap-1 relative"
-                  key={sessionIndex}
-                >
-                  <div
-                    className={`w-full px-2 py-1 rounded-md truncate cursor-pointer
+                  className={`w-full px-2 py-1 rounded-md truncate cursor-pointer
                      ${findActive(session._id) && "bg-slate-600"}
                      hover:bg-slate-600
                   `}
-                    onClick={() => hanldeSetActiveSession(session._id)}
-                  >
-                    {session.state.name} | {session.title}
-                  </div>
-
-                  <div className="hidden group-hover:flex absolute items-center h-full right-28 lg:right-[5.5rem]">
-                    <ActionIcon
-                      loading={deleteLoading[sessionIndex]}
-                      onClick={() => openDeleteModal(session._id, sessionIndex)}
-                      variant="outline"
-                      color="red"
-                    >
-                      <MdDelete />
-                    </ActionIcon>
-                  </div>
+                  onClick={() => hanldeSetActiveSession(session._id)}
+                >
+                  {session.state.name} | {session.title}
                 </div>
-              ))}
-            </div>
+
+                <div>
+                  <Menu shadow="md" width={100}>
+                    <Menu.Target>
+                      <ActionIcon color="white" variant="transparent">
+                        <BsThreeDotsVertical />
+                      </ActionIcon>
+                    </Menu.Target>
+                    <Menu.Dropdown className="rounded-lg bg-gray-800">
+                      <Menu.Item
+                        className="grid p-2"
+                        color="gray"
+                        onClick={() =>
+                          openDeleteModal(session._id, sessionIndex)
+                        }
+                      >
+                        <Button
+                          color="red"
+                          size="compact-xs"
+                          variant="transparent"
+                          loading={deleteLoading[sessionIndex]}
+                          loaderProps={{ type: "bars" }}
+                          leftSection={<MdDelete />}
+                          fullWidth
+                        >
+                          Delete
+                        </Button>
+                      </Menu.Item>
+                    </Menu.Dropdown>
+                  </Menu>
+                </div>
+
+                {/* <div className="hidden group-hover:flex absolute items-center right-0 justify-center">
+                  <ActionIcon
+                    loading={deleteLoading[sessionIndex]}
+                    onClick={}
+                    variant="transparent"
+                    color="red"
+                  >
+                    <MdDelete />
+                  </ActionIcon>
+                </div> */}
+              </div>
+            ))}
           </div>
-        ))}
-      </ScrollArea>
+        </div>
+      ))}
     </div>
   );
 }
