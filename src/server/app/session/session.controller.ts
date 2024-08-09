@@ -68,6 +68,10 @@ class SessionController {
     return res;
   }
 
+  /**
+   * Get Active Session Id
+   * @returns
+   */
   async findActiveSession() {
     "use server";
     const sessionToken = await ServerToken.getSessionToken();
@@ -83,19 +87,27 @@ class SessionController {
 
   async deleteSession(sessionId: string) {
     "use server";
-    try {
-      const userToken = await ServerToken.getUserToken();
-      const sessionToken = await ServerToken.getSessionToken();
-      const res = await this.sessionService.delete(sessionId, userToken);
-      const { response, payload } = res as HttpPostReturnType;
 
-      return this.responseProcess.process(
-        { response, payload },
-        { tags: [userToken, sessionToken] }
+    const userToken = await ServerToken.getUserToken();
+    const sessionToken = await ServerToken.getSessionToken();
+
+    const activeSession = await this.findActiveSession();
+
+    if (activeSession === sessionId) {
+      console.log("yes");
+
+      throw new Error(
+        `Request Failed: : \nError Code[Couldn't delete active session.]`
       );
-    } catch (error: any) {
-      return this.zodErrorMessage.format(error);
     }
+
+    const res = await this.sessionService.delete(sessionId, userToken);
+    const { response, payload } = res as HttpPostReturnType;
+
+    return this.responseProcess.process(
+      { response, payload },
+      { tags: [userToken, sessionToken] }
+    );
   }
 }
 
