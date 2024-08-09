@@ -53,7 +53,7 @@ export default function ChatClientStream({
 
     try {
       const response = await fetch(
-        `http://localhost:3001/chat/stream/${token?.user.sessionToken}`,
+        `${process.env.NEXT_PUBLIC_BASE_API_URL}${ChatRoute.STREAM_MESSAGE}/${token?.user.sessionToken}`,
         {
           method: HttpMethod.POST,
           headers: {
