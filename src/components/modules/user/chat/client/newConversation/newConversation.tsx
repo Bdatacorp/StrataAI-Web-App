@@ -36,14 +36,7 @@ export default function NewConversation({
   const router = useRouter();
 
   const handleClose = () => {
-    const session_id = localStorage.getItem("session_id") as string;
-    const state = localStorage.getItem("state") as string;
-
-    if (session_id && state) {
-      dispatch(closeConversation());
-    } else {
-      setStateError("Please select the state before continue");
-    }
+    dispatch(closeConversation());
   };
 
   const handleContinue = async () => {
