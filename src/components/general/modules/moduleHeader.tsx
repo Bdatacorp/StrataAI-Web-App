@@ -1,6 +1,5 @@
 "use client";
 
-
 import ContrlledBreadcrumbs, {
   ContrlledBreadcrumbsItems,
 } from "@/components/ui/client/breadcrumbs/contrlledBreadcrumbs";
@@ -24,8 +23,8 @@ export default function ModuleHeader({
 }: {
   moduleName: string;
   breadcrumbsItems?: ContrlledBreadcrumbsItems;
-  buttonName: string;
-  buttonAction: string | ActionCreatorWithoutPayload;
+  buttonName?: string;
+  buttonAction?: string | ActionCreatorWithoutPayload;
   pageTypes?: ModuleHeaderPageTypes;
 }) {
   const dispatch = useDispatch();
@@ -35,7 +34,7 @@ export default function ModuleHeader({
     if (typeof buttonAction === "function") {
       dispatch(buttonAction());
     } else {
-      router.push(buttonAction);
+      router.push(buttonAction || "");
     }
   };
 
@@ -55,13 +54,15 @@ export default function ModuleHeader({
         </div>
 
         {/* BUTTON */}
-        <div>
-          <Button
-            onClick={hanldeButtonClick}
-            color={Colors.primary}
-            w={150}
-          >{`New ${buttonName}`}</Button>
-        </div>
+        {buttonName && (
+          <div>
+            <Button
+              onClick={hanldeButtonClick}
+              color={Colors.primary}
+              w={150}
+            >{`New ${buttonName}`}</Button>
+          </div>
+        )}
       </div>
     </>
   );

@@ -17,8 +17,6 @@ export default function UsersModuleHeader() {
       pageTypes={ModuleHeaderPageTypes.Table}
       moduleName={Modules.ADMIN.USERS.name}
       breadcrumbsItems={items}
-      buttonName={Modules.ADMIN.USERS.name}
-      buttonAction={openUploadFileModal}
     />
   );
 }

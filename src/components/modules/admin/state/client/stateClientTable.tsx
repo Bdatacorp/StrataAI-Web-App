@@ -27,7 +27,11 @@ export default function StateClientTable({
       type: TableRowsActionTypes.NAVIGATION,
       navigationRoute: "",
     },
-    deleteAction: { action: deleteStateAction },
+    deleteAction: {
+      action: deleteStateAction,
+      confirmMessage:
+        "Are you sure you want to delete? The files associated with states will not be deleted. You can remove them separately using the files module.",
+    },
   };
 
   const handleUploadFileOnClick = async (rowData: any) => {

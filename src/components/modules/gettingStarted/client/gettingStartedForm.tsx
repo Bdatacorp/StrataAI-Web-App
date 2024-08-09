@@ -94,7 +94,7 @@ export default function GettingStartedForm({
           </div>
           <div>
             <p className="text-[14px] font-[700] text-[#09132080]">
-              Please fillout below details before the continue
+              Please fill out below details before continuing
             </p>
           </div>
         </div>
@@ -146,9 +146,9 @@ export default function GettingStartedForm({
         </div>
         <div className="w-full">
           <Select
-            label="About User"
+            label="User Type"
             name="type"
-            description="Please select your type"
+            description="Please let us know if you are an owner or a manager"
             placeholder="Ex. Owner"
             searchable
             data={UserTypesData}
@@ -165,7 +165,7 @@ export default function GettingStartedForm({
           <Select
             label="State"
             name="state"
-            description="Please enter state"
+            description="Please select your state"
             placeholder="Ex. Victoria"
             data={StatesData}
             searchable

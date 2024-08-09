@@ -22,17 +22,11 @@ export default function UserClientTable({
   rows: TableRows;
 }) {
   const router = useRouter();
-  const actions: TableActionIconsProps = {
-    deleteAction: { action: deleteFileAction },
-  };
+  const actions: TableActionIconsProps = {};
 
   return (
     <>
-      <DataTable
-        actions={actions}
-        columns={columns}
-        rows={rows}
-      />
+      <DataTable actions={actions} columns={columns} rows={rows} />
     </>
   );
 }
