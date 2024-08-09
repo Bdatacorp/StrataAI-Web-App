@@ -51,61 +51,63 @@ export default function ChatClientStream({
 
     const token = await getSession();
 
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API_URL}${ChatRoute.STREAM_MESSAGE}/${token?.user.sessionToken}`,
-      {
-        method: HttpMethod.POST,
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token?.user.token}`,
-        },
-        body: JSON.stringify({
-          text,
-        }),
-      }
-    );
-
-    if (response.ok && response.body) {
-      const reader = response.body
-        .pipeThrough(new TextDecoderStream())
-        .getReader();
-
-      const id = Date.now().toString();
-      while (true) {
-        const { value, done } = await reader.read();
-        if (done) {
-          revalidateSessionAction();
-          setLoading(false);
-          break;
+    try {
+      const response = await fetch(
+        `http://localhost:3001/chat/stream/${token?.user.sessionToken}`,
+        {
+          method: HttpMethod.POST,
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token?.user.token}`,
+          },
+          body: JSON.stringify({
+            text,
+          }),
         }
-        setClientMessages((prevMessages) => {
-          const existingMessage = prevMessages.find(
-            (message) => message.id === id
-          );
+      );
 
-          if (existingMessage) {
-            console.log("existingMessage", existingMessage);
+      if (response.ok && response.body) {
+        const reader = response.body
+          .pipeThrough(new TextDecoderStream())
+          .getReader();
 
-            return prevMessages.map((message) =>
-              message.id === id
-                ? { ...message, text: message.text + value }
-                : message
-            );
-          } else {
-            return [
-              ...prevMessages,
-              {
-                id,
-                role: MessageRoles.Assistant,
-                text: value,
-              },
-            ];
+        const id = Date.now().toString();
+        while (true) {
+          const { value, done } = await reader.read();
+          if (done) {
+            // revalidateSessionAction();
+            setLoading(false);
+            break;
           }
-        });
+          setClientMessages((prevMessages) => {
+            const existingMessage = prevMessages.find(
+              (message) => message.id === id
+            );
+
+            if (existingMessage) {
+              return prevMessages.map((message) =>
+                message.id === id
+                  ? { ...message, text: message.text + value }
+                  : message
+              );
+            } else {
+              return [
+                ...prevMessages,
+                {
+                  id,
+                  role: MessageRoles.Assistant,
+                  text: value,
+                },
+              ];
+            }
+          });
+        }
+      } else {
+        setLoading(false);
+        setMessageInputError("Error");
       }
-    } else {
-      setLoading(false);
-      setMessageInputError("Error");
+    } catch (err) {
+      console.log(err);
     }
   };
 

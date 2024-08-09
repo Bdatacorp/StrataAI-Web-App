@@ -62,8 +62,11 @@ export default function ChatFooter({
         </div>
         <div>
           <ActionIcon
-          loading={loading}
-            onClick={() => handleSend(inputRef.current?.value)}
+            loading={loading}
+            onClick={() => {
+              handleSend(inputRef.current?.value);
+              hanldeCancelButton();
+            }}
             size="lg"
             c="white"
             className="bg-primary"
