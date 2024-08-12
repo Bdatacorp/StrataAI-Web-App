@@ -42,7 +42,7 @@ export default function ChatFooter({
             onClick={hanldeCancelButton}
             size="lg"
             c="white"
-            className="bg-secondary"
+            className="bg-secondary hover:bg-primary"
             radius={100}
           >
             <MdOutlineClear className="text-lg" />
@@ -69,14 +69,13 @@ export default function ChatFooter({
             }}
             size="lg"
             c="white"
-            className="bg-primary"
+            className="bg-primary hover:bg-secondary"
             radius={100}
           >
             <MdSend className="text-lg" />
           </ActionIcon>
         </div>
       </div>
-      {/* {streamingResponse ? <ChatClientFormStreaming /> : <ChatClientForm />} */}
 
       <div className="text-[10px] text-center px-4 lg:px-28">
         Strata Chat AI may occasionally provide inaccurate information. It is

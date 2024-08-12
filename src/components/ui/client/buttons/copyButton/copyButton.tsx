@@ -8,7 +8,7 @@ export default function CopyButtonElement({ value }: { value?: string }) {
   return (
     <CopyButton value={value || ""} timeout={2000}>
       {({ copied, copy }) => (
-        <Tooltip label={copied ? "Copied" : "Copy"} withArrow position="right">
+        <Tooltip color="gray" label={copied ? "Copied" : "Copy"} withArrow position="bottom">
           <ActionIcon
             color={copied ? "teal" : "gray"}
             variant="subtle"

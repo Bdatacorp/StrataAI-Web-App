@@ -13,7 +13,7 @@ import {
   Tooltip,
 } from "@mantine/core";
 import Markdown from "react-markdown";
-import CopyButtonElement from "../copyButton/copyButton";
+import CopyButtonElement from "../buttons/copyButton/copyButton";
 import { MdEmail } from "react-icons/md";
 import Image from "next/image";
 import { toast } from "react-toastify";
@@ -22,6 +22,7 @@ import { useDispatch } from "react-redux";
 import { setAnnotationPDF } from "@/lib/provider/features/pdf/pdf.slice";
 import FilesRoute from "@/server/app/files/files.routes";
 import extractSourceNumber from "@/utils/client/helper/extractSourceNumber";
+import MessageButtons from "./messageButtons";
 
 export default function ChatMessage(message: ClientMessage) {
   const dispatch = useDispatch();
@@ -43,43 +44,31 @@ export default function ChatMessage(message: ClientMessage) {
               <Markdown>{message.text}</Markdown>
             </article>
 
-            <div className="w-full flex items-center gap-2">
+            <div className="w-full relative grid grid-cols-5 lg:grid-cols-10 gap-2">
               {message.annotation &&
                 message.annotation?.map((annotation, index) => (
-                  <Badge
-                    className="cursor-pointer"
-                    key={index}
-                    onClick={() =>
-                      dispatch(
-                        setAnnotationPDF({
-                          url: `${process.env.NEXT_PUBLIC_BASE_API_URL}${FilesRoute.VIEW}/${annotation.file_Id}`,
-                          page:
-                            extractSourceNumber(annotation.page as string) || 1,
-                        })
-                      )
-                    }
-                    color={Colors.primary}
-                  >
-                    {annotation.page}
-                  </Badge>
+                  <div key={index}>
+                    <Badge
+                      className="cursor-pointer"
+                      onClick={() =>
+                        dispatch(
+                          setAnnotationPDF({
+                            url: `${process.env.NEXT_PUBLIC_BASE_API_URL}${FilesRoute.VIEW}/${annotation.file_Id}`,
+                            page:
+                              extractSourceNumber(annotation.page as string) ||
+                              1,
+                          })
+                        )
+                      }
+                      color={Colors.primary}
+                    >
+                      {annotation.page}
+                    </Badge>
+                  </div>
                 ))}
             </div>
 
-            <div className="w-full flex justify-between items-center">
-              <div className=" flex gap-2">
-                <CopyButtonElement value={message.text} />
-
-                <Tooltip label="Contact Manager">
-                  <ActionIcon
-                    variant="transparent"
-                    color="gray"
-                    className="hover:bg-gray-100"
-                  >
-                    <MdEmail />
-                  </ActionIcon>
-                </Tooltip>
-              </div>
-            </div>
+            <MessageButtons message={message} />
           </div>
         </div>
       ) : (
