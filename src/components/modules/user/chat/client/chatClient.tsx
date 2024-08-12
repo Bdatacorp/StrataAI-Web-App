@@ -13,6 +13,9 @@ import askQuestionAction from "@/server/actions/chat/askQuestionAction";
 import { useSelector } from "react-redux";
 import { RootState } from "@/lib/provider/store";
 import NewSession from "../../session/client/newSessionClient";
+import extractSourceNumber, {
+  extractSource,
+} from "@/utils/client/helper/extractSourceNumber";
 
 export default function ChatClient({
   messages,
@@ -41,14 +44,19 @@ export default function ChatClient({
     setLoading(true);
     const res = await askQuestionAction(text || "");
     setLoading(false);
-    if (res.zodErrors) {
+    if ("zodErrors" in res) {
       setMessageInputError(res.zodErrors.text.message);
-    } else {
+    } else if ("payload" in res) {
       if (res?.status) {
+        const assistant = res.payload.data?.assistant;
         const message: ClientMessage = {
-          id: res?.payload?.data?.assistant?.id,
+          id: assistant.id,
           role: MessageRoles.Assistant,
-          text: res?.payload?.data?.assistant?.message,
+          text: assistant.message,
+          annotation: assistant.annotations?.map((annotation) => ({
+            file_Id: annotation.file_citation.file_id,
+            page: extractSource(annotation.text),
+          })),
         };
         setClientMessages((prevMessages) => [...prevMessages, message]);
       }

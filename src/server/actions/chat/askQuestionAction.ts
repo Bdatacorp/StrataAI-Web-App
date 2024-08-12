@@ -5,6 +5,6 @@ import chatController from "@/server/app/chat/chat.controller";
 export default async function askQuestionAction(
   text: string,
 ) {
-  const res: any = await chatController.askQuestion({ text });
+  const res = await chatController.askQuestion({ text });
   return res;
 }

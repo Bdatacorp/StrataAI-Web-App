@@ -136,9 +136,9 @@ export default function NavBarContent({
                      ${findActive(session._id) && "bg-slate-600"}
                      hover:bg-slate-600
                   `}
-                  onClick={() => hanldeSetActiveSession(session._id)}
+                  onClick={() => hanldeSetActiveSession(session?._id)}
                 >
-                  {session.state.name} | {session.title}
+                  {session?.state?.name} | {session?.title}
                 </div>
 
                 <div>

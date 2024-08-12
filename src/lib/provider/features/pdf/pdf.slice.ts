@@ -1,29 +1,37 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface initialState {
-  isPDFViewerOpened: boolean;
+  annotationPDF: {
+    opened: boolean;
+    url?: string;
+    page?: number;
+  };
 }
 
-const initialState = {
-  isPDFViewerOpened: false,
+const initialState: initialState = {
+  annotationPDF: {
+    opened: false,
+  },
 };
 
 const pdfSlice = createSlice({
   name: "pdf",
   initialState,
   reducers: {
-    togglePDFViewer(state) {
-      state.isPDFViewerOpened = !state.isPDFViewerOpened;
+    setAnnotationPDF(
+      state,
+      action: PayloadAction<{ url: string; page: number }>
+    ) {
+      state.annotationPDF.opened = true;
+      state.annotationPDF.url = action.payload.url;
+      state.annotationPDF.page = action.payload.page;
     },
-    openPDFViewer(state) {
-      state.isPDFViewerOpened = true;
-    },
-    closePDFViewer(state) {
-      state.isPDFViewerOpened = false;
+    clearAnnotationPDF(state) {
+      state.annotationPDF.opened = false;
+      state.annotationPDF.url = "";
     },
   },
 });
 
-export const { togglePDFViewer, openPDFViewer, closePDFViewer } =
-  pdfSlice.actions;
+export const { setAnnotationPDF, clearAnnotationPDF } = pdfSlice.actions;
 export default pdfSlice.reducer;

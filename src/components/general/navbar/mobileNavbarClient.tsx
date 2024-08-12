@@ -10,7 +10,6 @@ import { useDisclosure } from "@mantine/hooks";
 import Link from "next/link";
 import React from "react";
 import module from "./navbar.module.css";
-import NavBarLinks from "./navbarLinks";
 import { MdClose } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import {

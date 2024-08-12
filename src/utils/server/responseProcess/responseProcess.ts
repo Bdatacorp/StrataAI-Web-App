@@ -1,5 +1,5 @@
 import revalidateCache from "../actions/revalidateCache";
-import { ResponseProcessOptions } from "./type";
+import { ResponseProcessOptions, ReturnResponse } from "./type";
 
 class ResponseProcess {
   private tags: string[] = [];
@@ -18,14 +18,14 @@ class ResponseProcess {
    * status : boolen
    * payload : any
    */
-  async process(
-    data: { response: Response; payload: any },
+  async process<T>(
+    data: { response: Response; payload: T },
     options: ResponseProcessOptions = { allowDefaultTags: true }
-  ) {
+  ): Promise<ReturnResponse<T>> {
     const { response, payload } = data;
 
     let formattedPayload: any;
-    if (Array.isArray(payload?.message)) {
+    if (this.hasMessageArray(payload)) {
       formattedPayload = { ...payload, message: payload?.message[0] };
     } else {
       formattedPayload = payload;
@@ -50,6 +50,10 @@ class ResponseProcess {
       status: false,
       payload: formattedPayload,
     };
+  }
+
+  private hasMessageArray(payload: any): payload is { message: any[] } {
+    return payload && Array.isArray(payload.message);
   }
 }
 

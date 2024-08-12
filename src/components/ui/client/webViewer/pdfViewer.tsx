@@ -7,9 +7,14 @@ import WebViewerInstance from "@pdftron/pdfjs-express-viewer";
 interface PDFViewerProps {
   initialDoc: string;
   licenseKey: string;
+  page: number;
 }
 
-const PDFViewer: React.FC<PDFViewerProps> = ({ initialDoc, licenseKey }) => {
+const PDFViewer: React.FC<PDFViewerProps> = ({
+  initialDoc,
+  licenseKey,
+  page,
+}) => {
   const viewer = useRef<HTMLDivElement>(null);
   const [instance, setInstance] = useState<typeof WebViewerInstance | null>(
     null
@@ -29,33 +34,11 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ initialDoc, licenseKey }) => {
           const { Core, UI } = instance;
 
           Core.documentViewer.addEventListener("documentLoaded", () => {
+            Core.documentViewer.setCurrentPage(page);
             console.log("document loaded");
           });
 
-          Core.documentViewer.addEventListener(
-            "pageNumberUpdated",
-            (pageNumber: number) => {
-              console.log(`Page number is: ${pageNumber}`);
-            }
-          );
-
-          UI.setHeaderItems((header: any) => {
-            header.push({
-              type: "actionButton",
-              img: "https://icons.getbootstrap.com/assets/icons/caret-right-fill.svg",
-              onClick: () => {
-                const currentPage = Core.documentViewer.getCurrentPage();
-                const totalPages = Core.documentViewer.getPageCount();
-                const atLastPage = currentPage === totalPages;
-
-                if (atLastPage) {
-                  Core.documentViewer.setCurrentPage(1);
-                } else {
-                  Core.documentViewer.setCurrentPage(currentPage + 1);
-                }
-              },
-            });
-          });
+          instance.UI.disableElements(["menuButton"]);
 
           setInstance(instance);
         });
@@ -67,7 +50,7 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ initialDoc, licenseKey }) => {
         instance.UI.dispose();
       }
     };
-  }, [initialDoc, licenseKey, instance]);
+  }, [initialDoc, licenseKey, page, instance]);
 
   return <div className="webviewer w-full h-full" ref={viewer}></div>;
 };

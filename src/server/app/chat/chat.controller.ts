@@ -1,6 +1,11 @@
 import zodErrorMessageFormatter from "@/utils/server/pipes/zodErrorMessageFormatterPipe";
 import ResponceStatus from "@/utils/server/config/responseStatus";
-import { Chat, CreateChatDto, ChatMessage } from "./chat.types";
+import {
+  Chat,
+  CreateChatDto,
+  ChatMessage,
+  AskQuestionResponse,
+} from "./chat.types";
 import ChatValidate from "./chat.validate";
 import ChatCacheTags from "./chat.tags";
 import { ChatService } from "./chat.service";
@@ -28,16 +33,16 @@ class ChatController {
     try {
       const validated = ChatValidate.parse(message);
 
-      const sessionToken = await  ServerToken.getSessionToken();
+      const sessionToken = await ServerToken.getSessionToken();
 
       const res = await this.chatService.createMessage(
         sessionToken,
-        await  ServerToken.getUserToken(),
+        await ServerToken.getUserToken(),
         validated
       );
       const { response, payload } = res as HttpPostReturnType;
 
-      return this.responseProcess.process(
+      return this.responseProcess.process<AskQuestionResponse>(
         { response, payload },
         { allowDefaultTags: false, tags: [sessionToken] }
       );
@@ -54,7 +59,7 @@ class ChatController {
 
     const messages = await this.chatService.getSessionMessages(
       sessionToken,
-      await  ServerToken.getUserToken(),
+      await ServerToken.getUserToken(),
       [sessionToken]
     );
 

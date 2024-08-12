@@ -10,6 +10,8 @@ import chatController from "@/server/app/chat/chat.controller";
 import { ClientMessage, MessageRoles } from "../types";
 import { initialSessionMessages } from "@/lib/config/messages";
 import ChatClientWrapper from "../client/chatClientWrapper";
+import { MessageAnnotation } from "@/server/app/chat/chat.types";
+import extractSourceNumber, { extractSource } from "@/utils/client/helper/extractSourceNumber";
 
 async function FetchTable() {
   const messages = await chatController.loadMessages();
@@ -20,11 +22,25 @@ async function FetchTable() {
     label: state.name,
   }));
 
-  const formattedMessages: ClientMessage[] = messages.map((message: any) => ({
-    id: message._id,
-    role: message.type,
-    text: message.content.value,
-  }));
+  const formattedMessages: ClientMessage[] = messages.map((message: any) => {
+    const annotation = message.content.annotations?.map(
+      (annotation: MessageAnnotation) => {
+        console.log(annotation);
+        
+        return {
+          file_Id: annotation.file_citation.file_id,
+          page: extractSource(annotation.text),
+        };
+      }
+    );
+
+    return {
+      id: message._id,
+      role: message.type,
+      text: message.content.value,
+      annotation: message.type === MessageRoles.Assistant ? annotation : null,
+    };
+  });
 
   return (
     <ChatClientWrapper

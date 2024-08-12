@@ -18,6 +18,11 @@
   animation: fadein 4s ease-in 0s 1 normal forwards;
 }
 
+.pdfobject-container {
+  height: 500px;
+  border: 1px solid #ccc;
+}
+
 @keyframes fadein {
   0% {
     opacity: 0;

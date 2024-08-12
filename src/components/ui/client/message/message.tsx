@@ -4,13 +4,27 @@ import {
   ClientMessage,
   MessageRoles,
 } from "@/components/modules/user/chat/types";
-import { ActionIcon, Code, CopyButton, Text, Tooltip } from "@mantine/core";
+import {
+  ActionIcon,
+  Badge,
+  Code,
+  CopyButton,
+  Text,
+  Tooltip,
+} from "@mantine/core";
 import Markdown from "react-markdown";
 import CopyButtonElement from "../copyButton/copyButton";
 import { MdEmail } from "react-icons/md";
 import Image from "next/image";
+import { toast } from "react-toastify";
+import { Colors } from "@/lib/config/colors";
+import { useDispatch } from "react-redux";
+import { setAnnotationPDF } from "@/lib/provider/features/pdf/pdf.slice";
+import FilesRoute from "@/server/app/files/files.routes";
+import extractSourceNumber from "@/utils/client/helper/extractSourceNumber";
 
 export default function ChatMessage(message: ClientMessage) {
+  const dispatch = useDispatch();
   return (
     <div className="w-full">
       {message.role === MessageRoles.Assistant ? (
@@ -28,6 +42,29 @@ export default function ChatMessage(message: ClientMessage) {
             <article className="prose ">
               <Markdown>{message.text}</Markdown>
             </article>
+
+            <div className="w-full flex items-center gap-2">
+              {message.annotation &&
+                message.annotation?.map((annotation, index) => (
+                  <Badge
+                    className="cursor-pointer"
+                    key={index}
+                    onClick={() =>
+                      dispatch(
+                        setAnnotationPDF({
+                          url: `${process.env.NEXT_PUBLIC_BASE_API_URL}${FilesRoute.VIEW}/${annotation.file_Id}`,
+                          page:
+                            extractSourceNumber(annotation.page as string) || 1,
+                        })
+                      )
+                    }
+                    color={Colors.primary}
+                  >
+                    {annotation.page}
+                  </Badge>
+                ))}
+            </div>
+
             <div className="w-full flex justify-between items-center">
               <div className=" flex gap-2">
                 <CopyButtonElement value={message.text} />

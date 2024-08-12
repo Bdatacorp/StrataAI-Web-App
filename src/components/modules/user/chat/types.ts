@@ -3,7 +3,7 @@ export type ChatFormErrors = {
 };
 
 export type ChatFormState = {
-  id:string,
+  id: string;
   content: string;
   status: boolean;
   errors: ChatFormErrors;
@@ -13,6 +13,12 @@ export type ClientMessage = {
   id: string;
   text: string;
   role: string;
+  annotation?: Array<ClientMessageAnnotation>;
+};
+
+export type ClientMessageAnnotation = {
+  file_Id: string;
+  page: string | null;
 };
 
 export enum MessageRoles {
