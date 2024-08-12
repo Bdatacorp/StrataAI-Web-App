@@ -31,3 +31,13 @@ export type AskQuestionResponse = GeneralAPIResponse<{
   user: MessageContent;
   assistant: MessageContent & { annotations?: Array<MessageAnnotation> };
 }>;
+
+export enum FeedbackType {
+  Good = "Good",
+  Bad = "Bad",
+}
+
+export interface CreateFeedbackDto {
+  messageId: string;
+  type: FeedbackType;
+}

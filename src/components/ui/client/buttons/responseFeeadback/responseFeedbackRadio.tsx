@@ -1,6 +1,8 @@
 "use client";
 
 import { Colors } from "@/lib/config/colors";
+import createFeedbackAction from "@/server/actions/feedback/createFeedbackAction";
+import { FeedbackType } from "@/server/app/chat/chat.types";
 import { ActionIcon, ActionIconGroup, Group, Tooltip } from "@mantine/core";
 import { useEffect, useState } from "react";
 import {
@@ -9,6 +11,7 @@ import {
   MdThumbDown,
   MdThumbUp,
 } from "react-icons/md";
+import { toast } from "react-toastify";
 
 export default function ResponseFeedbackRadio({
   messageId,
@@ -22,14 +25,36 @@ export default function ResponseFeedbackRadio({
 
   const handleGoodResponseClick = async () => {
     resetState();
-    setGoodClickLoading(true);
     setGoodClicked(true);
+    setGoodClickLoading(true);
+
+    const res = await createFeedbackAction({
+      type: FeedbackType.Good,
+      messageId,
+    });
+
+    if ("status" in res) {
+      res.status && toast.success("Thank you for your feedback");
+    }
+
+    setGoodClickLoading(false);
   };
 
   const handleBadResponseClick = async () => {
     resetState();
-    setBadClickLoading(true);
     setBadClicked(true);
+    setBadClickLoading(true);
+
+    const res = await createFeedbackAction({
+      type: FeedbackType.Bad,
+      messageId,
+    });
+
+    if ("status" in res) {
+      res.status && toast.success("Thank you for your feedback");
+    }
+
+    setBadClickLoading(false);
   };
 
   const resetState = () => {

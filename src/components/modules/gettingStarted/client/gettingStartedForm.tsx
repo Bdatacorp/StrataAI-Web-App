@@ -79,7 +79,7 @@ export default function GettingStartedForm({
 
   return (
     <>
-      <div className="flex flex-col gap-5 items-center">
+      <div className="flex flex-col gap-5 items-center mb-5">
         <Image
           src={"/img/strata-ai.png"}
           className="loaderStrataAILogo"

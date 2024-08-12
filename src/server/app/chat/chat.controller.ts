@@ -5,8 +5,9 @@ import {
   CreateChatDto,
   ChatMessage,
   AskQuestionResponse,
+  CreateFeedbackDto,
 } from "./chat.types";
-import ChatValidate from "./chat.validate";
+import ChatValidate, { FeedbackValidate } from "./chat.validate";
 import ChatCacheTags from "./chat.tags";
 import { ChatService } from "./chat.service";
 import ServerToken from "@/utils/server/helper/token/serverToken";
@@ -15,6 +16,7 @@ import ResponseProcess from "@/utils/server/responseProcess/responseProcess";
 import ZodErrorMessage from "@/utils/server/zodErrorMessage/zodErrorMessage";
 import ChatRoute from "./chat.routes";
 import revalidateCache from "@/utils/server/actions/revalidateCache";
+import { GeneralAPIResponse } from "@/utils/server/types/app.type";
 
 class ChatController {
   private chatService: ChatService;
@@ -45,6 +47,29 @@ class ChatController {
       return this.responseProcess.process<AskQuestionResponse>(
         { response, payload },
         { allowDefaultTags: false, tags: [sessionToken] }
+      );
+    } catch (error: any) {
+      return this.zodErrorMessage.format(error);
+    }
+  }
+
+  async createFeedback(createFeedbackDto: CreateFeedbackDto) {
+    "use server";
+    try {
+      const validated = FeedbackValidate.parse(createFeedbackDto);
+
+      const sessionToken = await ServerToken.getSessionToken();
+
+      const res = await this.chatService.createFeedback(
+        sessionToken,
+        await ServerToken.getUserToken(),
+        validated
+      );
+      const { response, payload } = res as HttpPostReturnType;
+
+      return this.responseProcess.process<GeneralAPIResponse<any>>(
+        { response, payload },
+        { allowDefaultTags: false }
       );
     } catch (error: any) {
       return this.zodErrorMessage.format(error);
