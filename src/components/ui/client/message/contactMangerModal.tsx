@@ -1,27 +1,57 @@
+"use client";
+
 import { Colors } from "@/lib/config/colors";
+import createResponseEvent from "@/server/actions/feedback copy/createResponseEvent";
+import { ResponseEventType } from "@/server/app/chat/chat.types";
 import { Button, Textarea, Tooltip } from "@mantine/core";
 import React, { useEffect, useRef, useState } from "react";
+import { toast } from "react-toastify";
 
 export default function ContactMangerModal({
+  messageId,
   onClose,
 }: {
-    onClose: () => void;
+  messageId: string;
+  onClose: () => void;
 }) {
   const [verifyResponseClicked, setVerifyResponseClicked] =
     useState<boolean>(false);
   const [customMessageClicked, setCustomMessageClicked] =
     useState<boolean>(false);
+  const [type, setType] = useState<ResponseEventType>();
 
   const messageRef = useRef<HTMLTextAreaElement>(null);
 
-  const handleVerifyResponse = () => {
+  const handleVerifyResponse = async () => {
     resetState();
     setVerifyResponseClicked(true);
+    setType(ResponseEventType.Verify);
   };
 
   const handleCustomMessage = () => {
     resetState();
     setCustomMessageClicked(true);
+    setType(ResponseEventType.Message);
+  };
+
+  const hanldeConfirm = async () => {
+    onClose();
+
+    const res = await createResponseEvent({
+      messageId,
+      payload: {
+        type:
+          type === ResponseEventType.Message
+            ? (type as ResponseEventType.Message)
+            : (type as ResponseEventType.Verify),
+        content: messageRef.current?.value || "",
+      },
+    });
+
+    if ("status" in res) {
+      res.status &&
+        toast.success("You will receive an email with feedback shortly.");
+    }
   };
 
   const resetState = () => {
@@ -71,8 +101,14 @@ export default function ContactMangerModal({
         )}
 
         <div className="mt-4 w-full flex justify-end gap-4">
-          <Button variant="default" onClick={onClose}>Cancel</Button>
-          <Button variant="filled" color={Colors.primary}>
+          <Button variant="default" onClick={onClose}>
+            Cancel
+          </Button>
+          <Button
+            onClick={hanldeConfirm}
+            variant="filled"
+            color={Colors.primary}
+          >
             Confirm
           </Button>
         </div>

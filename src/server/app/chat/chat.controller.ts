@@ -6,6 +6,7 @@ import {
   ChatMessage,
   AskQuestionResponse,
   CreateFeedbackDto,
+  CreateResponseEventDto,
 } from "./chat.types";
 import ChatValidate, { FeedbackValidate } from "./chat.validate";
 import ChatCacheTags from "./chat.tags";
@@ -64,6 +65,30 @@ class ChatController {
         sessionToken,
         await ServerToken.getUserToken(),
         validated
+      );
+      const { response, payload } = res as HttpPostReturnType;
+
+      return this.responseProcess.process<GeneralAPIResponse<any>>(
+        { response, payload },
+        { allowDefaultTags: false }
+      );
+    } catch (error: any) {
+      return this.zodErrorMessage.format(error);
+    }
+  }
+
+  async createEvent(createResponseEventDto: CreateResponseEventDto) {
+
+    console.log(createResponseEventDto);
+    
+    "use server";
+    try {
+      const sessionToken = await ServerToken.getSessionToken();
+
+      const res = await this.chatService.createEvent(
+        sessionToken,
+        await ServerToken.getUserToken(),
+        createResponseEventDto
       );
       const { response, payload } = res as HttpPostReturnType;
 

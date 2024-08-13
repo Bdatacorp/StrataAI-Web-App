@@ -23,7 +23,9 @@ export default function MessageButtons({
     modals.open({
       onClose: hanldeClose,
       title: "Please confirm your action",
-      children: <ContactMangerModal onClose={hanldeClose} />,
+      children: (
+        <ContactMangerModal onClose={hanldeClose} messageId={message.id} />
+      ),
     });
 
   return (

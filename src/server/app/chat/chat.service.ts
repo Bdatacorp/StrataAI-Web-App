@@ -1,7 +1,11 @@
 import Service from "@/utils/server/class/service";
 import { HttpPostReturnType } from "@/utils/server/http/type";
 import ChatRoute from "./chat.routes";
-import { CreateChatDto, CreateFeedbackDto } from "./chat.types";
+import {
+  CreateChatDto,
+  CreateFeedbackDto,
+  CreateResponseEventDto,
+} from "./chat.types";
 
 export class ChatService extends Service {
   constructor() {
@@ -26,6 +30,18 @@ export class ChatService extends Service {
   ) {
     const URL = `${process.env.BASE_API_URL}${ChatRoute.CREATE_FEEDBACK}/${sessionToken}`;
     const res = await this.Http.Post(createFeedbackDto, token, URL);
+    return res;
+  }
+
+  async createEvent(
+    sessionToken: string,
+    token: string,
+    createResponseEventDto: CreateResponseEventDto
+  ) {
+    const URL = `${process.env.BASE_API_URL}${ChatRoute.CREATE_EVENT}/${sessionToken}`;
+    const res = await this.Http.Post(createResponseEventDto, token, URL);
+    console.log(res);
+
     return res;
   }
 
