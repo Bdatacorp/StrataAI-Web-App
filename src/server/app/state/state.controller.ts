@@ -9,6 +9,7 @@ import { HttpPostReturnType } from "@/utils/server/http/type";
 import ServerToken from "@/utils/server/helper/token/serverToken";
 import { revalidatePath } from "next/cache";
 import { Modules } from "@/lib/config/modules";
+import FilesCacheTags from "../files/files.tags";
 
 class StateController {
   private stateService: StateService;
@@ -51,11 +52,9 @@ class StateController {
       );
       const { response, payload } = res as HttpPostReturnType;
 
-      revalidatePath(Modules.ADMIN.STATE.route);
-
       return this.responseProcess.process(
         { response, payload },
-        { tags: [payload.data.id] }
+        { tags: [payload.data.id], allowDefaultTags: true }
       );
     } catch (error: any) {
       return this.zodErrorMessage.format(error);
@@ -76,7 +75,7 @@ class StateController {
       return this.responseProcess.process(
         { response, payload },
         {
-          tags: [stateId],
+          tags: [stateId, FilesCacheTags.Files],
         }
       );
     } catch (error: any) {
@@ -95,7 +94,7 @@ class StateController {
 
       return this.responseProcess.process(
         { response, payload },
-        { tags: [id] }
+        { tags: [id],allowDefaultTags:true }
       );
     } catch (error: any) {
       return this.zodErrorMessage.format(error);

@@ -38,7 +38,10 @@ class FilesController {
       );
       const { response, payload } = res as HttpPostReturnType;
 
-      return this.responseProcess.process({ response, payload });
+      return this.responseProcess.process(
+        { response, payload },
+        { allowDefaultTags: true }
+      );
     } catch (error: any) {
       return this.zodErrorMessage.format(error);
     }
@@ -53,7 +56,10 @@ class FilesController {
       );
       const { response, payload } = res as HttpPostReturnType;
 
-      return this.responseProcess.process({ response, payload });
+      return this.responseProcess.process(
+        { response, payload },
+        { allowDefaultTags: true }
+      );
     } catch (error: any) {
       return this.zodErrorMessage.format(error);
     }
