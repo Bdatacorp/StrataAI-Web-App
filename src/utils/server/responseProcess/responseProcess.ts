@@ -33,6 +33,7 @@ class ResponseProcess {
 
     if (response.ok) {
       if (options?.allowDefaultTags) {
+        console.log("allowDefaultTags", options.allowDefaultTags);
         options?.tags
           ? revalidateCache(this.tags.concat(options?.tags))
           : revalidateCache(this.tags);
