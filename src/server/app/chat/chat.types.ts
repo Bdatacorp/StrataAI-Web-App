@@ -19,17 +19,16 @@ export type MessageContent = {
   message: string;
 };
 
-export type MessageAnnotation = {
-  type: string;
-  text: string;
-  end_index: number;
-  start_index: number;
-  file_citation: { file_id: string };
+export type MessageMetadata = {
+  page: string;
+  filename: string;
+  source: string;
+  pageContent?: string;
 };
 
 export type AskQuestionResponse = GeneralAPIResponse<{
   user: MessageContent;
-  assistant: MessageContent & { annotations?: Array<MessageAnnotation> };
+  assistant: MessageContent & { metadata?: Array<MessageMetadata> };
 }>;
 
 export enum FeedbackType {

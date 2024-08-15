@@ -31,7 +31,7 @@ export default function ChatMessages({
               text={message.text}
               role={message.role}
               id={message.id}
-              annotation={message.annotation}
+              metadata={message.metadata}
             />
           </div>
         ))}

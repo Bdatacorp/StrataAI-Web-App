@@ -53,10 +53,7 @@ export default function ChatClient({
           id: assistant.id,
           role: MessageRoles.Assistant,
           text: assistant.message,
-          annotation: assistant.annotations?.map((annotation) => ({
-            file_Id: annotation.file_citation.file_id,
-            page: extractSource(annotation.text),
-          })),
+          metadata: assistant.metadata,
         };
         setClientMessages((prevMessages) => [...prevMessages, message]);
       }

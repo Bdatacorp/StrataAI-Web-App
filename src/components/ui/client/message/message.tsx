@@ -45,24 +45,22 @@ export default function ChatMessage(message: ClientMessage) {
             </article>
 
             <div className="w-full relative grid grid-cols-5 lg:grid-cols-10 gap-2">
-              {message.annotation &&
-                message.annotation?.map((annotation, index) => (
+              {message.metadata &&
+                message.metadata?.map((metadata, index) => (
                   <div key={index}>
                     <Badge
                       className="cursor-pointer"
                       onClick={() =>
                         dispatch(
                           setAnnotationPDF({
-                            url: `${process.env.NEXT_PUBLIC_BASE_API_URL}${FilesRoute.VIEW}/${annotation.file_Id}`,
-                            page:
-                              extractSourceNumber(annotation.page as string) ||
-                              1,
+                            url: `${process.env.NEXT_PUBLIC_BASE_API_URL}${FilesRoute.VIEW}/${metadata.filename}`,
+                            page: parseInt(metadata.page),
                           })
                         )
                       }
                       color={Colors.primary}
                     >
-                      {annotation.page}
+                      {metadata.page}
                     </Badge>
                   </div>
                 ))}
