@@ -7,6 +7,8 @@ import ZodErrorMessage from "@/utils/server/zodErrorMessage/zodErrorMessage";
 import { auth } from "@/utils/client/helper/auth";
 import { HttpPostReturnType } from "@/utils/server/http/type";
 import ServerToken from "@/utils/server/helper/token/serverToken";
+import { revalidatePath } from "next/cache";
+import { Modules } from "@/lib/config/modules";
 
 class StateController {
   private stateService: StateService;
@@ -48,6 +50,8 @@ class StateController {
         await ServerToken.getUserToken()
       );
       const { response, payload } = res as HttpPostReturnType;
+
+      revalidatePath(Modules.ADMIN.STATE.route);
 
       return this.responseProcess.process(
         { response, payload },
