@@ -20,6 +20,7 @@ import { getToken } from "next-auth/jwt";
 import { getSession } from "next-auth/react";
 import ChatRoute from "@/server/app/chat/chat.routes";
 import revalidateSessionAction from "@/server/actions/chat/revalidateSessionAction";
+import { MessageMetadata } from "@/server/app/chat/chat.types";
 
 export default function ChatClientStream({
   messages,
@@ -72,41 +73,71 @@ export default function ChatClientStream({
           .getReader();
 
         const id = Date.now().toString();
+        let metadata: MessageMetadata[] = [];
         while (true) {
           const { value, done } = await reader.read();
           if (done) {
             // revalidateSessionAction();
+
+            setClientMessages((prevMessages) => {
+              const existingMessage = prevMessages.find(
+                (message) => message.id === id
+              );
+
+              if (existingMessage) {
+                return prevMessages.map((message) =>
+                  message.id === id
+                    ? { ...message, metadata: metadata }
+                    : message
+                );
+              } else {
+                return prevMessages;
+              }
+            });
+
             setLoading(false);
             break;
           }
-          setClientMessages((prevMessages) => {
-            const existingMessage = prevMessages.find(
-              (message) => message.id === id
-            );
 
-            if (existingMessage) {
-              return prevMessages.map((message) =>
-                message.id === id
-                  ? { ...message, text: message.text + value }
-                  : message
-              );
+          try {
+            if (value.includes("metadata")) {
+              const data = await JSON.parse(value);
+              metadata = data.metadata;
             } else {
-              return [
-                ...prevMessages,
-                {
-                  id,
-                  role: MessageRoles.Assistant,
-                  text: value,
-                },
-              ];
+              setClientMessages((prevMessages) => {
+                const existingMessage = prevMessages.find(
+                  (message) => message.id === id
+                );
+
+                if (existingMessage) {
+                  return prevMessages.map((message) =>
+                    message.id === id
+                      ? { ...message, text: message.text + value.toString() }
+                      : message
+                  );
+                } else {
+                  return [
+                    ...prevMessages,
+                    {
+                      id,
+                      role: MessageRoles.Assistant,
+                      text: value.toString(),
+                    },
+                  ];
+                }
+              });
             }
-          });
+          } catch (err) {
+            console.log(err);
+            throw err;
+          }
         }
       } else {
         setLoading(false);
         setMessageInputError("Error");
       }
     } catch (err) {
+      setLoading(false);
       console.log(err);
     }
   };
