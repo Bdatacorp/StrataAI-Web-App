@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import { ClientMessage, MessageRoles } from "../types";
 import { toast } from "react-toastify";
 import askQuestionAction from "@/server/actions/chat/askQuestionAction";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/lib/provider/store";
 import NewSession from "../../session/client/newSessionClient";
 import askQuestionActionStream from "@/server/actions/chat/revalidateSessionAction";
@@ -21,6 +21,9 @@ import { getSession } from "next-auth/react";
 import ChatRoute from "@/server/app/chat/chat.routes";
 import revalidateSessionAction from "@/server/actions/chat/revalidateSessionAction";
 import { MessageMetadata } from "@/server/app/chat/chat.types";
+import { useSearchParams } from "next/navigation";
+import { setNewSession } from "@/lib/provider/features/ui/ui.slice";
+import NewSessionClient from "../../session/client/newSessionClient";
 
 export default function ChatClientStream({
   messages,
@@ -33,6 +36,16 @@ export default function ChatClientStream({
     useState<ClientMessage[]>(messages);
   const [messageInputError, setMessageInputError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
+
+  const dispatch = useDispatch();
+
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    if (searchParams?.get("session") === "new") {
+      dispatch(setNewSession(true));
+    }
+  }, [searchParams, dispatch]);
 
   const handleSend = async (text: string | undefined) => {
     if (text) {
@@ -145,6 +158,7 @@ export default function ChatClientStream({
   return (
     <>
       <NewConversation statesData={states} />
+      <NewSessionClient statesData={states} />
       <ChatMessages messages={clientMessages} />
       <ChatFooter
         messageInputError={messageInputError}

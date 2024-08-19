@@ -15,16 +15,14 @@ export default function ModuleLayoutElement({
 }: ModuleLayoutProps) {
   return (
     <>
-      <div className="w-full h-screen flex flex-col">
+      <div className="w-full h-[100svh] flex flex-col">
         <div className="h-[10%] w-full">{header}</div>
-        <div className="h-full w-full">
-          <div className="flex h-full">
-            <div className="hidden md:block min-w-[23%] max-w-[23%] max-h-full relative">
-              {navbar}
-            </div>
-            <div className="hidden h-full">{mobileNavbar}</div>
-            <div className="w-full">{children}</div>
+        <div className="w-full flex grow">
+          <div className="hidden md:block min-w-[23%] max-w-[23%] max-h-full relative">
+            {navbar}
           </div>
+          <div className="hidden h-full">{mobileNavbar}</div>
+          <div className="w-full">{children}</div>
         </div>
       </div>
     </>

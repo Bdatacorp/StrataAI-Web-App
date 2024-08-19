@@ -62,7 +62,7 @@ export function middleware(request: NextRequest, response: NextResponse) {
 
         return result;
       },
-      failedUrl: `${Modules.USER.NEW_SESSION.route}?session=new`,
+      failedUrl: `${Modules.USER.CHAT.route}?session=new`,
     },
   ];
 

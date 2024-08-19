@@ -23,7 +23,7 @@ export default function ChatMessages({
   }, [messages]);
 
   return (
-    <div className="w-full py-5 lg:p-10 h-[80vh]  overflow-scroll border">
+    <div className="w-full py-5 lg:p-10 h-[80svh] lg:h-[80svh] overflow-scroll">
       <div className="flex flex-col gap-4 px-4 lg:mx-20">
         {messages.map((message, index) => (
           <div key={index}>

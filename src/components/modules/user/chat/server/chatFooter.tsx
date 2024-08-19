@@ -32,7 +32,7 @@ export default function ChatFooter({
   };
 
   return (
-    <div className="absolute w-full bottom-0 h-auto py-2 bg-white flex flex-col items-center justify-center gap-2">
+    <div className="h-[15vh] w-full py-4 bg-white flex flex-col items-center justify-center gap-2 overflow-y-auto">
       {/* <div className="hidden lg:flex w-full lg:w-[40%]"></div> */}
 
       <div className="w-full flex justify-center items-center gap-3 px-4 lg:px-20">

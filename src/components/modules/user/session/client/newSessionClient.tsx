@@ -48,6 +48,8 @@ export default function NewSessionClient({
   };
 
   const handleContinue = async () => {
+    if (!stateId) setStateError("Please select the state before continue");
+
     setLoading(true);
     setStateError("");
 
@@ -67,9 +69,9 @@ export default function NewSessionClient({
         toast.error("Origin is unreachable");
       }
     } else {
+      router.push(Modules.USER.CHAT.route);
       dispatch(setNewSession(false));
       setLoading(false);
-      router.push(Modules.USER.CHAT.route);
     }
   };
 

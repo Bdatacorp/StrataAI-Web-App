@@ -113,7 +113,7 @@ export default function NavBarContent({
     });
 
   return (
-    <div className="h-[80vh] flex flex-col gap-6">
+    <div className="h-[80svh] flex flex-col gap-6">
       <div className="grid">
         <Button
           onClick={() => dispatch(openConversation())}
@@ -126,7 +126,10 @@ export default function NavBarContent({
       </div>
 
       {groupedByDate.map((groupedSession: GroupedSession, groupIndex) => (
-        <div key={groupIndex} className="flex flex-col gap-1 mb-4">
+        <div
+          key={groupIndex}
+          className="flex flex-col gap-1 mb-4 overflow-y-scroll"
+        >
           <div className="text-xs">{groupedSession.date}</div>
           <div className="flex flex-col gap-2">
             {groupedSession.sessions.map((session: any, sessionIndex) => (
