@@ -18,4 +18,11 @@ export default class ServerToken {
     if (!sessionToken) throw Error("Couldn't found user session");
     return sessionToken;
   }
+
+  static async getSessionTokenIf(): Promise<string | undefined> {
+    "use server";
+    const session = await auth();
+    const sessionToken = session?.user.sessionToken;
+    return sessionToken;
+  }
 }

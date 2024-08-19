@@ -78,10 +78,9 @@ class ChatController {
   }
 
   async createEvent(createResponseEventDto: CreateResponseEventDto) {
-
     console.log(createResponseEventDto);
-    
-    "use server";
+
+    ("use server");
     try {
       const sessionToken = await ServerToken.getSessionToken();
 
@@ -103,7 +102,7 @@ class ChatController {
 
   async loadMessages() {
     "use server";
-    const sessionToken = await ServerToken.getSessionToken();
+    const sessionToken = await ServerToken.getSessionTokenIf();
 
     if (!sessionToken) return [];
 

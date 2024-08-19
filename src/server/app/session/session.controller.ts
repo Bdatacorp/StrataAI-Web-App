@@ -74,7 +74,8 @@ class SessionController {
    */
   async findActiveSession() {
     "use server";
-    const sessionToken = await ServerToken.getSessionToken();
+    const sessionToken = await ServerToken.getSessionTokenIf();
+    if (!sessionToken) return "";
     const token = await ServerToken.getUserToken();
     const res = await this.sessionService.findActive(sessionToken, token);
     return res;
