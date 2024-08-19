@@ -77,7 +77,7 @@ const AdminSidebar: React.FC = () => {
 
   return (
     <div
-      className={`h-screen relative hidden md:hidden lg:block sidebar-transition border-r`}
+      className={`h-svh relative hidden md:hidden lg:block sidebar-transition border-r`}
       style={{ width: isSidebarExpanded ? "20%" : "10%" }}
     >
       {isSidebarExpanded ? (

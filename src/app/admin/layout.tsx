@@ -17,7 +17,7 @@ const ModuleLayout = ({
           {/* SIDE BAR */}
           <AdminSidebar />
 
-          <div className="grow overflow-x-hidden px-4 lg:pl-6 lg:pr-2 pt-7 overflow-y-scroll h-[calc(100vh-80px)] ">
+          <div className="grow overflow-x-hidden px-4 lg:pl-6 lg:pr-2 pt-7 overflow-y-scroll h-[calc(100svh-80px)] ">
             {children}
           </div>
         </div>

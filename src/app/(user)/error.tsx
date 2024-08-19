@@ -20,7 +20,7 @@ export default function Error({
   }, [error]);
 
   return (
-    <main className="w-full flex h-screen flex-col gap-2 justify-start items-center py-28">
+    <main className="w-full flex h-svh flex-col gap-2 justify-start items-center py-28">
       <Image
         src="/img/strata-ai.png"
         alt="Strata AI"

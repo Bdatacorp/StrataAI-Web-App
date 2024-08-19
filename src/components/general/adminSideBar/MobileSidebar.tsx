@@ -13,7 +13,7 @@ const MobileSidebar = () => {
   const pathName = usePathname();
 
   return (
-    <div className="h-[85vh] flex flex-col justify-between gap-8 w-full">
+    <div className="h-[85svh] flex flex-col justify-between gap-8 w-full">
       {/* LINKS */}
       <div className="flex flex-col gap-2 mt-3">
         {sidebarNavLinks[0].items.map((item) => (

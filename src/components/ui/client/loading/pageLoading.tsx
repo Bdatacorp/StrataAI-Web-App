@@ -10,7 +10,7 @@ export default function PageLoading({
 }) {
   return (
     <div
-      className={`w-full h-screen flex flex-col gap-3 justify-center items-center ${
+      className={`w-full h-svh flex flex-col gap-3 justify-center items-center ${
         isBackgroud && "bg-white"
       }`}
     >

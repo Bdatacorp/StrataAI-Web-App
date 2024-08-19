@@ -16,7 +16,7 @@ async function FetchStates() {
 
 const NewSessionServer = () => {
   return (
-    <div className="w-full h-screen bg-white">
+    <div className="w-full h-svh bg-white">
       <Suspense fallback={<ElementLoading />}>
         <FetchStates />
       </Suspense>

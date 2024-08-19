@@ -23,7 +23,7 @@ export default function ChatClientPDF() {
         opened={annotationPDF.opened}
         onClose={() => dispatch(clearAnnotationPDF())}
       >
-        <div className="h-[80vh]">
+        <div className="h-[80svh]">
           {annotationPDF.url && (
             <PDFViewer
               initialDoc={annotationPDF.url}

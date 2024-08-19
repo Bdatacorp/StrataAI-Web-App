@@ -29,7 +29,7 @@ const ExpandedSidebar: React.FC<ExpandedSidebarProps> = ({ links }) => {
   const pathName = usePathname();
 
   return (
-    <div className="px-4 py-5 pb-20 flex flex-col justify-between gap-10 transition-all duration-500 overflow-y-scroll w-full h-screen relative">
+    <div className="px-4 py-5 pb-20 flex flex-col justify-between gap-10 transition-all duration-500 overflow-y-scroll w-full h-svh relative">
       <div className="flex flex-col gap-8">
         {links.map((section, index) => (
           <div key={index}>

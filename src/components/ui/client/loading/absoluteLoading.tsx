@@ -9,7 +9,7 @@ export default function AbsoluteLoading() {
   return (
     <>
       {isNewUser && (
-        <div className="absolute w-full h-screen z-[1000]">
+        <div className="absolute w-full h-svh z-[1000]">
           <PageLoading isBackgroud />
         </div>
       )}

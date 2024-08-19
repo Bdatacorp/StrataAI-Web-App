@@ -53,7 +53,7 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="pt-20 lg:pt-0 lg:h-screen flex flex-col-reverse lg:flex-row gap-5 lg:gap-0">
+    <div className="pt-20 lg:pt-0 lg:h-svh flex flex-col-reverse lg:flex-row gap-5 lg:gap-0">
       <div className="md:flex-[6] flex justify-center items-center">
         <Image
           alt="Strata Login Bg"

@@ -29,7 +29,7 @@ export default function GettingStartedServer() {
   return (
     <>
       <AbsoluteLoading />
-      <div className="w-full lg:h-screen flex flex-col-reverse lg:flex-row">
+      <div className="w-full lg:h-svh flex flex-col-reverse lg:flex-row">
         <div className="w-full lg:w-2/5 flex justify-center items-center">
           <Image
             alt="Strata Login Bg"
