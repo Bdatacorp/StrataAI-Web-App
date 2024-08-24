@@ -50,7 +50,7 @@ export default function FeedbackClientTable({ rows }: { rows: TableRows }) {
 
   const FeedbackRowType = (type: Feedback["type"]) => {
     return (
-      <Table.Td className="w-28">
+      <Table.Td>
         {type === FeedbackType.Good ? (
           <Button
             variant="light"
@@ -75,13 +75,13 @@ export default function FeedbackClientTable({ rows }: { rows: TableRows }) {
   const cloumns: TableColumns[] = [
     {
       label: "Created at",
-      dataColumn: FeedbackColumnEnum.createdAt,
-      maxWidth: 20,
+      dataColumn: FeedbackColumnEnum.updatedAt,
+      maxWidth: 10,
     },
     {
       label: "State",
       dataColumn: FeedbackColumnEnum.session,
-      maxWidth: 20,
+      maxWidth: 10,
     },
     {
       label: "type",

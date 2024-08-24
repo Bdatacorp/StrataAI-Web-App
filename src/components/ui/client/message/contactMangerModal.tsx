@@ -1,8 +1,8 @@
 "use client";
 
 import { Colors } from "@/lib/config/colors";
-import createResponseEvent from "@/server/actions/feedback copy/createResponseEvent";
-import { ResponseEventType } from "@/server/app/chat/chat.types";
+import createResponseEventAction from "@/server/actions/response-event/createResponseEventAction";
+import { ResponseEventType } from "@/server/app/response-event/response-event.types";
 import { Button, Textarea, Tooltip } from "@mantine/core";
 import React, { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
@@ -37,7 +37,7 @@ export default function ContactMangerModal({
   const hanldeConfirm = async () => {
     onClose();
 
-    const res = await createResponseEvent({
+    const res = await createResponseEventAction({
       messageId,
       payload: {
         type:

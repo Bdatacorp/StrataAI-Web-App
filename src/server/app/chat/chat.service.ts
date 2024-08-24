@@ -1,7 +1,7 @@
 import Service from "@/utils/server/class/service";
 
 import ChatRoute from "./chat.routes";
-import { CreateChatDto, CreateResponseEventDto } from "./chat.types";
+import { CreateChatDto } from "./chat.types";
 
 export class ChatService extends Service {
   constructor() {
@@ -16,18 +16,6 @@ export class ChatService extends Service {
   ) {
     const URL = `${process.env.BASE_API_URL}${ChatRoute.RESOURCE}/${sessionToken}`;
     const res = await this.Http.Post(createChatDto, token, URL);
-    return res;
-  }
-
-  async createEvent(
-    sessionToken: string,
-    token: string,
-    createResponseEventDto: CreateResponseEventDto
-  ) {
-    const URL = `${process.env.BASE_API_URL}${ChatRoute.CREATE_EVENT}/${sessionToken}`;
-    const res = await this.Http.Post(createResponseEventDto, token, URL);
-    console.log(res);
-
     return res;
   }
 

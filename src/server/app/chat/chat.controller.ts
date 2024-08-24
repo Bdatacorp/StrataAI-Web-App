@@ -1,22 +1,11 @@
-import zodErrorMessageFormatter from "@/utils/server/pipes/zodErrorMessageFormatterPipe";
-import ResponceStatus from "@/utils/server/config/responseStatus";
-import {
-  Chat,
-  CreateChatDto,
-  ChatMessage,
-  AskQuestionResponse,
-  CreateResponseEventDto,
-} from "./chat.types";
+import { CreateChatDto, AskQuestionResponse } from "./chat.types";
 import ChatValidate from "./chat.validate";
 import ChatCacheTags from "./chat.tags";
 import { ChatService } from "./chat.service";
 import ServerToken from "@/utils/server/helper/token/serverToken";
-import { HttpMethod, HttpPostReturnType } from "@/utils/server/http/type";
+import { HttpPostReturnType } from "@/utils/server/http/type";
 import ResponseProcess from "@/utils/server/responseProcess/responseProcess";
 import ZodErrorMessage from "@/utils/server/zodErrorMessage/zodErrorMessage";
-import ChatRoute from "./chat.routes";
-import revalidateCache from "@/utils/server/actions/revalidateCache";
-import { GeneralAPIResponse } from "@/utils/server/types/app.type";
 
 class ChatController {
   private chatService: ChatService;
@@ -47,29 +36,6 @@ class ChatController {
       return this.responseProcess.process<AskQuestionResponse>(
         { response, payload },
         { allowDefaultTags: false, tags: [sessionToken] }
-      );
-    } catch (error: any) {
-      return this.zodErrorMessage.format(error);
-    }
-  }
-
-  async createEvent(createResponseEventDto: CreateResponseEventDto) {
-    console.log(createResponseEventDto);
-
-    ("use server");
-    try {
-      const sessionToken = await ServerToken.getSessionToken();
-
-      const res = await this.chatService.createEvent(
-        sessionToken,
-        await ServerToken.getUserToken(),
-        createResponseEventDto
-      );
-      const { response, payload } = res as HttpPostReturnType;
-
-      return this.responseProcess.process<GeneralAPIResponse<any>>(
-        { response, payload },
-        { allowDefaultTags: false }
       );
     } catch (error: any) {
       return this.zodErrorMessage.format(error);
