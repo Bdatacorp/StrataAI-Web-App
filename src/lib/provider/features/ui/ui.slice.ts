@@ -7,6 +7,7 @@ export interface initialState {
   newConversation: boolean;
   newSession: boolean;
   slideBarExpanded: boolean;
+  isCreateSystemUserModelOpened: boolean;
   viewMessages: {
     opened: boolean;
     messages?: {
@@ -18,6 +19,7 @@ export interface initialState {
 
 const initialState: initialState = {
   isMobileNavBarOpened: false,
+  isCreateSystemUserModelOpened:false,
   streamingResponse: true,
   newConversation: false,
   newSession: false,
@@ -69,6 +71,13 @@ const uiSlice = createSlice({
       state.viewMessages.opened = false;
       state.viewMessages.messages = null;
     },
+
+    openCreateSystemUserModel(state) {
+      state.isCreateSystemUserModelOpened = true;
+    },
+    closeCreateSystemUserModel(state) {
+      state.isCreateSystemUserModelOpened = false;
+    },
   },
 });
 
@@ -83,6 +92,8 @@ export const {
   setNewSession,
   setViewMessages,
   clearViewMessages,
+  openCreateSystemUserModel,
+  closeCreateSystemUserModel
 } = uiSlice.actions;
 
 export default uiSlice.reducer;

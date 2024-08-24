@@ -6,7 +6,12 @@ import { updateSideBar } from "@/lib/provider/features/ui/ui.slice";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import ExpandedSidebar from "./expandedSidebar";
 import CollapsedSidebar from "./collapsedSidebar";
-import { MdGroups, MdOutlineDocumentScanner } from "react-icons/md";
+import {
+  MdGroups,
+  MdOutlineAdminPanelSettings,
+  MdOutlineDocumentScanner,
+  MdOutlineEmail,
+} from "react-icons/md";
 import { FaLightbulb, FaParachuteBox, FaTruck } from "react-icons/fa";
 import { PiFilesFill, PiNotepadFill, PiUsersThreeLight } from "react-icons/pi";
 import { TbBuildingEstate, TbSettingsUp } from "react-icons/tb";
@@ -62,15 +67,15 @@ export const sidebarNavLinks: Section[] = [
       },
       {
         id: 5,
-        icon: <IoChatbubblesSharp className="text-xl" />,
-        link: "User Chat",
-        target: "/chat",
+        icon: <MdOutlineEmail className="text-xl" />,
+        link: Modules.ADMIN.RESPONSE_EVENT.name,
+        target: Modules.ADMIN.RESPONSE_EVENT.route,
       },
       {
         id: 6,
-        icon: <FaUserCheck className="text-xl" />,
-        link: "System Users",
-        target: "/admin/system",
+        icon: <MdOutlineAdminPanelSettings className="text-xl" />,
+        link: Modules.ADMIN.SYSTEM_USERS.name,
+        target: Modules.ADMIN.SYSTEM_USERS.route,
       },
     ],
   },

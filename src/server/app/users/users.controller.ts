@@ -6,6 +6,8 @@ import FilesCacheTags from "./users.tags";
 import { UsersService } from "./users.service";
 import UsersCacheTags from "./users.tags";
 import { signIn } from "next-auth/react";
+import { CreateAdminDto } from "./users.types";
+import CreateAdminValidate from "./users.validate";
 
 class UsersController {
   private usersService: UsersService;
@@ -29,6 +31,57 @@ class UsersController {
     );
 
     return users;
+  }
+
+  async getAllSystemUsers(): Promise<File[]> {
+    "use server";
+
+    const users = await this.usersService.getAllSystemUsers(
+      await ServerToken.getUserToken(),
+      [UsersCacheTags.SystemUsers]
+    );
+
+    return users;
+  }
+
+  async createSystemUser(createAdminDto: CreateAdminDto) {
+    "use server";
+
+    try {
+      const validated = CreateAdminValidate.parse(createAdminDto);
+
+      const res = await this.usersService.createSystemUser(
+        validated,
+        await ServerToken.getUserToken()
+      );
+
+      const { response, payload } = res as HttpPostReturnType;
+
+      return this.responseProcess.process(
+        { response, payload },
+        { tags: [UsersCacheTags.SystemUsers], allowDefaultTags: true }
+      );
+    } catch (error: any) {
+      return this.zodErrorMessage.format(error);
+    }
+  }
+
+  async deleteAdmin(id: string) {
+    "use server";
+    try {
+      const res = await this.usersService.deleteAdmin(
+        id,
+        await ServerToken.getUserToken()
+      );
+      const { response, payload } = res as HttpPostReturnType;
+
+      return this.responseProcess.process(
+        { response, payload },
+        { tags: [UsersCacheTags.SystemUsers], allowDefaultTags: false }
+      );
+    } catch (error: any) {
+      return this.zodErrorMessage.format(error);
+    }
   }
 
   async createMessageToken(userId: string) {

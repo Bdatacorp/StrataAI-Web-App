@@ -1,5 +1,6 @@
 import Service from "@/utils/server/class/service";
 import UserRoute from "./users.routes";
+import { CreateAdminDto } from "./users.types";
 
 export class UsersService extends Service {
   constructor() {
@@ -18,6 +19,33 @@ export class UsersService extends Service {
       updatedAt: this.timeStampFormatter(item.updatedAt),
     }));
     return formattedData;
+  }
+
+  async getAllSystemUsers(token: string, tags: string[]) {
+    const URL = `${process.env.BASE_API_URL}${UserRoute.SYSTEM_USERS}`;
+
+    const result = await this.Http.Get(token, tags, null, URL);
+
+    //format timestamp data
+    const formattedData = await result?.map((item: any) => ({
+      ...item,
+      createdAt: this.timeStampFormatter(item.createdAt),
+      latestActivity: this.timeStampFormatter(item.latestActivity),
+      updatedAt: this.timeStampFormatter(item.updatedAt),
+    }));
+    return formattedData;
+  }
+
+  async createSystemUser(createAdminDto: CreateAdminDto, token: string) {
+    const URL = `${process.env.BASE_API_URL}${UserRoute.SYSTEM_USERS}`;
+    const res = await this.Http.Post(createAdminDto, token, URL);
+    return res;
+  }
+
+  async deleteAdmin(id: string, token: string) {
+    const URL = `${process.env.BASE_API_URL}${UserRoute.SYSTEM_USERS}`;
+    const res = await this.Http.Delete(id, token, URL);
+    return res;
   }
 
   async getAllMessages(messageToken: string, token: string, tags: string[]) {

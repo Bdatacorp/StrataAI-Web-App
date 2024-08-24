@@ -18,7 +18,7 @@ export default function ContactMangerModal({
     useState<boolean>(false);
   const [customMessageClicked, setCustomMessageClicked] =
     useState<boolean>(false);
-  const [type, setType] = useState<ResponseEventType>();
+  const [type, setType] = useState<ResponseEventType>(ResponseEventType.Verify);
 
   const messageRef = useRef<HTMLTextAreaElement>(null);
 
@@ -39,13 +39,8 @@ export default function ContactMangerModal({
 
     const res = await createResponseEventAction({
       messageId,
-      payload: {
-        type:
-          type === ResponseEventType.Message
-            ? (type as ResponseEventType.Message)
-            : (type as ResponseEventType.Verify),
-        content: messageRef.current?.value || "",
-      },
+      content: messageRef.current?.value || "",
+      type,
     });
 
     if ("status" in res) {

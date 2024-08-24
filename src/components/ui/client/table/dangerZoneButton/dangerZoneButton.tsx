@@ -29,16 +29,20 @@ export default function DangerZoneButton({
   const [disableLoading, setDisableLoading] = useState(false);
 
   async function deleteData() {
-    setDeleteLoading(true);
-    const deleted: any = id && deleteAction && (await deleteAction.action(id));
+    if (deleteAction) {
+      setDeleteLoading(true);
+      const deleted: any = await deleteAction.action(id);
 
-    if (deleted.status) {
-      toast.success(deleted.message);
-    } else {
-      toast.error(deleted.message || "Couldn't delete");
+      console.log(deleted);
+
+      if (deleted.status) {
+        toast.success(deleted.payload.message);
+      } else {
+        toast.error(deleted.payload.message || "Couldn't delete");
+      }
+
+      setDeleteLoading(false);
     }
-
-    setDeleteLoading(false);
   }
 
   const openDeleteModal = () =>

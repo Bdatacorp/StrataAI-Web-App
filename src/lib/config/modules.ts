@@ -26,6 +26,12 @@ export const Modules = {
       title: "Users | Strata Chat AI Admin",
       route: "/admin/users",
     },
+    SYSTEM_USERS: {
+      name: "System Users",
+      description: "Strata Chat AI By Stratapages",
+      title: "SystemUsers | Strata Chat AI Admin",
+      route: "/admin/system-users",
+    },
     USERS_MESSAGES: {
       name: "User Messages",
       description: "Strata Chat AI By Stratapages",
@@ -37,6 +43,12 @@ export const Modules = {
       description: "Strata Chat AI By Stratapages",
       title: "Feedbacks | Strata Chat AI Admin",
       route: "/admin/feedbacks",
+    },
+    RESPONSE_EVENT: {
+      name: "Manager Requests",
+      description: "Strata Chat AI By Stratapages",
+      title: "Manager Requests | Strata Chat AI Admin",
+      route: "/admin/response-events",
     },
   },
   USER: {

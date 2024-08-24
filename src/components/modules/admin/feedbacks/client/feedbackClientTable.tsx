@@ -73,21 +73,28 @@ export default function FeedbackClientTable({ rows }: { rows: TableRows }) {
   };
 
   const cloumns: TableColumns[] = [
+    
+    {
+      label: "User",
+      dataColumn: FeedbackColumnEnum.user,
+      maxWidth: 10,
+    },
+    {
+      label: "State",
+      dataColumn: FeedbackColumnEnum.state,
+      maxWidth: 10,
+    },
     {
       label: "Created at",
       dataColumn: FeedbackColumnEnum.updatedAt,
       maxWidth: 10,
     },
     {
-      label: "State",
-      dataColumn: FeedbackColumnEnum.session,
-      maxWidth: 10,
-    },
-    {
-      label: "type",
+      label: "Feedback Type",
       dataColumn: FeedbackColumnEnum.type,
       elementFun: FeedbackRowType,
     },
+    
   ];
 
   return (

@@ -104,7 +104,7 @@ export default function GettingStartedForm({
             label="Name"
             name="name"
             description="Please enter your name"
-            placeholder="Ex. Dilshan"
+            placeholder="Ex. John Doe"
             error={formError?.name?.message}
             onChange={(e) =>
               setFormState((state) => ({

@@ -70,7 +70,7 @@ export default function TableDataRows({
               index
             ) =>
               elementFun ? (
-                elementFun(rowData[dataColumn])
+                elementFun(rowData)
               ) : (
                 <React.Fragment key={index}>
                   {dataColumn === "index" && (

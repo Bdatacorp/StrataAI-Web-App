@@ -18,3 +18,10 @@ export enum UserColumnEnum {
   phone = "phone",
   latestActivity = "latestActivity",
 }
+
+export type CreateAdminDto = {
+  name: string;
+  email: string;
+  phone: string;
+  password: string;
+};

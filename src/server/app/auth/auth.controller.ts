@@ -6,6 +6,7 @@ import ZodErrorMessage from "@/utils/server/zodErrorMessage/zodErrorMessage";
 import { AuthService } from "./auth.service";
 import { CreateUserDto, LoginDto } from "./auth.types";
 import { auth } from "@/utils/client/helper/auth";
+import UsersCacheTags from "../users/users.tags";
 
 class AuthController {
   private authService: AuthService;
@@ -42,7 +43,10 @@ class AuthController {
 
       const { response, payload } = res as HttpPostReturnType;
 
-      return this.responseProcess.process({ response, payload });
+      return this.responseProcess.process({ response, payload },{
+        allowDefaultTags:false,
+        tags:[UsersCacheTags.Users]
+      });
     } catch (error: any) {
       return this.zodErrorMessage.format(error);
     }

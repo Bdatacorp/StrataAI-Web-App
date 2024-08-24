@@ -36,7 +36,8 @@ class FeedbackController {
 
     const formattedFeedbacks = feedbacks.map((feedback: Feedback) => ({
       ...feedback,
-      session: feedback.session.state.name,
+      state: feedback.session?.state?.name,
+      user: feedback.session?.user?.email,
     }));
 
     return formattedFeedbacks;

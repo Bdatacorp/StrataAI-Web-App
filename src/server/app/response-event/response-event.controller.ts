@@ -4,8 +4,14 @@ import { HttpPostReturnType } from "@/utils/server/http/type";
 import ServerToken from "@/utils/server/helper/token/serverToken";
 import { GeneralAPIResponse } from "@/utils/server/types/app.type";
 import { ResponseEventService } from "./response-event.service";
-import { CreateResponseEventDto } from "./response-event.types";
+import {
+  CreateResponseEventDto,
+  ReplyEventDto,
+  ResponseEvent,
+} from "./response-event.types";
 import ResponseEventTags from "./response-event.tags";
+import { ReplyEventValidate } from "./response-event.validate";
+import { log } from "node:console";
 
 class ResponseEventController {
   private responseEventService: ResponseEventService;
@@ -19,21 +25,25 @@ class ResponseEventController {
     this.zodErrorMessage = new ZodErrorMessage();
   }
 
-  async getAllFeedbacks() {
+  async getAllEvents() {
     "use server";
 
-    const events = await this.responseEventService.getAll(
+    const events: ResponseEvent[] = await this.responseEventService.getAll(
       await ServerToken.getUserToken(),
       this.tags
     );
 
-    return events;
+    const formattedEvents = events.map((responseEvent: ResponseEvent) => ({
+      ...responseEvent,
+      state: responseEvent.session?.state?.name,
+      user: responseEvent.session?.user?.email,
+    }));
+
+    return formattedEvents;
   }
 
   async createEvent(createResponseEventDto: CreateResponseEventDto) {
-    console.log(createResponseEventDto);
-
-    ("use server");
+    "use server";
     try {
       const sessionToken = await ServerToken.getSessionToken();
 
@@ -41,6 +51,29 @@ class ResponseEventController {
         sessionToken,
         await ServerToken.getUserToken(),
         createResponseEventDto
+      );
+
+      console.log(res);
+
+      const { response, payload } = res as HttpPostReturnType;
+
+      return this.responseProcess.process<GeneralAPIResponse<any>>(
+        { response, payload },
+        { allowDefaultTags: true }
+      );
+    } catch (error: any) {
+      return this.zodErrorMessage.format(error);
+    }
+  }
+
+  async replyToResponseEventAction(replyEventDto: ReplyEventDto) {
+    "use server";
+    try {
+      const validated = ReplyEventValidate.parse(replyEventDto);
+
+      const res = await this.responseEventService.replyEvent(
+        validated,
+        await ServerToken.getUserToken()
       );
       const { response, payload } = res as HttpPostReturnType;
 

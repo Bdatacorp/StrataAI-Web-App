@@ -13,6 +13,8 @@ export interface Feedback {
 
 export enum FeedbackColumnEnum {
   session = "session",
+  user = "user",
+  state = "state",
   userMessage = "userMessage",
   assistantMessage = "assistantMessage",
   type = "type",

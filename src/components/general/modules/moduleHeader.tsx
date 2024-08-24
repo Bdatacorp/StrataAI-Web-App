@@ -59,8 +59,10 @@ export default function ModuleHeader({
             <Button
               onClick={hanldeButtonClick}
               color={Colors.primary}
-              w={150}
-            >{`New ${buttonName}`}</Button>
+              miw={150}
+            >
+              {buttonName}
+            </Button>
           </div>
         )}
       </div>
