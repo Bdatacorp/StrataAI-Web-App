@@ -43,15 +43,15 @@ class UsersController {
 
     return this.responseProcess.process(
       { response, payload },
-      { tags: [userId], allowDefaultTags: false }
+      { tags: [], allowDefaultTags: false }
     );
   }
 
-  async getAllUserMessages(token: string) {
+  async getAllUserMessages(messageToken: string) {
     "use server";
 
     const res = await this.usersService.getAllMessages(
-      token,
+      messageToken,
       await ServerToken.getUserToken(),
       []
     );
@@ -59,16 +59,45 @@ class UsersController {
     return res;
   }
 
-  async getAllUserSessions(token: string) {
+  async getAllUserSessions(messageToken: string) {
     "use server";
 
     const res = await this.usersService.getAllSessions(
-      token,
+      messageToken,
       await ServerToken.getUserToken(),
       []
     );
 
     return res;
+  }
+
+  async getUserActiveSession(messageToken: string) {
+    "use server";
+
+    const res = await this.usersService.getActiveSession(
+      messageToken,
+      await ServerToken.getUserToken(),
+      []
+    );
+
+    return res;
+  }
+
+  async createSessionMessageToken(messageToken: string, sessionId: string) {
+    "use server";
+
+    const res = await this.usersService.createSessionMessageToken(
+      messageToken,
+      sessionId,
+      await ServerToken.getUserToken()
+    );
+
+    const { response, payload } = res as HttpPostReturnType;
+
+    return this.responseProcess.process(
+      { response, payload },
+      { tags: [], allowDefaultTags: false }
+    );
   }
 }
 

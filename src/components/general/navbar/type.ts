@@ -1,5 +1,3 @@
-import { UnknownAction } from "@reduxjs/toolkit";
-import { ReactNode } from "react";
 import { IconType } from "react-icons";
 import { UrlObject } from "url";
 type Url = string | UrlObject;
@@ -16,3 +14,8 @@ export type NavbarLinkType = {
   Element?: any;
   link?: string | Url;
 };
+
+export enum NavBarContentTypeEnum {
+  Admin = "Admin",
+  Public = "Public",
+}

@@ -6,25 +6,25 @@ import {
   Drawer,
   Tooltip,
 } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
-import Link from "next/link";
 import React from "react";
-import module from "./navbar.module.css";
 import { MdClose } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  closeMobileNavBar,
-  initialState,
-} from "@/lib/provider/features/ui/ui.slice";
-import { RootState } from "@/lib/provider/store";
+import { closeMobileNavBar } from "@/lib/provider/features/ui/ui.slice";
+
 import NavBarContent from "../navBarContent";
+import { NavBarContentTypeEnum } from "../../type";
+import { RootState } from "@/lib/provider/store";
 
 export default function MobileNavbar({
   sessions,
   activeSession,
+  type,
+  token,
 }: {
   sessions: any[];
   activeSession: string;
+  type: NavBarContentTypeEnum;
+  token?: string;
 }) {
   const opened = useSelector(
     (state: RootState) => state.ui.isMobileNavBarOpened
@@ -55,7 +55,12 @@ export default function MobileNavbar({
           <div
             className={`w-full flex flex-col pt-5 gap-5 h-full text-white capitalize`}
           >
-            <NavBarContent sessions={sessions} activeSession={activeSession} />
+            <NavBarContent
+              type={type}
+              sessions={sessions}
+              activeSession={activeSession}
+              token={token}
+            />
           </div>
         </Drawer.Body>
       </Drawer.Content>

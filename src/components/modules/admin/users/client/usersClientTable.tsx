@@ -32,8 +32,9 @@ export default function UserClientTable({
     const res = await createMessageToken(rowData._id);
 
     if (res.status && res.payload.data.token) {
-      router.push(
-        Modules.ADMIN.USERS_MESSAGES.route + res.payload.data.token
+      window.open(
+        Modules.ADMIN.USERS_MESSAGES.route + res.payload.data.token,
+        "_blank"
       );
     } else {
       toast.error(res.payload.message || "Something Went Wrong");

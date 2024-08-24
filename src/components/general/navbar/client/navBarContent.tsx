@@ -14,6 +14,9 @@ import { MdDelete } from "react-icons/md";
 import { PiPlusCircleBold } from "react-icons/pi";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import { NavBarContentTypeEnum } from "../type";
+import createSessionMessageToken from "@/server/actions/user/createSessionMessageToken";
+import { Modules } from "@/lib/config/modules";
 
 type GroupedSession = {
   date: string;
@@ -23,9 +26,13 @@ type GroupedSession = {
 export default function NavBarContent({
   sessions,
   activeSession,
+  type,
+  token,
 }: {
   sessions: any[];
   activeSession: string;
+  type: NavBarContentTypeEnum;
+  token?: string;
 }) {
   const [groupedByDate, setGroupedByDate] = useState<GroupedSession[]>([]);
   const dispatch = useDispatch();
@@ -74,12 +81,26 @@ export default function NavBarContent({
   }
 
   const hanldeSetActiveSession = async (sessionId: string) => {
-    const result: any = await signIn("retrieveSession", {
-      redirect: false,
-      sessionId,
-    });
-    if (!result?.error) {
-      window.location.reload();
+    if (type === NavBarContentTypeEnum.Admin) {
+      if (!token) return toast.error("Something Went Wrong");
+
+      const res = await createSessionMessageToken(token, sessionId);
+
+      if (res.status && res.payload.data.token) {
+        router.push(
+          Modules.ADMIN.USERS_MESSAGES.route + res.payload.data.token
+        );
+      } else {
+        toast.error(res.payload.message || "Something Went Wrong");
+      }
+    } else {
+      const result: any = await signIn("retrieveSession", {
+        redirect: false,
+        sessionId,
+      });
+      if (!result?.error) {
+        window.location.reload();
+      }
     }
   };
 
@@ -114,16 +135,18 @@ export default function NavBarContent({
 
   return (
     <div className="h-[80svh] flex flex-col gap-6">
-      <div className="grid">
-        <Button
-          onClick={() => dispatch(openConversation())}
-          c="blue"
-          variant="light"
-          leftSection={<PiPlusCircleBold className="text-lg" />}
-        >
-          New Conversation
-        </Button>
-      </div>
+      {type !== NavBarContentTypeEnum.Admin && (
+        <div className="grid">
+          <Button
+            onClick={() => dispatch(openConversation())}
+            c="blue"
+            variant="light"
+            leftSection={<PiPlusCircleBold className="text-lg" />}
+          >
+            New Conversation
+          </Button>
+        </div>
+      )}
 
       {groupedByDate.map((groupedSession: GroupedSession, groupIndex) => (
         <div key={groupIndex} className="flex flex-col gap-1 mb-4">
@@ -141,40 +164,42 @@ export default function NavBarContent({
                   {session?.state?.name} | {session?.title}
                 </div>
 
-                <div>
-                  <Menu shadow="md" width={100}>
-                    <Menu.Target>
-                      <ActionIcon color="white" variant="transparent">
-                        <BsThreeDotsVertical />
-                      </ActionIcon>
-                    </Menu.Target>
-                    <Menu.Dropdown className="rounded-lg bg-gray-800">
-                      <Menu.Item
-                        className="grid p-2"
-                        color="gray"
-                        onClick={() =>
-                          findActive(session._id)
-                            ? toast.warning(
-                                "Unable to delete the active session."
-                              )
-                            : openDeleteModal(session._id, sessionIndex)
-                        }
-                      >
-                        <Button
-                          color="red"
-                          size="compact-xs"
-                          variant="transparent"
-                          loading={deleteLoading[sessionIndex]}
-                          loaderProps={{ type: "bars" }}
-                          leftSection={<MdDelete />}
-                          fullWidth
+                {type !== NavBarContentTypeEnum.Admin && (
+                  <div>
+                    <Menu shadow="md" width={100}>
+                      <Menu.Target>
+                        <ActionIcon color="white" variant="transparent">
+                          <BsThreeDotsVertical />
+                        </ActionIcon>
+                      </Menu.Target>
+                      <Menu.Dropdown className="rounded-lg bg-gray-800">
+                        <Menu.Item
+                          className="grid p-2"
+                          color="gray"
+                          onClick={() =>
+                            findActive(session._id)
+                              ? toast.warning(
+                                  "Unable to delete the active session."
+                                )
+                              : openDeleteModal(session._id, sessionIndex)
+                          }
                         >
-                          Delete
-                        </Button>
-                      </Menu.Item>
-                    </Menu.Dropdown>
-                  </Menu>
-                </div>
+                          <Button
+                            color="red"
+                            size="compact-xs"
+                            variant="transparent"
+                            loading={deleteLoading[sessionIndex]}
+                            loaderProps={{ type: "bars" }}
+                            leftSection={<MdDelete />}
+                            fullWidth
+                          >
+                            Delete
+                          </Button>
+                        </Menu.Item>
+                      </Menu.Dropdown>
+                    </Menu>
+                  </div>
+                )}
 
                 {/* <div className="hidden group-hover:flex absolute items-center right-0 justify-center">
                   <ActionIcon

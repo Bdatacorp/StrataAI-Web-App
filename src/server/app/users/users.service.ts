@@ -20,22 +20,20 @@ export class UsersService extends Service {
     return formattedData;
   }
 
-  async getAllMessages(
-    messageToken: string,
-    token: string,
-    tags: string[]
-  ) {
+  async getAllMessages(messageToken: string, token: string, tags: string[]) {
     const URL = `${process.env.BASE_API_URL}${UserRoute.USER_MESSAGES}/${messageToken}`;
     const result = await this.Http.Get(token, tags, null, URL);
     return result;
   }
 
-  async getAllSessions(
-    messageToken: string,
-    token: string,
-    tags: string[]
-  ) {
+  async getAllSessions(messageToken: string, token: string, tags: string[]) {
     const URL = `${process.env.BASE_API_URL}${UserRoute.USER_SESSIONS}/${messageToken}`;
+    const result = await this.Http.Get(token, tags, null, URL);
+    return result;
+  }
+
+  async getActiveSession(messageToken: string, token: string, tags: string[]) {
+    const URL = `${process.env.BASE_API_URL}${UserRoute.USER_ACTIVE_SESSION}/${messageToken}`;
     const result = await this.Http.Get(token, tags, null, URL);
     return result;
   }
@@ -43,6 +41,16 @@ export class UsersService extends Service {
   async createMessageToken(userId: string, token: string) {
     const URL = `${process.env.BASE_API_URL}${UserRoute.USER_MESSAGES}/${userId}`;
     const res = await this.Http.Post({}, token, URL);
+    return res;
+  }
+
+  async createSessionMessageToken(
+    messageToken: string,
+    sessionId: string,
+    token: string
+  ) {
+    const URL = `${process.env.BASE_API_URL}${UserRoute.USER_ACTIVE_SESSION}/${messageToken}`;
+    const res = await this.Http.Post({ sessionId }, token, URL);
     return res;
   }
 }

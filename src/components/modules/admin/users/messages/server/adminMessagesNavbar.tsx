@@ -1,39 +1,29 @@
 import { Suspense } from "react";
-import sessionController from "@/server/app/session/session.controller";
-import NavBarContent from "@/components/general/navbar/navBarContent";
 import usersController from "@/server/app/users/users.controller";
-
-export interface ClientSession {
-  id: number;
-  title: string;
-  thread_id?: string;
-  state: string;
-  date: string;
-  active: boolean;
-}
-
-type GroupedSession = {
-  date: string;
-  sessions: ClientSession[];
-};
+import NavbarClient from "@/components/general/navbar/client/navbarClient";
+import ElementLoading from "@/components/ui/client/loading/elementLoading";
+import { NavBarContentTypeEnum } from "@/components/general/navbar/type";
 
 async function FetchSessions({ token }: { token: string }) {
   "use server";
 
   const sessions = await usersController.getAllUserSessions(token);
+  const activeSession = await usersController.getUserActiveSession(token);
 
-  return <NavBarContent activeSession={""} sessions={sessions} />;
+  return (
+    <NavbarClient
+      type={NavBarContentTypeEnum.Admin}
+      activeSession={activeSession._id}
+      sessions={sessions}
+      token={token}
+    />
+  );
 }
-
 
 export default function AdminMessagesNavbar({ token }: { token: string }) {
   return (
-    <div
-      className={`overflow-x-auto w-full flex flex-col pt-5 gap-5 px-2 bg-slate-800 h-full text-white capitalize`}
-    >
-      <Suspense>
-        <FetchSessions token={token} />
-      </Suspense>
-    </div>
+    <Suspense fallback={<ElementLoading />}>
+      <FetchSessions token={token} />
+    </Suspense>
   );
 }

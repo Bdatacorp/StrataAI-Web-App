@@ -1,13 +1,11 @@
 import Header from "@/components/general/header/header";
-import Navbar from "@/components/general/navbar/navbar";
-
+import NavbarServer from "@/components/general/navbar/server/navbarServer";
 import ModuleLayoutElement from "@/components/layouts/moduleLayout";
-
 import { ReactNode } from "react";
 
 export default function ModuleLayout({ children }: { children: ReactNode }) {
   return (
-    <ModuleLayoutElement header={<Header />} navbar={<Navbar />}>
+    <ModuleLayoutElement header={<Header />} navbar={<NavbarServer />}>
       {children}
     </ModuleLayoutElement>
   );
