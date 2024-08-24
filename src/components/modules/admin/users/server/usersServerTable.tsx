@@ -29,6 +29,10 @@ const cloumns: TableColumns[] = [
     label: "User Role",
     dataColumn: UserColumnEnum.role,
   },
+  {
+    label: "Last Acivity",
+    dataColumn: UserColumnEnum.latestActivity,
+  },
 ];
 
 async function FetchTable() {
@@ -51,4 +55,4 @@ const UserServerTable = () => {
   );
 };
 
-export default UserServerTable
+export default UserServerTable;

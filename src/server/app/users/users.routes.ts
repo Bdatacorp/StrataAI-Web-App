@@ -1,6 +1,5 @@
 const UserRoute = {
-  RESOURCE: "/auth/user",
-  REGISTER: "/auth/register",
+  RESOURCE: "/user"
 };
 
 export default UserRoute;

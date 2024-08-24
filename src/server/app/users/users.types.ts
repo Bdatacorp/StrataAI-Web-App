@@ -7,6 +7,7 @@ export interface User {
   role: UserRoles;
   type: UserType;
   phone: string;
+  latestActivity: string;
 }
 
 export enum UserColumnEnum {
@@ -15,4 +16,5 @@ export enum UserColumnEnum {
   role = "role",
   type = "type",
   phone = "phone",
+  latestActivity = "latestActivity",
 }
