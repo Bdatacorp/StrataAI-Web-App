@@ -4,7 +4,14 @@ import { openConversation } from "@/lib/provider/features/ui/ui.slice";
 import { RootState } from "@/lib/provider/store";
 import deleteSessionAction from "@/server/actions/session/deleteSessionAction";
 import categorizeDate from "@/utils/client/helper/timestampConvertToStringDate";
-import { ActionIcon, Button, Menu, ScrollArea, Text } from "@mantine/core";
+import {
+  ActionIcon,
+  Button,
+  LoadingOverlay,
+  Menu,
+  ScrollArea,
+  Text,
+} from "@mantine/core";
 import { modals } from "@mantine/modals";
 import { signIn } from "next-auth/react";
 import { useParams, usePathname, useRouter } from "next/navigation";
@@ -28,11 +35,13 @@ export default function NavBarContent({
   activeSession,
   type,
   token,
+  loading,
 }: {
   sessions: any[];
   activeSession: string;
   type: NavBarContentTypeEnum;
   token?: string;
+  loading?: boolean;
 }) {
   const [groupedByDate, setGroupedByDate] = useState<GroupedSession[]>([]);
   const dispatch = useDispatch();
@@ -134,7 +143,7 @@ export default function NavBarContent({
     });
 
   return (
-    <div className="h-[80svh] flex flex-col gap-6">
+    <div className="h-[80svh] flex flex-col gap-6 relative">
       {type !== NavBarContentTypeEnum.Admin && (
         <div className="grid">
           <Button

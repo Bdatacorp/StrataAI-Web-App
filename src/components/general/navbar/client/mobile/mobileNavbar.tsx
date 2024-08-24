@@ -4,6 +4,7 @@ import {
   Button,
   CloseButton,
   Drawer,
+  LoadingOverlay,
   Tooltip,
 } from "@mantine/core";
 import React from "react";
@@ -20,11 +21,13 @@ export default function MobileNavbar({
   activeSession,
   type,
   token,
+  loading,
 }: {
   sessions: any[];
   activeSession: string;
   type: NavBarContentTypeEnum;
   token?: string;
+  loading?: boolean;
 }) {
   const opened = useSelector(
     (state: RootState) => state.ui.isMobileNavBarOpened
@@ -41,7 +44,8 @@ export default function MobileNavbar({
       <Drawer.Overlay />
 
       <Drawer.Content>
-        <Drawer.Body className={`h-full flex flex-col bg-slate-800`}>
+        <Drawer.Body className={`h-full flex flex-col bg-slate-800 relative`}>
+          <LoadingOverlay visible={loading} />
           <div className="w-full flex justify-center mb-5">
             <ActionIcon
               onClick={() => dispatch(closeMobileNavBar())}
@@ -53,13 +57,14 @@ export default function MobileNavbar({
           </div>
 
           <div
-            className={`w-full flex flex-col pt-5 gap-5 h-full text-white capitalize`}
+            className={`w-full flex flex-col pt-5 gap-5 h-full text-white capitalize overflow-y-auto`}
           >
             <NavBarContent
               type={type}
               sessions={sessions}
               activeSession={activeSession}
               token={token}
+              loading={loading}
             />
           </div>
         </Drawer.Body>

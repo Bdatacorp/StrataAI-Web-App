@@ -8,11 +8,13 @@ export default function NavbarClient({
   activeSession,
   type,
   token,
+  loading,
 }: {
   sessions: any[];
   activeSession: string;
   type: NavBarContentTypeEnum;
   token?: string;
+  loading?:boolean,
 }) {
   return (
     <>
@@ -22,6 +24,7 @@ export default function NavbarClient({
           activeSession={activeSession}
           sessions={sessions}
           token={token}
+          loading={loading}
         />
       </div>
       <div className="hidden h-full">
@@ -30,6 +33,7 @@ export default function NavbarClient({
           activeSession={activeSession}
           sessions={sessions}
           token={token}
+          loading={loading}
         />
       </div>
     </>

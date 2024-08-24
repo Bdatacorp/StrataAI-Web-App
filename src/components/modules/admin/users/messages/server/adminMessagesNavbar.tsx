@@ -3,6 +3,7 @@ import usersController from "@/server/app/users/users.controller";
 import NavbarClient from "@/components/general/navbar/client/navbarClient";
 import ElementLoading from "@/components/ui/client/loading/elementLoading";
 import { NavBarContentTypeEnum } from "@/components/general/navbar/type";
+import NavbarLoading from "@/components/general/navbar/client/navbarLoading";
 
 async function FetchSessions({ token }: { token: string }) {
   "use server";
@@ -22,7 +23,7 @@ async function FetchSessions({ token }: { token: string }) {
 
 export default function AdminMessagesNavbar({ token }: { token: string }) {
   return (
-    <Suspense fallback={<ElementLoading />}>
+    <Suspense fallback={<NavbarLoading />}>
       <FetchSessions token={token} />
     </Suspense>
   );
