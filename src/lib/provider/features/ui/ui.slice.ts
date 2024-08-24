@@ -1,3 +1,4 @@
+import { Message } from "@/server/app/chat/chat.types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface initialState {
@@ -6,6 +7,13 @@ export interface initialState {
   newConversation: boolean;
   newSession: boolean;
   slideBarExpanded: boolean;
+  viewMessages: {
+    opened: boolean;
+    messages?: {
+      userMessage: Message;
+      assistantMessage: Message;
+    } | null;
+  };
 }
 
 const initialState: initialState = {
@@ -14,6 +22,9 @@ const initialState: initialState = {
   newConversation: false,
   newSession: false,
   slideBarExpanded: true,
+  viewMessages: {
+    opened: false,
+  },
 };
 
 const uiSlice = createSlice({
@@ -44,6 +55,20 @@ const uiSlice = createSlice({
     setNewSession: (state, action: PayloadAction<boolean>) => {
       state.newSession = action.payload;
     },
+    setViewMessages(
+      state,
+      action: PayloadAction<{
+        userMessage: Message;
+        assistantMessage: Message;
+      }>
+    ) {
+      state.viewMessages.opened = true;
+      state.viewMessages.messages = action.payload;
+    },
+    clearViewMessages(state) {
+      state.viewMessages.opened = false;
+      state.viewMessages.messages = null;
+    },
   },
 });
 
@@ -56,6 +81,8 @@ export const {
   openConversation,
   updateSideBar,
   setNewSession,
+  setViewMessages,
+  clearViewMessages,
 } = uiSlice.actions;
 
 export default uiSlice.reducer;

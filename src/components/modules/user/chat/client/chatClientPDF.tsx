@@ -20,6 +20,7 @@ export default function ChatClientPDF() {
     <>
       <Modal
         size="xl"
+        zIndex={10000}
         opened={annotationPDF.opened}
         onClose={() => dispatch(clearAnnotationPDF())}
       >

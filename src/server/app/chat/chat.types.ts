@@ -1,3 +1,4 @@
+import { MessageRoles } from "@/components/modules/user/chat/types";
 import { GeneralAPIResponse } from "@/utils/server/types/app.type";
 
 export interface Chat {
@@ -13,6 +14,15 @@ export interface ChatMessage {
 export interface CreateChatDto {
   text: string;
 }
+
+export type Message = {
+  _id: string;
+  content: { value: string; metadata: MessageMetadata[] };
+  type: MessageRoles;
+
+  createdAt: string;
+  updatedAt: string;
+};
 
 export type MessageContent = {
   id: string;

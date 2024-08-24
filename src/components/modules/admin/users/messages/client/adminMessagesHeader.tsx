@@ -29,9 +29,6 @@ export default function AdminMessagesHeader() {
   const mobileNavbarOpend = useSelector(
     (state: RootState) => state.ui.isMobileNavBarOpened
   );
-  const streamingResponse = useSelector(
-    (state: RootState) => state.ui.streamingResponse
-  );
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -56,7 +53,7 @@ export default function AdminMessagesHeader() {
         <strong className="hidden md:block">{"User Chat"}</strong>
       </div>
       <div className="hidden md:flex justify-center items-center gap-6 px-10">
-        <Tooltip color="gray" label="Logout">
+        <Tooltip color="gray" label="Close">
           <Button
             color={Colors.primary}
             rightSection={<MdClose />}

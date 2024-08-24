@@ -57,27 +57,43 @@ export default function TableDataRows({
           </Table.Td>
 
           {columns.map(
-            ({ dataColumn, width, maxWidth, center, noWrap, label }, index) => (
-              <React.Fragment key={index}>
-                {dataColumn === "index" && (
-                  <Table.Td className="max-w-[5px] text-ellipsis overflow-hidden whitespace-nowrap">
-                    {index}
-                  </Table.Td>
-                )}
+            (
+              {
+                dataColumn,
+                width,
+                maxWidth,
+                center,
+                noWrap,
+                label,
+                elementFun,
+              },
+              index
+            ) =>
+              elementFun ? (
+                elementFun(rowData[dataColumn])
+              ) : (
+                <React.Fragment key={index}>
+                  {dataColumn === "index" && (
+                    <Table.Td className="max-w-[5px] text-ellipsis overflow-hidden whitespace-nowrap">
+                      {index}
+                    </Table.Td>
+                  )}
 
-                {dataColumn !== "status" && dataColumn !== "index" && (
-                  <Table.Td
-                    className={`${
-                      width ? `w-[${width}px]` : "lg:max-w-3"
-                    } whitespace-nowrap truncate`}
-                  >
-                    {typeof rowData[dataColumn] === "object"
-                      ? JSON.stringify(rowData[dataColumn])
-                      : rowData[dataColumn]}
-                  </Table.Td>
-                )}
-              </React.Fragment>
-            )
+                  {dataColumn !== "status" && dataColumn !== "index" && (
+                    <Table.Td
+                      className={`
+                        ${width && `w-[${width}px]`} 
+                        ${
+                          maxWidth ? `max-w-[${maxWidth}px]` : "lg:max-w-3"
+                        } whitespace-nowrap truncate`}
+                    >
+                      {typeof rowData[dataColumn] === "object"
+                        ? JSON.stringify(rowData[dataColumn])
+                        : rowData[dataColumn]}
+                    </Table.Td>
+                  )}
+                </React.Fragment>
+              )
           )}
 
           {/* <Table.Td width={"80px"}>

@@ -7,6 +7,7 @@ export interface TableColumns {
   center?: boolean;
   maxWidth?: number;
   width?: number;
+  elementFun?: (data: any) => ReactNode;
 }
 export interface TableRows {
   data: any[];

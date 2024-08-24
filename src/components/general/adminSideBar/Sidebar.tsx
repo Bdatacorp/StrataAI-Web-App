@@ -13,6 +13,7 @@ import { TbBuildingEstate, TbSettingsUp } from "react-icons/tb";
 import { Modules } from "@/lib/config/modules";
 import { IoChatbubblesSharp } from "react-icons/io5";
 import { FaUserCheck } from "react-icons/fa6";
+import { VscFeedback } from "react-icons/vsc";
 
 interface LinkItem {
   id: number;
@@ -55,12 +56,18 @@ export const sidebarNavLinks: Section[] = [
       },
       {
         id: 4,
+        icon: <VscFeedback className="text-xl" />,
+        link: Modules.ADMIN.FEEDBACKS.name,
+        target: Modules.ADMIN.FEEDBACKS.route,
+      },
+      {
+        id: 5,
         icon: <IoChatbubblesSharp className="text-xl" />,
         link: "User Chat",
         target: "/chat",
       },
       {
-        id: 5,
+        id: 6,
         icon: <FaUserCheck className="text-xl" />,
         link: "System Users",
         target: "/admin/system",
