@@ -23,11 +23,52 @@ class UsersController {
   async getAllUsers(): Promise<File[]> {
     "use server";
 
-    const states = await this.usersService.getAll(
+    const users = await this.usersService.getAll(
       await ServerToken.getUserToken(),
       this.tags
     );
-    return states;
+
+    return users;
+  }
+
+  async createMessageToken(userId: string) {
+    "use server";
+
+    const res = await this.usersService.createMessageToken(
+      userId,
+      await ServerToken.getUserToken()
+    );
+
+    const { response, payload } = res as HttpPostReturnType;
+
+    return this.responseProcess.process(
+      { response, payload },
+      { tags: [userId], allowDefaultTags: false }
+    );
+  }
+
+  async getAllUserMessages(token: string) {
+    "use server";
+
+    const res = await this.usersService.getAllMessages(
+      token,
+      await ServerToken.getUserToken(),
+      []
+    );
+
+    return res;
+  }
+
+  async getAllUserSessions(token: string) {
+    "use server";
+
+    const res = await this.usersService.getAllSessions(
+      token,
+      await ServerToken.getUserToken(),
+      []
+    );
+
+    return res;
   }
 }
 

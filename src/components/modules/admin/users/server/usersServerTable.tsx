@@ -12,26 +12,24 @@ const cloumns: TableColumns[] = [
   {
     label: "Name",
     dataColumn: UserColumnEnum.name,
+    width:40
   },
   {
     label: "Email",
     dataColumn: UserColumnEnum.email,
+    width:30
   },
-  {
-    label: "Phone",
-    dataColumn: UserColumnEnum.phone,
-  },
+
   {
     label: "User Type",
     dataColumn: UserColumnEnum.type,
+    width:20
   },
-  {
-    label: "User Role",
-    dataColumn: UserColumnEnum.role,
-  },
+
   {
     label: "Last Acivity",
     dataColumn: UserColumnEnum.latestActivity,
+    width:50
   },
 ];
 

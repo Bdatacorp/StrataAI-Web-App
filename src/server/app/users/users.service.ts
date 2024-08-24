@@ -19,4 +19,30 @@ export class UsersService extends Service {
     }));
     return formattedData;
   }
+
+  async getAllMessages(
+    messageToken: string,
+    token: string,
+    tags: string[]
+  ) {
+    const URL = `${process.env.BASE_API_URL}${UserRoute.USER_MESSAGES}/${messageToken}`;
+    const result = await this.Http.Get(token, tags, null, URL);
+    return result;
+  }
+
+  async getAllSessions(
+    messageToken: string,
+    token: string,
+    tags: string[]
+  ) {
+    const URL = `${process.env.BASE_API_URL}${UserRoute.USER_SESSIONS}/${messageToken}`;
+    const result = await this.Http.Get(token, tags, null, URL);
+    return result;
+  }
+
+  async createMessageToken(userId: string, token: string) {
+    const URL = `${process.env.BASE_API_URL}${UserRoute.USER_MESSAGES}/${userId}`;
+    const res = await this.Http.Post({}, token, URL);
+    return res;
+  }
 }

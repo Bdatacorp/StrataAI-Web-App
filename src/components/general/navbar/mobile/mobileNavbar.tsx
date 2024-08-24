@@ -17,11 +17,9 @@ import {
   initialState,
 } from "@/lib/provider/features/ui/ui.slice";
 import { RootState } from "@/lib/provider/store";
-import { NavBarLinkTypes } from "./type";
-import { PiPlusCircleBold } from "react-icons/pi";
-import NavBarContent from "./navBarContent";
+import NavBarContent from "../navBarContent";
 
-export default function MobileNavbarClient({
+export default function MobileNavbar({
   sessions,
   activeSession,
 }: {
@@ -57,7 +55,7 @@ export default function MobileNavbarClient({
           <div
             className={`w-full flex flex-col pt-5 gap-5 h-full text-white capitalize`}
           >
-            <NavBarContent sessions={sessions} activeSession={activeSession}/>
+            <NavBarContent sessions={sessions} activeSession={activeSession} />
           </div>
         </Drawer.Body>
       </Drawer.Content>

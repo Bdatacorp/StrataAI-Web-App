@@ -1,6 +1,6 @@
 import AdminHeader from "@/components/general/adminHeader/adminHeader";
 import Header from "@/components/general/header/header";
-import Navbar from "@/components/general/navbar/navbar";
+import Navbar from "@/components/general/navbar/desktop/desktopNavbar";
 import AdminSidebar from "@/components/general/adminSideBar/Sidebar";
 import { ToastContainer } from "react-toastify";
 

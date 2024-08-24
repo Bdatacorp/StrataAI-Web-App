@@ -66,7 +66,11 @@ export default function TableDataRows({
                 )}
 
                 {dataColumn !== "status" && dataColumn !== "index" && (
-                  <Table.Td className={`lg:max-w-3 whitespace-nowrap truncate`}>
+                  <Table.Td
+                    className={`${
+                      width ? `w-[${width}px]` : "lg:max-w-3"
+                    } whitespace-nowrap truncate`}
+                  >
                     {typeof rowData[dataColumn] === "object"
                       ? JSON.stringify(rowData[dataColumn])
                       : rowData[dataColumn]}
