@@ -24,6 +24,7 @@ import { toast } from "react-toastify";
 import { NavBarContentTypeEnum } from "../type";
 import createSessionMessageToken from "@/server/actions/user/createSessionMessageToken";
 import { Modules } from "@/lib/config/modules";
+import { Colors } from "@/lib/config/colors";
 
 type GroupedSession = {
   date: string;
@@ -46,6 +47,9 @@ export default function NavBarContent({
   const [groupedByDate, setGroupedByDate] = useState<GroupedSession[]>([]);
   const dispatch = useDispatch();
   const [deleteLoading, setDeleteLoading] = useState<boolean[]>([false]);
+  const [loadingSessions, setLoadingSessions] = useState<
+    { id: string; loading: boolean }[]
+  >(sessions.map((session) => ({ id: session._id, loading: false })));
   const router = useRouter();
 
   useEffect(() => {}, []);
@@ -89,7 +93,13 @@ export default function NavBarContent({
     return sessionId === currentSessionID;
   }
 
-  const hanldeSetActiveSession = async (sessionId: string) => {
+  const hanldeSetActiveSession = async (sessionId: string, index: any) => {
+    setLoadingSessions((sessions) =>
+      sessions.map((session: any) =>
+        session.id === sessionId ? { ...session, loading: true } : session
+      )
+    );
+
     if (type === NavBarContentTypeEnum.Admin) {
       if (!token) return toast.error("Something Went Wrong");
 
@@ -111,6 +121,12 @@ export default function NavBarContent({
         window.location.reload();
       }
     }
+
+    setLoadingSessions((sessions) =>
+      sessions.map((session: any) =>
+        session.id === sessionId ? { ...session, loading: false } : session
+      )
+    );
   };
 
   const handleDelete = async (sessionId: string, sessionIndex: number) => {
@@ -162,13 +178,34 @@ export default function NavBarContent({
           <div className="text-xs">{groupedSession.date}</div>
           <div className="flex flex-col gap-2">
             {groupedSession.sessions.map((session: any, sessionIndex) => (
-              <div className="group flex gap-1" key={sessionIndex}>
+              <div className="group flex gap-1 relative" key={sessionIndex}>
+                <LoadingOverlay
+                  loaderProps={{
+                    size: "sm",
+                    type: "dots",
+                    color: Colors.primary,
+                  }}
+                  overlayProps={{ radius: "sm", blur: 1, color: "#475569" }}
+                  visible={
+                    loadingSessions.find(
+                      (loadingSession) => loadingSession.id === session._id
+                    )?.loading
+                  }
+                  color="gray"
+                />
                 <div
                   className={`w-full px-2 py-1 rounded-md truncate cursor-pointer
                      ${findActive(session._id) && "bg-slate-600"}
                      hover:bg-slate-600
                   `}
-                  onClick={() => hanldeSetActiveSession(session?._id)}
+                  onClick={() =>
+                    hanldeSetActiveSession(
+                      session?._id,
+                      loadingSessions.find(
+                        (loadingSession) => loadingSession.id === session._id
+                      )
+                    )
+                  }
                 >
                   {session?.state?.name} | {session?.title}
                 </div>
