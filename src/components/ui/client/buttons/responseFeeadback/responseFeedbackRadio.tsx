@@ -2,7 +2,7 @@
 
 import { Colors } from "@/lib/config/colors";
 import createFeedbackAction from "@/server/actions/feedback/createFeedbackAction";
-import { FeedbackType } from "@/server/app/chat/chat.types";
+import { FeedbackType } from "@/server/app/feedback/feedback.types";
 import { ActionIcon, ActionIconGroup, Group, Tooltip } from "@mantine/core";
 import { useEffect, useState } from "react";
 import {

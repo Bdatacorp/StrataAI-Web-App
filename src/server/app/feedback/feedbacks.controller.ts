@@ -10,7 +10,9 @@ import { revalidatePath } from "next/cache";
 import { Modules } from "@/lib/config/modules";
 import FilesCacheTags from "../files/files.tags";
 import FeedbackCacheTags from "./feedback.tags";
-import { Feedback } from "./feedback.types";
+import { CreateFeedbackDto, Feedback } from "./feedback.types";
+import FeedbackValidate from "./feedback.validate";
+import { GeneralAPIResponse } from "@/utils/server/types/app.type";
 
 class FeedbackController {
   private feedbackService: FeedbackService;
@@ -38,6 +40,29 @@ class FeedbackController {
     }));
 
     return formattedFeedbacks;
+  }
+
+  async createFeedback(createFeedbackDto: CreateFeedbackDto) {
+    "use server";
+    try {
+      const validated = FeedbackValidate.parse(createFeedbackDto);
+
+      const sessionToken = await ServerToken.getSessionToken();
+
+      const res = await this.feedbackService.createFeedback(
+        sessionToken,
+        await ServerToken.getUserToken(),
+        validated
+      );
+      const { response, payload } = res as HttpPostReturnType;
+
+      return this.responseProcess.process<GeneralAPIResponse<any>>(
+        { response, payload },
+        { allowDefaultTags: false }
+      );
+    } catch (error: any) {
+      return this.zodErrorMessage.format(error);
+    }
   }
 }
 

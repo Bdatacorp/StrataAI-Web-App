@@ -12,7 +12,7 @@ import { Modules } from "@/lib/config/modules";
 import { openUploadFileToStateModal } from "@/lib/provider/features/state/state.slice";
 import { setViewMessages } from "@/lib/provider/features/ui/ui.slice";
 import deleteStateAction from "@/server/actions/state/deleteStateAction";
-import { FeedbackType } from "@/server/app/chat/chat.types";
+import { FeedbackType } from "@/server/app/feedback/feedback.types";
 import {
   Feedback,
   FeedbackColumnEnum,

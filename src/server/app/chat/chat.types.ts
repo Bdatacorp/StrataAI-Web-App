@@ -41,16 +41,6 @@ export type AskQuestionResponse = GeneralAPIResponse<{
   assistant: MessageContent & { metadata?: Array<MessageMetadata> };
 }>;
 
-export enum FeedbackType {
-  Good = "Good",
-  Bad = "Bad",
-}
-
-export interface CreateFeedbackDto {
-  messageId: string;
-  type: FeedbackType;
-}
-
 export enum ResponseEventType {
   Reply = "Reply",
   Verify = "Verify",

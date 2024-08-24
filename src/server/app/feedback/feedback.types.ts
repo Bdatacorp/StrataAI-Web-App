@@ -1,10 +1,4 @@
-import {
-
-  FeedbackType,
-  Message,
-  MessageContent,
-
-} from "../chat/chat.types";
+import { Message, MessageContent } from "../chat/chat.types";
 import { Session } from "../session/session.types";
 
 export interface Feedback {
@@ -24,4 +18,14 @@ export enum FeedbackColumnEnum {
   type = "type",
   createdAt = "createdAt",
   updatedAt = "updatedAt",
+}
+
+export enum FeedbackType {
+  Good = "Good",
+  Bad = "Bad",
+}
+
+export interface CreateFeedbackDto {
+  messageId: string;
+  type: FeedbackType;
 }
