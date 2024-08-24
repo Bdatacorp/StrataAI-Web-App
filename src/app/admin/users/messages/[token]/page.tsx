@@ -1,5 +1,6 @@
 import Header from "@/components/general/header/header";
 import ModuleLayoutElement from "@/components/layouts/moduleLayout";
+import AdminMessagesHeader from "@/components/modules/admin/users/messages/client/adminMessagesHeader";
 import AdminMessagesNavbar from "@/components/modules/admin/users/messages/server/adminMessagesNavbar";
 import AdminMessagesServer from "@/components/modules/admin/users/messages/server/adminMessagesServer";
 import ChatClientPDF from "@/components/modules/user/chat/client/chatClientPDF";
@@ -8,7 +9,7 @@ import ChatPageWrapper from "@/components/modules/user/chat/server/chatPageWrapp
 export default function ChatPage({ params }: { params: { token: string } }) {
   return (
     <ModuleLayoutElement
-      header={<Header />}
+      header={<AdminMessagesHeader />}
       navbar={<AdminMessagesNavbar token={params.token} />}
     >
       <ChatPageWrapper>
