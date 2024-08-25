@@ -107,7 +107,7 @@ export default function ChatClientStream({
               }
             });
             if (id === "") {
-              revalidateSessionAction();
+              await revalidateSessionAction();
             }
             setLoading(false);
             break;
@@ -117,9 +117,9 @@ export default function ChatClientStream({
             if (value.includes("metadata")) {
               const data = await JSON.parse(value);
               metadata = data.metadata;
-            } else if (value.includes("id")) {
+            } else if (value.includes("stream__Id")) {
               const data = await JSON.parse(value);
-              id = data.id;
+              id = data.stream__Id;
             } else {
               setClientMessages((prevMessages) => {
                 const existingMessage = prevMessages.find(
