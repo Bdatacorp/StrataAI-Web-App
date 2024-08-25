@@ -91,8 +91,6 @@ export default function ChatClientStream({
         while (true) {
           const { value, done } = await reader.read();
           if (done) {
-            // revalidateSessionAction();
-
             setClientMessages((prevMessages) => {
               const existingMessage = prevMessages.find(
                 (message) => message.id === initalId
@@ -108,7 +106,9 @@ export default function ChatClientStream({
                 return prevMessages;
               }
             });
-
+            if (id === "") {
+              revalidateSessionAction();
+            }
             setLoading(false);
             break;
           }
