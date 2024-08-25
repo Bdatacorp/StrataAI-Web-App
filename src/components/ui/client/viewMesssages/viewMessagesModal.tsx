@@ -20,7 +20,6 @@ export default function ViewMessagesModal() {
         opened={viewMessages.opened}
         onClose={() => dispatch(clearViewMessages())}
         centered
-        size={"70%"}
       >
         <div className="w-full flex flex-col gap-4 p-2">
           <div className="shadow p-2 flex flex-col gap-2 rounded-md py-4">
