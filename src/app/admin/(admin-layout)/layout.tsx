@@ -8,12 +8,11 @@ const ModuleLayout = ({
 }>) => {
   return (
     <>
-      <div className="w-full flex flex-col">
+      <div className="w-full h-svh max-h-screen flex flex-col overflow-hidden">
         <AdminHeader />
-        <div className="flex">
+        <div className="flex max-h-full">
           <AdminSidebar />
-
-          <div className="grow overflow-x-hidden px-4 lg:pl-6 lg:pr-2 pt-7 overflow-y-scroll h-[calc(100svh-80px)] ">
+          <div className="grow overflow-x-hidden px-4 lg:pl-6 lg:pr-2 pt-7 overflow-y-scroll">
             {children}
           </div>
         </div>

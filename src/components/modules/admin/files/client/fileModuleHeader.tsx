@@ -17,7 +17,7 @@ export default function FileModuleHeader() {
       pageTypes={ModuleHeaderPageTypes.Table}
       moduleName={Modules.ADMIN.FILES.name}
       breadcrumbsItems={items}
-      buttonName={Modules.ADMIN.FILES.name}
+      buttonName={`Upload ${Modules.ADMIN.FILES.name.slice(0, -1)}`}
       buttonAction={openUploadFileModal}
     />
   );
