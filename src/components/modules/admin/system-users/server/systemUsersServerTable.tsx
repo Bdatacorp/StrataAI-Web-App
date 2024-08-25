@@ -9,24 +9,24 @@ const cloumns: TableColumns[] = [
   {
     label: "Name",
     dataColumn: UserColumnEnum.name,
-    maxWidth:40
+    maxWidth: 10,
   },
   {
     label: "Email",
     dataColumn: UserColumnEnum.email,
-    maxWidth:40
+    maxWidth: 10,
   },
 
   {
     label: "User Role",
     dataColumn: UserColumnEnum.role,
-    width: 20,
+    maxWidth: 10,
   },
 
   {
     label: "Last Acivity",
     dataColumn: UserColumnEnum.latestActivity,
-    width: 50,
+    minWidth: 20,
   },
 ];
 

@@ -85,7 +85,8 @@ export default function ChatClientStream({
           .pipeThrough(new TextDecoderStream())
           .getReader();
 
-        const id = Date.now().toString();
+        const initalId = Date.now().toString();
+        let id = "";
         let metadata: MessageMetadata[] = [];
         while (true) {
           const { value, done } = await reader.read();
@@ -94,13 +95,13 @@ export default function ChatClientStream({
 
             setClientMessages((prevMessages) => {
               const existingMessage = prevMessages.find(
-                (message) => message.id === id
+                (message) => message.id === initalId
               );
 
               if (existingMessage) {
                 return prevMessages.map((message) =>
-                  message.id === id
-                    ? { ...message, metadata: metadata }
+                  message.id === initalId
+                    ? { ...message, id: id, metadata: metadata }
                     : message
                 );
               } else {
@@ -116,15 +117,18 @@ export default function ChatClientStream({
             if (value.includes("metadata")) {
               const data = await JSON.parse(value);
               metadata = data.metadata;
+            } else if (value.includes("id")) {
+              const data = await JSON.parse(value);
+              id = data.id;
             } else {
               setClientMessages((prevMessages) => {
                 const existingMessage = prevMessages.find(
-                  (message) => message.id === id
+                  (message) => message.id === initalId
                 );
 
                 if (existingMessage) {
                   return prevMessages.map((message) =>
-                    message.id === id
+                    message.id === initalId
                       ? { ...message, text: message.text + value.toString() }
                       : message
                   );
@@ -132,7 +136,7 @@ export default function ChatClientStream({
                   return [
                     ...prevMessages,
                     {
-                      id,
+                      id: initalId,
                       role: MessageRoles.Assistant,
                       text: value.toString(),
                     },

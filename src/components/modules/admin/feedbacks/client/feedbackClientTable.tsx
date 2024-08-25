@@ -48,7 +48,9 @@ export default function FeedbackClientTable({ rows }: { rows: TableRows }) {
     },
   ];
 
-  const FeedbackRowType = (type: Feedback["type"]) => {
+  const FeedbackRowType = (rowData: any) => {
+    const { type }: Feedback = JSON.parse(rowData);
+
     return (
       <Table.Td>
         {type === FeedbackType.Good ? (
@@ -73,7 +75,6 @@ export default function FeedbackClientTable({ rows }: { rows: TableRows }) {
   };
 
   const cloumns: TableColumns[] = [
-    
     {
       label: "User",
       dataColumn: FeedbackColumnEnum.user,
@@ -85,16 +86,10 @@ export default function FeedbackClientTable({ rows }: { rows: TableRows }) {
       maxWidth: 10,
     },
     {
-      label: "Created at",
-      dataColumn: FeedbackColumnEnum.updatedAt,
-      maxWidth: 10,
-    },
-    {
       label: "Feedback Type",
       dataColumn: FeedbackColumnEnum.type,
       elementFun: FeedbackRowType,
     },
-    
   ];
 
   return (

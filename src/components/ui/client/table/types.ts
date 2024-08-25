@@ -6,6 +6,7 @@ export interface TableColumns {
   noWrap?: boolean;
   center?: boolean;
   maxWidth?: number;
+  minWidth?: number;
   width?: number;
   elementFun?: (data: any) => ReactNode;
 }

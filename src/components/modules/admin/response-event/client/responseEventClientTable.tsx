@@ -96,8 +96,8 @@ export default function ResponseEventClientTable({
     },
   ];
 
-  const EventRowType = (responseEvent: ResponseEvent) => {
-    const { type, content, reply } = responseEvent;
+  const EventRowType = (rowData: any) => {
+    const { type, content, reply }: ResponseEvent = JSON.parse(rowData);
     return (
       <Table.Td>
         {type === ResponseEventType.Message && (
@@ -114,14 +114,14 @@ export default function ResponseEventClientTable({
     );
   };
 
-  const EventRowReply = (responseEvent: ResponseEvent) => {
-    const { type, content, reply } = responseEvent;
+  const EventRowReply = (rowData: any) => {
+    const { type, content, reply }: ResponseEvent = JSON.parse(rowData);
     return (
       <Table.Td>
         {reply ? (
           <Tooltip color="gray" label="Reply to user">
             <Button
-              onClick={() => openReplyViewModal(responseEvent)}
+              onClick={() => openReplyViewModal(JSON.parse(rowData))}
               variant="light"
               color="teal"
               leftSection={<FaCheck />}
@@ -134,7 +134,7 @@ export default function ResponseEventClientTable({
             {type === ResponseEventType.Verify && (
               <Tooltip color="gray" label="Reply to user">
                 <Button
-                  onClick={() => openReplyModal(responseEvent)}
+                  onClick={() => openReplyModal(JSON.parse(rowData))}
                   variant="light"
                   color="yellow"
                   leftSection={<MdSend />}
@@ -147,7 +147,7 @@ export default function ResponseEventClientTable({
             {type === ResponseEventType.Message && (
               <Tooltip color="gray" label="Reply to user">
                 <Button
-                  onClick={() => openReplyModal(responseEvent)}
+                  onClick={() => openReplyModal(JSON.parse(rowData))}
                   variant="light"
                   color="yellow"
                   leftSection={<MdSend />}

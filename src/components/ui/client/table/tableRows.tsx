@@ -57,20 +57,9 @@ export default function TableDataRows({
           </Table.Td>
 
           {columns.map(
-            (
-              {
-                dataColumn,
-                width,
-                maxWidth,
-                center,
-                noWrap,
-                label,
-                elementFun,
-              },
-              index
-            ) =>
+            ({ dataColumn, width, maxWidth, minWidth, elementFun }, index) =>
               elementFun ? (
-                elementFun(rowData)
+                elementFun(JSON.stringify(rowData))
               ) : (
                 <React.Fragment key={index}>
                   {dataColumn === "index" && (
@@ -83,9 +72,9 @@ export default function TableDataRows({
                     <Table.Td
                       className={`
                         ${width && `w-[${width}px]`} 
-                        ${
-                          maxWidth ? `max-w-[${maxWidth}px]` : "lg:max-w-3"
-                        } whitespace-nowrap truncate`}
+                        ${maxWidth && `max-w-[${maxWidth}px]`} 
+                        ${minWidth && `min-w-[${minWidth}px]`}
+                        text-ellipsis overflow-hidden whitespace-nowrap truncate`}
                     >
                       {typeof rowData[dataColumn] === "object"
                         ? JSON.stringify(rowData[dataColumn])
