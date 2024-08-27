@@ -27,4 +27,10 @@ export class AuthService extends Service {
     const res = await this.Http.Post(createUserDto, "", URL);
     return res;
   }
+
+  async validateUser({ email }: { email: string }) {
+    const URL = `${process.env.BASE_API_URL}${AuthRoutes.VALIDATE_USER}/${email}`;
+    const res = await this.Http.Post({}, "", URL);
+    return res;
+  }
 }

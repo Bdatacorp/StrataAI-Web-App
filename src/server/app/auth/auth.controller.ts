@@ -1,4 +1,4 @@
-import { AuthLoginValidate, AuthRegiterValidate } from "./auth.validate";
+import { AuthLoginValidate, AuthRegiterValidate, AuthUserValidate } from "./auth.validate";
 import ServerToken from "@/utils/server/helper/token/serverToken";
 import ResponseProcess from "@/utils/server/responseProcess/responseProcess";
 import { HttpPostReturnType } from "@/utils/server/http/type";
@@ -40,6 +40,24 @@ class AuthController {
       const validated = AuthRegiterValidate.parse(createUserDto);
 
       const res = await this.authService.registerUser(validated);
+
+      const { response, payload } = res as HttpPostReturnType;
+
+      return this.responseProcess.process({ response, payload },{
+        allowDefaultTags:false,
+        tags:[UsersCacheTags.Users]
+      });
+    } catch (error: any) {
+      return this.zodErrorMessage.format(error);
+    }
+  }
+
+  async validateUser(email: string) {
+    "use server";
+    try {
+      const validated = AuthUserValidate.parse(email);
+
+      const res = await this.authService.validateUser(validated);
 
       const { response, payload } = res as HttpPostReturnType;
 

@@ -48,3 +48,12 @@ export const AuthRegiterValidate = z.object({
       message: "Please select a one of state",
     }),
 });
+
+export const AuthUserValidate = z.object({
+  email: z
+    .string({ message: ValidationMessages.requiredWithFelid("Email") })
+    .min(1, {
+      message: ValidationMessages.requiredWithFelid("Email"),
+    })
+    .email("Invalid email. Please check your email again !"),
+});
