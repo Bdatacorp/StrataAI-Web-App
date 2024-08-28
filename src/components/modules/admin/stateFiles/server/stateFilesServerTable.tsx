@@ -15,10 +15,7 @@ const cloumns: TableColumns[] = [
     dataColumn: FileColumnEnum.filename,
     maxWidth: 10,
   },
-  {
-    label: "File Id",
-    dataColumn: FileColumnEnum.file_id,
-  },
+  
 ];
 
 async function FetchTable({ stateId }: { stateId: string }) {
