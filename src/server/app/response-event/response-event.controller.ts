@@ -87,13 +87,35 @@ class ResponseEventController {
     }
   }
 
+  async verifyResponseEventAction(requestId: string) {
+    "use server";
+    try {
+      const res = await this.responseEventService.replyEvent(
+        {
+          requestId,
+          message: "Your response has been verified by the manager",
+        },
+        await ServerToken.getUserToken()
+      );
+      const { response, payload } = res as HttpPostReturnType;
+
+      return this.responseProcess.process<GeneralAPIResponse<any>>(
+        { response, payload },
+        { allowDefaultTags: true }
+      );
+    } catch (error: any) {
+      return this.zodErrorMessage.format(error);
+    }
+  }
+
   async getAnalytics() {
     "use server";
 
-    const analytics: ResponseEventAnalytics = await this.responseEventService.analytics(
-      await ServerToken.getUserToken(),
-      this.tags
-    );
+    const analytics: ResponseEventAnalytics =
+      await this.responseEventService.analytics(
+        await ServerToken.getUserToken(),
+        this.tags
+      );
 
     return analytics;
   }

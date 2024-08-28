@@ -1,18 +1,10 @@
-import { TableRows } from "@/components/ui/client/table/types";
 import { Suspense } from "react";
-import DataTableLoading from "@/components/ui/client/table/loading";
-
 import statesController from "@/server/app/state/state.controller";
-import ChatClient from "../client/chatClient";
-import PageLoading from "@/components/ui/client/loading/pageLoading";
 import ElementLoading from "@/components/ui/client/loading/elementLoading";
 import chatController from "@/server/app/chat/chat.controller";
 import { ClientMessage, MessageRoles } from "../types";
 import { initialSessionMessages } from "@/lib/config/messages";
 import ChatClientWrapper from "../client/chatClientWrapper";
-import extractSourceNumber, {
-  extractSource,
-} from "@/utils/client/helper/extractSourceNumber";
 
 async function FetchTable() {
   const messages = await chatController.loadMessages();

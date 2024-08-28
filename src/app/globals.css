@@ -3,8 +3,23 @@
 @tailwind utilities;
 
 ::-webkit-scrollbar {
-  background-color: transparent;
+  display: none;
 }
+
+.styled-scrolbar::-webkit-scrollbar {
+  display: block;
+  background-color: transparent;
+  width: 8px;
+}
+
+.styled-scrolbar::-webkit-scrollbar-thumb {
+  background-color: #fcdf0862;
+  border-radius: 10px;
+}
+
+/* .styled-scrolbar::-webkit-scrollbar-track {
+  background-color: #d4d4d4;
+} */
 
 .loaderStrataAILogo {
   animation: jelloH 2s ease 0s 1 normal forwards;

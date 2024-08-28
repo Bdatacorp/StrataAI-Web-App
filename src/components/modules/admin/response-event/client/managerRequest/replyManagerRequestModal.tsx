@@ -1,24 +1,27 @@
 "use client";
 
-import { MessageRoles } from "@/components/modules/user/chat/types";
-import ChatMessage from "@/components/ui/client/message/message";
 import ViewMessages from "@/components/ui/client/viewMessages/viewMessages";
 import { Colors } from "@/lib/config/colors";
-import createResponseEventAction from "@/server/actions/response-event/createResponseEventAction";
 import replyToResponseEventAction from "@/server/actions/response-event/replyToResponseEventAction";
 import {
   ResponseEvent,
   ResponseEventType,
 } from "@/server/app/response-event/response-event.types";
 import { User } from "@/server/app/users/users.types";
-import { Button, LoadingOverlay, Textarea, Tooltip } from "@mantine/core";
-import React, { useEffect, useRef, useState } from "react";
-import { BiUser, BiUserCircle } from "react-icons/bi";
+import {
+  Button,
+  Divider,
+  LoadingOverlay,
+  Textarea,
+  Tooltip,
+} from "@mantine/core";
+import React, { useRef, useState } from "react";
 import { FaUserCircle } from "react-icons/fa";
-import { MdSend } from "react-icons/md";
+import { MdSend, MdVerified } from "react-icons/md";
 import { toast } from "react-toastify";
-import Reply from "./reply";
 import ReplyElement from "./reply";
+import verifyResponseEventAction from "@/server/actions/response-event/verifyResponseEventAction";
+import { FaCheck } from "react-icons/fa6";
 
 export default function ReplyManagerRequestModal({
   responseEvent,
@@ -30,6 +33,8 @@ export default function ReplyManagerRequestModal({
   const messageRef = useRef<HTMLTextAreaElement>(null);
   const [messageError, setMessageError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
+  const [verifyLoading, setVerifyLoading] = useState<boolean>(false);
+  const [verified, setVerified] = useState<boolean>(false);
 
   const hanldeConfirm = async () => {
     setLoading(true);
@@ -52,9 +57,28 @@ export default function ReplyManagerRequestModal({
     setLoading(false);
   };
 
+  const handleVerify = async () => {
+    setVerifyLoading(true);
+
+    const res = await verifyResponseEventAction(responseEvent._id);
+
+    if ("zodErrors" in res) {
+      setMessageError(res.zodErrors.message.message);
+    } else {
+      if ("status" in res && res.status) {
+        toast.success(res.payload.message);
+        setVerified(true);
+        setTimeout(() => onClose(), 2500);
+      } else {
+        toast.error("Something Went Wrong");
+      }
+    }
+    setVerifyLoading(false);
+  };
+
   return (
     <>
-      <div className="w-full h-screen flex flex-col-reverse lg:flex-row gap-5 lg:gap-0">
+      <div className="w-full h-full flex flex-col-reverse lg:flex-row gap-5 lg:gap-4">
         <ViewMessages responseEvent={responseEvent} />
 
         <div className="w-full flex flex-col gap-3 relative">
@@ -107,12 +131,41 @@ export default function ReplyManagerRequestModal({
               </div>
             </>
           ) : (
-            <ReplyElement
-              messageError={messageError}
-              messageRef={messageRef}
-              onClose={onClose}
-              hanldeConfirm={hanldeConfirm}
-            />
+            <>
+              {responseEvent.type === ResponseEventType.Verify && (
+                <>
+                  <div>
+                    {verified ? (
+                      <Button
+                        variant="light"
+                        color="teal"
+                        leftSection={<FaCheck />}
+                      >
+                        Verified
+                      </Button>
+                    ) : (
+                      <Button
+                        variant="light"
+                        color="teal"
+                        leftSection={<MdVerified />}
+                        onClick={handleVerify}
+                        loading={verifyLoading}
+                      >
+                        Verify The Response
+                      </Button>
+                    )}
+                  </div>
+                  <Divider my="xs" label="OR" labelPosition="center" />
+                </>
+              )}
+
+              <ReplyElement
+                messageError={messageError}
+                messageRef={messageRef}
+                onClose={onClose}
+                hanldeConfirm={hanldeConfirm}
+              />
+            </>
           )}
         </div>
       </div>

@@ -12,7 +12,7 @@ const ModuleLayout = ({
         <AdminHeader />
         <div className="flex max-h-full">
           <AdminSidebar />
-          <div className="grow overflow-x-hidden px-4 lg:pl-6 lg:pr-2 pt-7 overflow-y-scroll">
+          <div className="grow overflow-x-hidden px-4 lg:pl-6 lg:pr-2 pt-7 overflow-y-scroll styled-scrolbar">
             {children}
           </div>
         </div>
