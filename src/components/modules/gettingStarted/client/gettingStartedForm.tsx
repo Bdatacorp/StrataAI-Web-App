@@ -6,7 +6,7 @@ import {
   GettingStartedProps,
   GettingStartedState,
 } from "./types";
-import { useState } from "react";
+import { SetStateAction, useState } from "react";
 import { Button, Card, Select, TextInput } from "@mantine/core";
 import { signIn } from "next-auth/react";
 import Image from "next/image";
@@ -14,7 +14,8 @@ import { useDispatch } from "react-redux";
 import { setIsNewUser } from "@/lib/provider/features/user/user.slice";
 import { Modules } from "@/lib/config/modules";
 import { CreateUserDto } from "@/server/app/auth/auth.types";
-import { toast } from "react-toastify";
+import { Id, toast } from "react-toastify";
+import VerificationBox from "@/components/ui/client/verificationBox/verificationBox";
 
 const initialFormErrors: GettingStartedErrors = {
   name: { message: "" },
@@ -32,12 +33,18 @@ const initialFormState: GettingStartedState = {
   stateId: "",
 };
 
+enum Forms {
+  USER_VALIDATION = 0,
+  USER_REGISTRATION = 1,
+  USER_EMAIL_VERIFICATION = 2,
+}
+
 export default function GettingStartedForm({
   UserTypesData,
   StatesData,
 }: GettingStartedProps) {
   const [formLoading, setFormLoading] = useState<boolean>(false);
-  const [userValidated, setUserValidated] = useState<boolean>(false);
+  const [activeForm, setActiveForm] = useState<Forms>(Forms.USER_VALIDATION);
   const router = useRouter();
   const dispatch = useDispatch();
 
@@ -85,7 +92,6 @@ export default function GettingStartedForm({
       redirect: false,
       email: formState?.email,
     });
-    
 
     if (result?.error) {
       setFormLoading(false);
@@ -99,7 +105,7 @@ export default function GettingStartedForm({
           return setFormError((errors) => ({ ...errors, ...res.zodErrors }));
         } else if (res?.payload?.message) {
           if (res.payload?.statusCode === 404) {
-            setUserValidated(true);
+            setActiveForm(Forms.USER_REGISTRATION);
           } else {
             return toast.error(res?.payload?.message);
           }
@@ -114,6 +120,29 @@ export default function GettingStartedForm({
     }
   };
 
+  const FormList = [
+    <UserRegistrationForm
+      key={Forms.USER_REGISTRATION}
+      formState={formState}
+      setFormState={setFormState}
+      handleValidateUser={handleValidateUser}
+      StatesData={StatesData}
+      UserTypesData={UserTypesData}
+      formError={formError}
+      formLoading={formLoading}
+      hanldeOnSubmit={hanldeOnSubmit}
+    />,
+
+    <UserValidationForm
+      key={Forms.USER_VALIDATION}
+      formError={formError}
+      formState={formState}
+      formLoading={formLoading}
+      handleValidateUser={handleValidateUser}
+      setFormState={setFormState}
+    />,
+  ];
+
   return (
     <>
       <div className="flex flex-col gap-5 items-center mb-5">
@@ -125,153 +154,225 @@ export default function GettingStartedForm({
           height={30}
         />
 
-        {userValidated ? (
-          <>
-            <div className="flex flex-col items-center justify-center leading-6 gap-2">
-              <div>
-                <h1 className="text-[30px] font-[700] text-black">Welcome</h1>
-              </div>
-              <div>
-                <p className="text-[14px] font-[700] text-[#09132080]">
-                  Please fill out below details before continuing
-                </p>
-              </div>
-            </div>
-
-            <div className="w-full">
-              <TextInput
-                label="Name"
-                name="name"
-                description="Please enter your name"
-                placeholder="Ex. John Doe"
-                error={formError?.name?.message}
-                value={formState?.name}
-                onChange={(e) =>
-                  setFormState((state) => ({
-                    ...state,
-                    name: e.target.value,
-                  }))
-                }
-              />
-            </div>
-            <div className="w-full">
-              <TextInput
-                label="Email"
-                name="email"
-                description="Please enter your email"
-                placeholder="Ex. example@gmail.com"
-                disabled
-                error={formError?.email?.message}
-                value={formState?.email}
-                onChange={(e) =>
-                  setFormState((state) => ({
-                    ...state,
-                    email: e.target.value,
-                  }))
-                }
-              />
-            </div>
-            <div className="w-full">
-              <TextInput
-                label="Phone"
-                name="phone"
-                description="Please enter your Mobile Number"
-                placeholder="Ex. +61 412 345 678."
-                error={formError?.phone?.message}
-                value={formState?.phone}
-                onChange={(e) =>
-                  setFormState((state) => ({
-                    ...state,
-                    phone: e.target.value,
-                  }))
-                }
-              />
-            </div>
-            <div className="w-full">
-              <Select
-                label="User Type"
-                name="type"
-                description="Please let us know if you are an owner or a manager"
-                placeholder="Ex. Owner"
-                searchable
-                data={UserTypesData}
-                error={formError?.type?.message}
-                value={formState?.type}
-                onChange={(value) =>
-                  setFormState((state) => ({
-                    ...state,
-                    type: value as string,
-                  }))
-                }
-              />
-            </div>
-            <div className="w-full">
-              <Select
-                label="State"
-                name="state"
-                description="Please select your state"
-                placeholder="Ex. Victoria"
-                data={StatesData}
-                searchable
-                error={formError?.stateId?.message}
-                value={formState?.stateId}
-                onChange={(value) =>
-                  setFormState((state) => ({
-                    ...state,
-                    stateId: value as string,
-                  }))
-                }
-              />
-            </div>
-
-            <Button
-              loading={formLoading}
-              onClick={hanldeOnSubmit}
-              className="bg-primary hover:bg-primary hover:opacity-90 w-full"
-            >
-              Continue
-            </Button>
-          </>
-        ) : (
-          <>
-            <div className="flex flex-col items-center justify-center leading-6 gap-2">
-              <div>
-                <h1 className="text-[30px] font-[700] text-black">Welcome</h1>
-              </div>
-              <div>
-                <p className="text-[14px] font-[700] text-[#09132080]">
-                  Please enter the email before continuing
-                </p>
-              </div>
-            </div>
-
-            <div className="w-full">
-              <TextInput
-                label="Email"
-                name="email"
-                description="Please enter your email"
-                placeholder="Ex. example@gmail.com"
-                error={formError?.email?.message}
-                value={formState?.email}
-                onChange={(e) =>
-                  setFormState((state) => ({
-                    ...state,
-                    email: e.target.value,
-                  }))
-                }
-              />
-            </div>
-
-            <Button
-              loading={formLoading}
-              onClick={handleValidateUser}
-              className="bg-primary hover:bg-primary hover:opacity-90 w-full"
-            >
-              Continue
-            </Button>
-          </>
+        {FormList.map(
+          (form, index) => activeForm.toString() === form.key && form
         )}
       </div>
+    </>
+  );
+}
+
+function UserValidationForm({
+  formError,
+  formState,
+  formLoading,
+  handleValidateUser,
+  setFormState,
+}: {
+  formError: GettingStartedErrors;
+  formState: GettingStartedState;
+  formLoading: boolean;
+  handleValidateUser: () => Promise<void | Id>;
+  setFormState: (value: SetStateAction<GettingStartedState>) => void;
+}) {
+  return (
+    <>
+      <div className="flex flex-col items-center justify-center leading-6 gap-2">
+        <div>
+          <h1 className="text-[30px] font-[700] text-black">Welcome</h1>
+        </div>
+        <div>
+          <p className="text-[14px] font-[700] text-[#09132080]">
+            Please enter the email before continuing
+          </p>
+        </div>
+      </div>
+
+      <div className="w-full">
+        <TextInput
+          label="Email"
+          name="email"
+          description="Please enter your email"
+          placeholder="Ex. example@gmail.com"
+          error={formError?.email?.message}
+          value={formState?.email}
+          onChange={(e) =>
+            setFormState((state) => ({
+              ...state,
+              email: e.target.value,
+            }))
+          }
+        />
+      </div>
+
+      <Button
+        loading={formLoading}
+        onClick={handleValidateUser}
+        className="bg-primary hover:bg-primary hover:opacity-90 w-full"
+      >
+        Continue
+      </Button>
+    </>
+  );
+}
+
+// function UserEmailVerification({
+//   formError,
+//   formState,
+//   formLoading,
+//   handleValidateUser,
+//   setFormState,
+// }: {
+//   formError: GettingStartedErrors;
+//   formState: GettingStartedState;
+//   formLoading: boolean;
+//   handleValidateUser: () => Promise<void | Id>;
+//   setFormState: (value: SetStateAction<GettingStartedState>) => void;
+// }) {
+//   return (
+//     <>
+//       <div className="flex flex-col items-center justify-center leading-6 gap-2">
+//         <div>
+//           <h1 className="text-[30px] font-[700] text-black">Welcome</h1>
+//         </div>
+//         <div>
+//           <p className="text-[14px] font-[700] text-[#09132080]">
+//             Please verify your email before continuing
+//           </p>
+//         </div>
+//       </div>
+
+//       <div className="w-full">
+//         <VerificationBox />
+//       </div>
+//     </>
+//   );
+// }
+
+function UserRegistrationForm({
+  formError,
+  formState,
+  formLoading,
+  setFormState,
+  UserTypesData,
+  StatesData,
+  hanldeOnSubmit,
+}: {
+  formError: GettingStartedErrors;
+  formState: GettingStartedState;
+  formLoading: boolean;
+  handleValidateUser: () => Promise<void | Id>;
+  setFormState: (value: SetStateAction<GettingStartedState>) => void;
+  UserTypesData: string[];
+  StatesData: { value: string; label: string }[];
+  hanldeOnSubmit: () => Promise<void>;
+}) {
+  return (
+    <>
+      <div className="flex flex-col items-center justify-center leading-6 gap-2">
+        <div>
+          <h1 className="text-[30px] font-[700] text-black">Welcome</h1>
+        </div>
+        <div>
+          <p className="text-[14px] font-[700] text-[#09132080]">
+            Please fill out below details before continuing
+          </p>
+        </div>
+      </div>
+
+      <div className="w-full">
+        <TextInput
+          label="Name"
+          name="name"
+          description="Please enter your name"
+          placeholder="Ex. John Doe"
+          error={formError?.name?.message}
+          value={formState?.name}
+          onChange={(e) =>
+            setFormState((state) => ({
+              ...state,
+              name: e.target.value,
+            }))
+          }
+        />
+      </div>
+      <div className="w-full">
+        <TextInput
+          label="Email"
+          name="email"
+          description="Please enter your email"
+          placeholder="Ex. example@gmail.com"
+          disabled
+          error={formError?.email?.message}
+          value={formState?.email}
+          onChange={(e) =>
+            setFormState((state) => ({
+              ...state,
+              email: e.target.value,
+            }))
+          }
+        />
+      </div>
+      <div className="w-full">
+        <TextInput
+          label="Phone"
+          name="phone"
+          description="Please enter your Mobile Number"
+          placeholder="Ex. +61 412 345 678."
+          error={formError?.phone?.message}
+          value={formState?.phone}
+          onChange={(e) =>
+            setFormState((state) => ({
+              ...state,
+              phone: e.target.value,
+            }))
+          }
+        />
+      </div>
+      <div className="w-full">
+        <Select
+          label="User Type"
+          name="type"
+          description="Please let us know if you are an owner or a manager"
+          placeholder="Ex. Owner"
+          searchable
+          data={UserTypesData}
+          error={formError?.type?.message}
+          value={formState?.type}
+          onChange={(value) =>
+            setFormState((state) => ({
+              ...state,
+              type: value as string,
+            }))
+          }
+        />
+      </div>
+      <div className="w-full">
+        <Select
+          label="State"
+          name="state"
+          description="Please select your state"
+          placeholder="Ex. Victoria"
+          data={StatesData}
+          searchable
+          error={formError?.stateId?.message}
+          value={formState?.stateId}
+          onChange={(value) =>
+            setFormState((state) => ({
+              ...state,
+              stateId: value as string,
+            }))
+          }
+        />
+      </div>
+
+      <Button
+        loading={formLoading}
+        onClick={hanldeOnSubmit}
+        className="bg-primary hover:bg-primary hover:opacity-90 w-full"
+      >
+        Continue
+      </Button>
     </>
   );
 }

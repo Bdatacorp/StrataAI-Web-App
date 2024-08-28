@@ -7,6 +7,7 @@ import theme from "./_theme";
 import ReduxProvider from "@/lib/provider/reduxProvider";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import 'animate.css';
 
 export default function LibProviders({ children }: { children: ReactNode }) {
   return (
