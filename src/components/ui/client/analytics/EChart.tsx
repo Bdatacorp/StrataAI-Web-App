@@ -3,6 +3,7 @@
 import * as echarts from "echarts";
 import { useEffect, useRef, useState } from "react";
 import { BarChart } from "echarts/charts";
+import LoadingBarEChart from "./loading/loadingBarEChart";
 
 export default function EChart({
   option,
@@ -14,6 +15,7 @@ export default function EChart({
   height?: number;
 }) {
   const elementRef = useRef<HTMLDivElement>(null);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const chart = echarts.init(elementRef.current, null, {
@@ -21,7 +23,13 @@ export default function EChart({
       height: height || 400,
     });
     chart.setOption(option);
+    setLoading(false);
   }, [option, width, height]);
 
-  return <div ref={elementRef}></div>;
+  return (
+    <>
+      {loading && <LoadingBarEChart />}
+      <div ref={elementRef}></div>
+    </>
+  );
 }

@@ -1,4 +1,5 @@
 import BarAnalytics from "@/components/ui/client/analytics/EChart";
+import LoadingTableAnalytics from "@/components/ui/client/analytics/loading/loading";
 import TableAnalytics, {
   TableAnalyticsOptions,
 } from "@/components/ui/client/analytics/tableAnalytics";
@@ -65,7 +66,7 @@ async function FetchAnalytics() {
 
 export default function EventsAnalyticsServer() {
   return (
-    <Suspense>
+    <Suspense fallback={<LoadingTableAnalytics size={1} />}>
       <FetchAnalytics />
     </Suspense>
   );

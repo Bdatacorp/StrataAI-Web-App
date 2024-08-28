@@ -33,7 +33,7 @@ export default function FeedbackClientTable({ rows }: { rows: TableRows }) {
     modals.open({
       onClose: hanldeClose,
       title: "Reply to request",
-      size: "80%",
+
       children: <ViewMessages responseEvent={data} />,
     });
 

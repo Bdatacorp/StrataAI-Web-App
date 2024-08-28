@@ -54,7 +54,7 @@ export default function ReplyManagerRequestModal({
 
   return (
     <>
-      <div className="w-full h-screen flex flex-col-reverse lg:flex-row">
+      <div className="w-full h-screen flex flex-col-reverse lg:flex-row gap-5 lg:gap-0">
         <ViewMessages responseEvent={responseEvent} />
 
         <div className="w-full flex flex-col gap-3 relative">

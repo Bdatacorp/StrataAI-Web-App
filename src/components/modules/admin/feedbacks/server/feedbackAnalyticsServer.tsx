@@ -1,8 +1,10 @@
 import BarAnalytics from "@/components/ui/client/analytics/EChart";
+import LoadingTableAnalytics from "@/components/ui/client/analytics/loading/loading";
 import TableAnalytics, {
   TableAnalyticsOptions,
 } from "@/components/ui/client/analytics/tableAnalytics";
 import feedbackController from "@/server/app/feedback/feedbacks.controller";
+import { Skeleton } from "@mantine/core";
 
 import React, { Suspense } from "react";
 
@@ -65,7 +67,7 @@ async function FetchAnalytics() {
 
 export default function FeedbackAnalyticsServer() {
   return (
-    <Suspense>
+    <Suspense fallback={<LoadingTableAnalytics size={1} />}>
       <FetchAnalytics />
     </Suspense>
   );
