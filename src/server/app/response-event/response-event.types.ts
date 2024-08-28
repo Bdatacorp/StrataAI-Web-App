@@ -20,6 +20,12 @@ export interface ResponseEvent {
   updatedAt: string;
 }
 
+export type ResponseEventAnalytics = {
+  eventsCount: number;
+  repliedEvents: number;
+  unRepliedEvents: number;
+};
+
 export enum ResponseEventColumnEnum {
   session = "session",
   user = "user",

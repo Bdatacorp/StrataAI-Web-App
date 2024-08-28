@@ -13,10 +13,11 @@ export function middleware(request: NextRequest, response: NextResponse) {
       identifier: "Validate Login Page | If request has session, skip login",
       matcherPathnames: [Modules.AUTH.LOGIN.route],
       condition: (token) => {
-        const result = token?.user?.role !== UserRoles.ADMIN;
+        const result = token?.user?.role === UserRoles.ADMIN;
         return result;
       },
-      failedUrl: Modules.ADMIN.STATE.route,
+      sucessUrl: Modules.ADMIN.STATE.route,
+      failedUrl: null,
     },
     {
       identifier: "Validate Admin Pages",

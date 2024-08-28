@@ -17,4 +17,10 @@ export class FeedbackService extends Service {
     const res = await this.Http.Post(createFeedbackDto, token, URL);
     return res;
   }
+
+  async analytics(token: string, tags: string[]) {
+    const URL = `${process.env.BASE_API_URL}${FeedbackRoutes.GET_ANALYTICS}`;
+    const res = await this.Http.Get(token, tags, null, URL);
+    return res;
+  }
 }

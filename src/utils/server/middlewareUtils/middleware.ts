@@ -41,7 +41,9 @@ export class MiddlewareUtils {
       ) {
         console.log(middleware.identifier);
         if (!middleware.condition(retrivedToken)) {
-          return this.redirectTo(failedUrl, this.request);
+          if (failedUrl) {
+            return this.redirectTo(failedUrl, this.request);
+          }
         } else {
           if (middleware.sucessUrl) {
             console.log(middleware.sucessUrl);
@@ -70,9 +72,11 @@ export class MiddlewareUtils {
     return token;
   }
 
-  private constructFailedUrl(baseUrl: string): string {
-    const url = new URL(baseUrl, this.request.url);
-    url.searchParams.append("callbackUrl", this.request.nextUrl.pathname);
-    return url.pathname + url.search;
+  private constructFailedUrl(baseUrl: string | null) {
+    if (baseUrl) {
+      const url = new URL(baseUrl, this.request.url);
+      url.searchParams.append("callbackUrl", this.request.nextUrl.pathname);
+      return url.pathname + url.search;
+    }
   }
 }

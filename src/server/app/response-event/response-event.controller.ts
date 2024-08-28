@@ -8,6 +8,7 @@ import {
   CreateResponseEventDto,
   ReplyEventDto,
   ResponseEvent,
+  ResponseEventAnalytics,
 } from "./response-event.types";
 import ResponseEventTags from "./response-event.tags";
 import { ReplyEventValidate } from "./response-event.validate";
@@ -84,6 +85,17 @@ class ResponseEventController {
     } catch (error: any) {
       return this.zodErrorMessage.format(error);
     }
+  }
+
+  async getAnalytics() {
+    "use server";
+
+    const analytics: ResponseEventAnalytics = await this.responseEventService.analytics(
+      await ServerToken.getUserToken(),
+      this.tags
+    );
+
+    return analytics;
   }
 }
 

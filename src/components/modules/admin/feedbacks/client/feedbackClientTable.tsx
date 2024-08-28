@@ -8,16 +8,15 @@ import {
   TableRows,
   TableRowsActionTypes,
 } from "@/components/ui/client/table/types";
-import { Modules } from "@/lib/config/modules";
-import { openUploadFileToStateModal } from "@/lib/provider/features/state/state.slice";
-import { setViewMessages } from "@/lib/provider/features/ui/ui.slice";
-import deleteStateAction from "@/server/actions/state/deleteStateAction";
+import ViewMessages from "@/components/ui/client/viewMessages/viewMessages";
 import { FeedbackType } from "@/server/app/feedback/feedback.types";
 import {
   Feedback,
   FeedbackColumnEnum,
 } from "@/server/app/feedback/feedback.types";
+import { ResponseEvent } from "@/server/app/response-event/response-event.types";
 import { Button, Table, Tooltip } from "@mantine/core";
+import { modals } from "@mantine/modals";
 import React from "react";
 import { MdOutlineThumbDown, MdOutlineThumbUp } from "react-icons/md";
 import { useDispatch } from "react-redux";
@@ -26,14 +25,17 @@ export default function FeedbackClientTable({ rows }: { rows: TableRows }) {
   const dispatch = useDispatch();
   const actions: TableActionIconsProps = {};
 
-  const handleViewMessages = async (data: Feedback) => {
-    dispatch(
-      setViewMessages({
-        userMessage: data.userMessage,
-        assistantMessage: data.assistantMessage,
-      })
-    );
+  const hanldeClose = () => {
+    modals.closeAll();
   };
+
+  const openViewMessageModal = async (data: ResponseEvent) =>
+    modals.open({
+      onClose: hanldeClose,
+      title: "Reply to request",
+      size: "80%",
+      children: <ViewMessages responseEvent={data} />,
+    });
 
   const actionButtons: RowActionButton[] = [
     {
@@ -44,7 +46,7 @@ export default function FeedbackClientTable({ rows }: { rows: TableRows }) {
           </Button>
         </Tooltip>
       ),
-      action: handleViewMessages,
+      action: openViewMessageModal,
     },
   ];
 

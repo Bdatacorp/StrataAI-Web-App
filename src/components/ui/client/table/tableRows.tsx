@@ -159,6 +159,7 @@ export default function TableDataRows({
           </Table.Td>
         </Table.Tr>
       ))}
+      <div className="mt-10"></div>
     </>
   );
 }

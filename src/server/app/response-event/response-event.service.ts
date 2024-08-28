@@ -46,4 +46,10 @@ export class ResponseEventService extends Service {
     );
     return res;
   }
+
+  async analytics(token: string, tags: string[]) {
+    const URL = `${process.env.BASE_API_URL}${ResponseEventRoutes.GET_ANALYTICS}`;
+    const res = await this.Http.Get(token, tags, null, URL);
+    return res;
+  }
 }

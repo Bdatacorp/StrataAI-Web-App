@@ -1,3 +1,4 @@
+import { number } from "zod";
 import { Message, MessageContent } from "../chat/chat.types";
 import { Session } from "../session/session.types";
 
@@ -10,6 +11,12 @@ export interface Feedback {
   createdAt: string;
   updatedAt: string;
 }
+
+export type FeedbackAnalytics = {
+  feedbacksCount: number;
+  feedbacksPositive: number;
+  feedbacksNegative: number;
+};
 
 export enum FeedbackColumnEnum {
   session = "session",

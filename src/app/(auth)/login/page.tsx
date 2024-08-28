@@ -10,13 +10,7 @@ export const metadata: Metadata = {
 };
 
 const LoginPage = async () => {
-  const session = await auth();
-
-  if (session?.user.token) {
-    redirect(Modules.ADMIN.STATE.route);
-  } else {
-    return <LoginForm />;
-  }
+  return <LoginForm />;
 };
 
 export default LoginPage;

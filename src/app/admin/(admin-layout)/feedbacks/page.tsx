@@ -3,7 +3,7 @@ import { Metadata } from "next";
 import { Modules } from "@/lib/config/modules";
 import FeedbackModuleHeader from "@/components/modules/admin/feedbacks/client/feedbackModuleHeader";
 import FeedbackServerTable from "@/components/modules/admin/feedbacks/server/feedbackServerTable";
-import ViewMessagesModal from "@/components/ui/client/viewMesssages/viewMessagesModal";
+import FeedbackAnalyticsServer from "@/components/modules/admin/feedbacks/server/feedbackAnalyticsServer";
 
 export const metadata: Metadata = {
   title: Modules.ADMIN.FEEDBACKS.title,
@@ -14,9 +14,11 @@ const FeedbacksModule = () => {
   return (
     <>
       <FeedbackModuleHeader />
-      <ViewMessagesModal/>
+      <FeedbackAnalyticsServer />
 
-      <TableWrapper tableSection={<FeedbackServerTable />} />
+      <div className="overflow-x-scroll">
+        <FeedbackServerTable />
+      </div>
     </>
   );
 };

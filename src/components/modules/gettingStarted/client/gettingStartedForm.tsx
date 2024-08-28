@@ -37,7 +37,7 @@ export default function GettingStartedForm({
   StatesData,
 }: GettingStartedProps) {
   const [formLoading, setFormLoading] = useState<boolean>(false);
-  const [formSucessLoading, setFormSucessLoading] = useState<boolean>(false);
+  const [userValidated, setUserValidated] = useState<boolean>(false);
   const router = useRouter();
   const dispatch = useDispatch();
 
@@ -77,6 +77,43 @@ export default function GettingStartedForm({
     }
   };
 
+  const handleValidateUser = async () => {
+    setFormError(initialFormErrors);
+    setFormLoading(true);
+
+    const result: any = await signIn("validateUser", {
+      redirect: false,
+      email: formState?.email,
+    });
+    
+
+    if (result?.error) {
+      setFormLoading(false);
+
+      if (
+        result?.error.includes("zodErrors") ||
+        result?.error.includes("payload")
+      ) {
+        const res = await JSON.parse(result.error);
+        if (res && res.zodErrors) {
+          return setFormError((errors) => ({ ...errors, ...res.zodErrors }));
+        } else if (res?.payload?.message) {
+          if (res.payload?.statusCode === 404) {
+            setUserValidated(true);
+          } else {
+            return toast.error(res?.payload?.message);
+          }
+        }
+      } else {
+        return toast.error("Origin is unreachable");
+      }
+    } else {
+      dispatch(setIsNewUser(true));
+      setTimeout(() => router.replace(Modules.USER.CHAT.route), 4000);
+      setFormLoading(false);
+    }
+  };
+
   return (
     <>
       <div className="flex flex-col gap-5 items-center mb-5">
@@ -88,103 +125,152 @@ export default function GettingStartedForm({
           height={30}
         />
 
-        <div className="flex flex-col items-center justify-center leading-6 gap-2">
-          <div>
-            <h1 className="text-[30px] font-[700] text-black">Welcome</h1>
-          </div>
-          <div>
-            <p className="text-[14px] font-[700] text-[#09132080]">
-              Please fill out below details before continuing
-            </p>
-          </div>
-        </div>
+        {userValidated ? (
+          <>
+            <div className="flex flex-col items-center justify-center leading-6 gap-2">
+              <div>
+                <h1 className="text-[30px] font-[700] text-black">Welcome</h1>
+              </div>
+              <div>
+                <p className="text-[14px] font-[700] text-[#09132080]">
+                  Please fill out below details before continuing
+                </p>
+              </div>
+            </div>
 
-        <div className="w-full">
-          <TextInput
-            label="Name"
-            name="name"
-            description="Please enter your name"
-            placeholder="Ex. John Doe"
-            error={formError?.name?.message}
-            onChange={(e) =>
-              setFormState((state) => ({
-                ...state,
-                name: e.target.value,
-              }))
-            }
-          />
-        </div>
-        <div className="w-full">
-          <TextInput
-            label="Email"
-            name="email"
-            description="Please enter your email"
-            placeholder="Ex. example@gmail.com"
-            error={formError?.email?.message}
-            onChange={(e) =>
-              setFormState((state) => ({
-                ...state,
-                email: e.target.value,
-              }))
-            }
-          />
-        </div>
-        <div className="w-full">
-          <TextInput
-            label="Phone"
-            name="phone"
-            description="Please enter your Mobile Number"
-            placeholder="Ex. +61 412 345 678."
-            error={formError?.phone?.message}
-            onChange={(e) =>
-              setFormState((state) => ({
-                ...state,
-                phone: e.target.value,
-              }))
-            }
-          />
-        </div>
-        <div className="w-full">
-          <Select
-            label="User Type"
-            name="type"
-            description="Please let us know if you are an owner or a manager"
-            placeholder="Ex. Owner"
-            searchable
-            data={UserTypesData}
-            error={formError?.type?.message}
-            onChange={(value) =>
-              setFormState((state) => ({
-                ...state,
-                type: value as string,
-              }))
-            }
-          />
-        </div>
-        <div className="w-full">
-          <Select
-            label="State"
-            name="state"
-            description="Please select your state"
-            placeholder="Ex. Victoria"
-            data={StatesData}
-            searchable
-            error={formError?.stateId?.message}
-            onChange={(value) =>
-              setFormState((state) => ({
-                ...state,
-                stateId: value as string,
-              }))
-            }
-          />
-        </div>
-        <Button
-          loading={formLoading}
-          onClick={hanldeOnSubmit}
-          className="bg-primary hover:bg-primary hover:opacity-90 w-full"
-        >
-          Continue
-        </Button>
+            <div className="w-full">
+              <TextInput
+                label="Name"
+                name="name"
+                description="Please enter your name"
+                placeholder="Ex. John Doe"
+                error={formError?.name?.message}
+                value={formState?.name}
+                onChange={(e) =>
+                  setFormState((state) => ({
+                    ...state,
+                    name: e.target.value,
+                  }))
+                }
+              />
+            </div>
+            <div className="w-full">
+              <TextInput
+                label="Email"
+                name="email"
+                description="Please enter your email"
+                placeholder="Ex. example@gmail.com"
+                disabled
+                error={formError?.email?.message}
+                value={formState?.email}
+                onChange={(e) =>
+                  setFormState((state) => ({
+                    ...state,
+                    email: e.target.value,
+                  }))
+                }
+              />
+            </div>
+            <div className="w-full">
+              <TextInput
+                label="Phone"
+                name="phone"
+                description="Please enter your Mobile Number"
+                placeholder="Ex. +61 412 345 678."
+                error={formError?.phone?.message}
+                value={formState?.phone}
+                onChange={(e) =>
+                  setFormState((state) => ({
+                    ...state,
+                    phone: e.target.value,
+                  }))
+                }
+              />
+            </div>
+            <div className="w-full">
+              <Select
+                label="User Type"
+                name="type"
+                description="Please let us know if you are an owner or a manager"
+                placeholder="Ex. Owner"
+                searchable
+                data={UserTypesData}
+                error={formError?.type?.message}
+                value={formState?.type}
+                onChange={(value) =>
+                  setFormState((state) => ({
+                    ...state,
+                    type: value as string,
+                  }))
+                }
+              />
+            </div>
+            <div className="w-full">
+              <Select
+                label="State"
+                name="state"
+                description="Please select your state"
+                placeholder="Ex. Victoria"
+                data={StatesData}
+                searchable
+                error={formError?.stateId?.message}
+                value={formState?.stateId}
+                onChange={(value) =>
+                  setFormState((state) => ({
+                    ...state,
+                    stateId: value as string,
+                  }))
+                }
+              />
+            </div>
+
+            <Button
+              loading={formLoading}
+              onClick={hanldeOnSubmit}
+              className="bg-primary hover:bg-primary hover:opacity-90 w-full"
+            >
+              Continue
+            </Button>
+          </>
+        ) : (
+          <>
+            <div className="flex flex-col items-center justify-center leading-6 gap-2">
+              <div>
+                <h1 className="text-[30px] font-[700] text-black">Welcome</h1>
+              </div>
+              <div>
+                <p className="text-[14px] font-[700] text-[#09132080]">
+                  Please enter the email before continuing
+                </p>
+              </div>
+            </div>
+
+            <div className="w-full">
+              <TextInput
+                label="Email"
+                name="email"
+                description="Please enter your email"
+                placeholder="Ex. example@gmail.com"
+                error={formError?.email?.message}
+                value={formState?.email}
+                onChange={(e) =>
+                  setFormState((state) => ({
+                    ...state,
+                    email: e.target.value,
+                  }))
+                }
+              />
+            </div>
+
+            <Button
+              loading={formLoading}
+              onClick={handleValidateUser}
+              className="bg-primary hover:bg-primary hover:opacity-90 w-full"
+            >
+              Continue
+            </Button>
+          </>
+        )}
       </div>
     </>
   );

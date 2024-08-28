@@ -27,7 +27,7 @@ export type MiddlewareUtilConfig = {
   /**
    * If Condition false redirect url
    */
-  failedUrl: string;
+  failedUrl: string | null;
 
   /**
    * Append searchParams as ?callbackUrl=

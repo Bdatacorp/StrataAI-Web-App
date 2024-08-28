@@ -29,7 +29,7 @@ const LoginForm = () => {
     const callbackUrl =
       searchParams?.get("callbackUrl") || Modules.ADMIN.STATE.route;
 
-    const result: any = await signIn("credentials", {
+    const result: any = await signIn("adminLogin", {
       redirect: false,
       email: emailAddress,
       password,

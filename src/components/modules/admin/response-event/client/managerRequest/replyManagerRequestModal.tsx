@@ -1,5 +1,8 @@
 "use client";
 
+import { MessageRoles } from "@/components/modules/user/chat/types";
+import ChatMessage from "@/components/ui/client/message/message";
+import ViewMessages from "@/components/ui/client/viewMessages/viewMessages";
 import { Colors } from "@/lib/config/colors";
 import createResponseEventAction from "@/server/actions/response-event/createResponseEventAction";
 import replyToResponseEventAction from "@/server/actions/response-event/replyToResponseEventAction";
@@ -14,6 +17,8 @@ import { BiUser, BiUserCircle } from "react-icons/bi";
 import { FaUserCircle } from "react-icons/fa";
 import { MdSend } from "react-icons/md";
 import { toast } from "react-toastify";
+import Reply from "./reply";
+import ReplyElement from "./reply";
 
 export default function ReplyManagerRequestModal({
   responseEvent,
@@ -49,14 +54,42 @@ export default function ReplyManagerRequestModal({
 
   return (
     <>
-      <div className="w-full flex flex-col gap-3 relative">
-        <LoadingOverlay
-          visible={loading}
-          loaderProps={{ color: Colors.primary }}
-        />
+      <div className="w-full h-screen flex flex-col-reverse lg:flex-row">
+        <ViewMessages responseEvent={responseEvent} />
 
-        {responseEvent.type === ResponseEventType.Message &&
-          responseEvent.content && (
+        <div className="w-full flex flex-col gap-3 relative">
+          <LoadingOverlay
+            visible={loading}
+            loaderProps={{ color: Colors.primary }}
+          />
+
+          <div>
+            <strong>Manager Request Message</strong>
+          </div>
+
+          {responseEvent.type === ResponseEventType.Message &&
+            responseEvent.content && (
+              <>
+                <div className="flex flex-col gap-2 shadow p-2 rounded-md">
+                  <div className="flex h-auto gap-2">
+                    <div className="flex justify-center items-center">
+                      <FaUserCircle className="text-2xl" />
+                    </div>
+                    <div className="flex flex-col justify-center">
+                      <div className="text-xs">
+                        {responseEvent.session.user.email}
+                      </div>
+                      <div className="text-[10px]">
+                        {responseEvent.updatedAt}
+                      </div>
+                    </div>
+                  </div>
+                  <p className="text-sm">{responseEvent.content}</p>
+                </div>
+              </>
+            )}
+
+          {responseEvent.reply ? (
             <>
               <div className="flex flex-col gap-2 shadow p-2 rounded-md">
                 <div className="flex h-auto gap-2">
@@ -64,37 +97,23 @@ export default function ReplyManagerRequestModal({
                     <FaUserCircle className="text-2xl" />
                   </div>
                   <div className="flex flex-col justify-center">
-                    <div className="text-xs">
-                      {responseEvent.session.user.email}
+                    <div className="text-xs">Manager</div>
+                    <div className="text-[10px]">
+                      {responseEvent.reply.updatedAt}
                     </div>
-                    <div className="text-[10px]">{responseEvent.updatedAt}</div>
                   </div>
                 </div>
-                <p className="text-sm">{responseEvent.content}</p>
+                <p className="text-sm">{responseEvent.reply.content}</p>
               </div>
             </>
+          ) : (
+            <ReplyElement
+              messageError={messageError}
+              messageRef={messageRef}
+              onClose={onClose}
+              hanldeConfirm={hanldeConfirm}
+            />
           )}
-
-        <Textarea
-          error={messageError}
-          label="Message"
-          ref={messageRef}
-          autosize
-          minRows={7}
-        />
-
-        <div className="mt-4 w-full flex justify-end gap-4">
-          <Button variant="default" onClick={onClose}>
-            Cancel
-          </Button>
-          <Button
-            onClick={hanldeConfirm}
-            variant="filled"
-            color={Colors.primary}
-            rightSection={<MdSend />}
-          >
-            Send
-          </Button>
         </div>
       </div>
     </>

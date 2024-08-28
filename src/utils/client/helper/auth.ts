@@ -22,8 +22,8 @@ import CredentialsProvider from "next-auth/providers/credentials";
 export const authConfig = {
   providers: [
     CredentialsProvider({
-      id: "credentials",
-      name: "Credentials",
+      id: "adminLogin",
+      name: "adminLogin",
       credentials: {
         email: { label: "Email", type: "text" },
         password: { label: "Password", type: "password" },
@@ -68,6 +68,31 @@ export const authConfig = {
         }
 
         if (res.payload.data) {
+          const userPayload: UserPayload = res.payload.data;
+          return userPayload;
+        }
+
+        return null;
+      },
+    }),
+    CredentialsProvider({
+      id: "validateUser",
+      name: "validateUser",
+      credentials: {
+        email: { type: "text" },
+      },
+      async authorize(credentials, req) {
+        const res = await authController.validateUser(
+          credentials?.email as string
+        );
+
+        console.log(res);
+
+        if ("zodErrors" in res || ("status" in res && !res.status)) {
+          throw new Error(JSON.stringify(res));
+        }
+
+        if ("status" in res && res.payload.data) {
           const userPayload: UserPayload = res.payload.data;
           return userPayload;
         }

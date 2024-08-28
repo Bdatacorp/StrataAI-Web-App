@@ -23,7 +23,7 @@ export default async function DataTable({
   elements?: DangerZoneElement[];
 }) {
   return (
-    <div className="mt-7 table-container w-full h-full">
+    <div className="table-container w-full h-full mb-10">
       <ClientDataTable columns={columns}>
         <TableDataRows
           actions={actions}

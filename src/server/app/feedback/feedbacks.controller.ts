@@ -10,7 +10,11 @@ import { revalidatePath } from "next/cache";
 import { Modules } from "@/lib/config/modules";
 import FilesCacheTags from "../files/files.tags";
 import FeedbackCacheTags from "./feedback.tags";
-import { CreateFeedbackDto, Feedback } from "./feedback.types";
+import {
+  CreateFeedbackDto,
+  Feedback,
+  FeedbackAnalytics,
+} from "./feedback.types";
 import FeedbackValidate from "./feedback.validate";
 import { GeneralAPIResponse } from "@/utils/server/types/app.type";
 
@@ -59,11 +63,22 @@ class FeedbackController {
 
       return this.responseProcess.process<GeneralAPIResponse<any>>(
         { response, payload },
-        { allowDefaultTags: false }
+        { allowDefaultTags: true }
       );
     } catch (error: any) {
       return this.zodErrorMessage.format(error);
     }
+  }
+
+  async getAnalytics() {
+    "use server";
+
+    const feedbacks: FeedbackAnalytics = await this.feedbackService.analytics(
+      await ServerToken.getUserToken(),
+      this.tags
+    );
+
+    return feedbacks;
   }
 }
 
