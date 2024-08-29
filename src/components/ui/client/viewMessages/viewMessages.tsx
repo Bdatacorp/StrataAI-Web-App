@@ -8,7 +8,7 @@ export default function ViewMessages({
   responseEvent: ResponseEvent;
 }) {
   return (
-    <div className="w-full flex flex-col gap-4 h-[80svh] overflow-x-auto styled-scrolbar">
+    <div className="w-full flex flex-col gap-4 h-[80svh] overflow-y-auto styled-scrolbar">
       <div className="shadow p-2 flex flex-col gap-2 rounded-md py-4">
         <strong>User Message</strong>
         <ChatMessage

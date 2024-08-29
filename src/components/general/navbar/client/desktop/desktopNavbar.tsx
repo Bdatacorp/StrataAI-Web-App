@@ -17,7 +17,7 @@ export default function DesktopNavbar({
 }) {
   return (
     <div
-      className={`overflow-x-auto w-full flex flex-col pt-5 gap-5 px-2 bg-slate-800 h-full text-white capitalize relative`}
+      className={`overflow-y-auto w-full flex flex-col pt-5 gap-5 px-2 bg-slate-800 h-full text-white capitalize relative`}
     >
       <LoadingOverlay visible={loading} />
       <NavBarContent

@@ -16,7 +16,7 @@ const FeedbacksModule = () => {
       <FeedbackModuleHeader />
       <FeedbackAnalyticsServer />
 
-      <div className="overflow-x-scroll">
+      <div className="overflow-y-scroll">
         <FeedbackServerTable />
       </div>
     </>

@@ -38,7 +38,7 @@ export default function GettingStartedServer() {
             height={100}
           />
         </div>
-        <div className="grow overflow-x-scroll p-8 lg:p-10 lg:px-20">
+        <div className="grow overflow-y-scroll p-8 lg:p-10 lg:px-20">
           <Suspense fallback={<ElementLoading />}>
             <FetchStates />
           </Suspense>
