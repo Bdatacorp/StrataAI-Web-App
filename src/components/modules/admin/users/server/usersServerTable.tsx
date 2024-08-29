@@ -21,6 +21,12 @@ const cloumns: TableColumns[] = [
   },
 
   {
+    label: "Phone",
+    dataColumn: UserColumnEnum.phone,
+    width:20
+  },
+
+  {
     label: "User Type",
     dataColumn: UserColumnEnum.type,
     width:20

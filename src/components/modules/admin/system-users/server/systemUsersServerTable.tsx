@@ -16,6 +16,11 @@ const cloumns: TableColumns[] = [
     dataColumn: UserColumnEnum.email,
     maxWidth: 10,
   },
+  {
+    label: "Phone",
+    dataColumn: UserColumnEnum.phone,
+    width: 20,
+  },
 
   {
     label: "User Role",
