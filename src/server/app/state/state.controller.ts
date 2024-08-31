@@ -10,6 +10,7 @@ import ServerToken from "@/utils/server/helper/token/serverToken";
 import { revalidatePath } from "next/cache";
 import { Modules } from "@/lib/config/modules";
 import FilesCacheTags from "../files/files.tags";
+import revalidateCache from "@/utils/server/actions/revalidateCache";
 
 class StateController {
   private stateService: StateService;
@@ -54,7 +55,7 @@ class StateController {
 
       return this.responseProcess.process(
         { response, payload },
-        { tags: [payload.data.id], allowDefaultTags: true }
+        { allowDefaultTags: false }
       );
     } catch (error: any) {
       return this.zodErrorMessage.format(error);
@@ -65,6 +66,11 @@ class StateController {
     "use server";
     try {
       const stateId = formData.get("stateId") as string;
+      if (!stateId)
+        return this.zodErrorMessage.format({
+          status: false,
+          message: "State could not be found",
+        });
       const res = await this.stateService.uploadToState(
         formData,
         stateId,
@@ -76,11 +82,21 @@ class StateController {
         { response, payload },
         {
           tags: [stateId, FilesCacheTags.Files],
+          allowDefaultTags: true,
         }
       );
     } catch (error: any) {
       return this.zodErrorMessage.format(error);
     }
+  }
+
+  async revalidateState(stateId: string) {
+    "use server";
+    return revalidateCache([
+      stateId,
+      FilesCacheTags.Files,
+      StateCacheTags.State,
+    ]);
   }
 
   async deleteState(id: string) {
@@ -94,7 +110,7 @@ class StateController {
 
       return this.responseProcess.process(
         { response, payload },
-        { tags: [id],allowDefaultTags:true }
+        { tags: [id], allowDefaultTags: true }
       );
     } catch (error: any) {
       return this.zodErrorMessage.format(error);

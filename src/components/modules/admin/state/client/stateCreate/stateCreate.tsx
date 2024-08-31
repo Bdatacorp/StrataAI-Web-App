@@ -5,6 +5,7 @@ import { Colors } from "@/lib/config/colors";
 import { closeCreateStateModel } from "@/lib/provider/features/state/state.slice";
 import { RootState } from "@/lib/provider/store";
 import createStateAction from "@/server/actions/state/createStateAction";
+import revalidateStateAction from "@/server/actions/state/revalidateStateAction";
 import uploadToStateAction from "@/server/actions/state/uploadToStateAction";
 import { Button, Group, Modal, rem, Stepper, TextInput } from "@mantine/core";
 import { FileWithPath, PDF_MIME_TYPE } from "@mantine/dropzone";
@@ -61,7 +62,6 @@ export default function StateCreate() {
       setStateNameError(res.zodErrors.name.message);
     } else {
       if (res.status == true) {
-        console.log(res);
         toast.success(res.payload.message);
         setStateId(res.payload.data.id);
         setActive(1);
@@ -99,14 +99,14 @@ export default function StateCreate() {
     setNextStepLoding(false);
   };
 
+  const onClose = async () => {
+    dispatch(closeCreateStateModel());
+    return await revalidateStateAction(stateId || "");
+  };
+
   return (
     <>
-      <Modal
-        opened={isCreateModalOpened}
-        onClose={() => dispatch(closeCreateStateModel())}
-        centered
-        size="lg"
-      >
+      <Modal opened={isCreateModalOpened} onClose={onClose} centered size="lg">
         <Stepper
           active={active}
           onStepClick={setActive}
