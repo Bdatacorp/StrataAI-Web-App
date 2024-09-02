@@ -80,6 +80,13 @@ export class HTTP {
         body: formData,
       });
 
+      if (response.status === 413) {
+        return {
+          response,
+          payload: { status: false, message: response.statusText },
+        };
+      }
+
       const data = await response.json();
       return {
         response,
@@ -132,6 +139,11 @@ export class HTTP {
   private handleRequestError(error: Error) {
     console.log("Handle Request Error", error);
     throw new Error(`Failed to initiate request:`);
+  }
+
+  private handleUploadError(error: Error) {
+    console.log("Handle Request Error", error);
+    return error;
   }
 
   /**
