@@ -57,6 +57,7 @@ export const authConfig = {
         type: { type: "text" },
         phone: { type: "text" },
         stateId: { type: "text" },
+        acceptTerms: { type: "checkbox" },
       },
       async authorize(credentials, req) {
         const res: any = await authController.registerUser(

@@ -36,4 +36,5 @@ export interface CreateUserDto {
   type: string;
   phone: string;
   stateId: string;
+  acceptTerms?: string | boolean;
 }

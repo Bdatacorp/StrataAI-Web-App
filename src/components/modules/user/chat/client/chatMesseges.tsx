@@ -32,7 +32,7 @@ export default function ChatMessages({
 
   return (
     <>
-      <div className="w-full py-5 lg:p-10 h-[80svh] lg:h-[70svh] overflow-y-scroll styled-scrolbar">
+      <div className="w-full py-5 lg:p-10 h-[70svh] lg:h-[70svh] overflow-y-scroll styled-scrolbar">
         <div className="flex flex-col gap-4 px-4 lg:mx-20">
           <div className="mt-10 lg:mt-0" ref={firstMessageRef}></div>
           {messages.map((message, index) => (

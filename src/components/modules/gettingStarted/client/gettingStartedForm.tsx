@@ -6,8 +6,8 @@ import {
   GettingStartedProps,
   GettingStartedState,
 } from "./types";
-import { SetStateAction, useState } from "react";
-import { Button, Card, Select, TextInput } from "@mantine/core";
+import { RefObject, SetStateAction, useRef, useState } from "react";
+import { Button, Card, Checkbox, Select, TextInput } from "@mantine/core";
 import { signIn } from "next-auth/react";
 import Image from "next/image";
 import { useDispatch } from "react-redux";
@@ -16,6 +16,7 @@ import { Modules } from "@/lib/config/modules";
 import { CreateUserDto } from "@/server/app/auth/auth.types";
 import { Id, toast } from "react-toastify";
 import VerificationBox from "@/components/ui/client/verificationBox/verificationBox";
+import Link from "next/link";
 
 const initialFormErrors: GettingStartedErrors = {
   name: { message: "" },
@@ -23,6 +24,7 @@ const initialFormErrors: GettingStartedErrors = {
   phone: { message: "" },
   type: { message: "" },
   stateId: { message: "" },
+  acceptTerms: { message: "" },
 };
 
 const initialFormState: GettingStartedState = {
@@ -45,6 +47,7 @@ export default function GettingStartedForm({
 }: GettingStartedProps) {
   const [formLoading, setFormLoading] = useState<boolean>(false);
   const [activeForm, setActiveForm] = useState<Forms>(Forms.USER_VALIDATION);
+  const acceptTermsRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
   const dispatch = useDispatch();
 
@@ -65,6 +68,7 @@ export default function GettingStartedForm({
       phone: formState?.phone,
       type: formState?.type,
       stateId: formState?.stateId,
+      acceptTerms: acceptTermsRef.current?.checked,
     });
 
     if (result?.error) {
@@ -131,6 +135,7 @@ export default function GettingStartedForm({
       formError={formError}
       formLoading={formLoading}
       hanldeOnSubmit={hanldeOnSubmit}
+      acceptTermsRef={acceptTermsRef}
     />,
 
     <UserValidationForm
@@ -257,6 +262,7 @@ function UserRegistrationForm({
   UserTypesData,
   StatesData,
   hanldeOnSubmit,
+  acceptTermsRef,
 }: {
   formError: GettingStartedErrors;
   formState: GettingStartedState;
@@ -266,6 +272,7 @@ function UserRegistrationForm({
   UserTypesData: string[];
   StatesData: { value: string; label: string }[];
   hanldeOnSubmit: () => Promise<void>;
+  acceptTermsRef: RefObject<HTMLInputElement>;
 }) {
   return (
     <>
@@ -362,6 +369,33 @@ function UserRegistrationForm({
               ...state,
               stateId: value as string,
             }))
+          }
+        />
+      </div>
+
+      <div className="w-full">
+        <Checkbox
+          error={formError?.acceptTerms?.message}
+          ref={acceptTermsRef}
+          label={
+            <div className="flex items-center gap-1 text-[11px] text-center justify-center flex-wrap font-[600]">
+              <span className="text-[#09132080]">I accept</span>
+              <Link
+                target="_blank"
+                href={Modules.GUEST.TERMS.route}
+                className="text-Accent"
+              >
+                Terms and Conditions
+              </Link>
+              <span className="text-[#09132080]">and</span>
+              <Link
+                target="_blank"
+                href={Modules.GUEST.PRIVACY.route}
+                className="text-Accent"
+              >
+                Privacy Policy
+              </Link>
+            </div>
           }
         />
       </div>

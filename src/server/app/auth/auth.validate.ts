@@ -47,6 +47,11 @@ export const AuthRegiterValidate = z.object({
     .min(1, {
       message: "Please select a one of state",
     }),
+  acceptTerms: z
+    .boolean({ message: "Please accept terms and conditions" })
+    .refine((val) => val === true, {
+      message: "Please accept terms and conditions",
+    }),
 });
 
 export const AuthUserValidate = z.object({

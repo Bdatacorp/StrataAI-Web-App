@@ -41,7 +41,12 @@ class AuthController {
   async registerUser(createUserDto: CreateUserDto) {
     "use server";
     try {
-      const validated = AuthRegiterValidate.parse(createUserDto);
+      const validated: CreateUserDto = AuthRegiterValidate.parse({
+        ...createUserDto,
+        acceptTerms: JSON.parse(createUserDto.acceptTerms as string),
+      });
+
+      delete validated.acceptTerms;
 
       const res = await this.authService.registerUser(validated);
 
