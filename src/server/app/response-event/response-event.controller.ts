@@ -72,29 +72,12 @@ class ResponseEventController {
     try {
       const validated = ReplyEventValidate.parse(replyEventDto);
 
+      if (replyEventDto.verified == true) {
+        validated.message = `Your response has been verified by the manager. \nComment : \n ${validated.message}`;
+      }
+
       const res = await this.responseEventService.replyEvent(
         validated,
-        await ServerToken.getUserToken()
-      );
-      const { response, payload } = res as HttpPostReturnType;
-
-      return this.responseProcess.process<GeneralAPIResponse<any>>(
-        { response, payload },
-        { allowDefaultTags: true }
-      );
-    } catch (error: any) {
-      return this.zodErrorMessage.format(error);
-    }
-  }
-
-  async verifyResponseEventAction(requestId: string) {
-    "use server";
-    try {
-      const res = await this.responseEventService.replyEvent(
-        {
-          requestId,
-          message: "Your response has been verified by the manager",
-        },
         await ServerToken.getUserToken()
       );
       const { response, payload } = res as HttpPostReturnType;

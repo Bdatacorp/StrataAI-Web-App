@@ -10,6 +10,7 @@ import {
 import { User } from "@/server/app/users/users.types";
 import {
   Button,
+  Checkbox,
   Divider,
   LoadingOverlay,
   Textarea,
@@ -41,6 +42,7 @@ export default function ReplyManagerRequestModal({
 
     const res = await replyToResponseEventAction({
       requestId: responseEvent._id,
+      verified: verified,
       message: messageRef.current?.value as string,
     });
 
@@ -55,25 +57,6 @@ export default function ReplyManagerRequestModal({
       }
     }
     setLoading(false);
-  };
-
-  const handleVerify = async () => {
-    setVerifyLoading(true);
-
-    const res = await verifyResponseEventAction(responseEvent._id);
-
-    if ("zodErrors" in res) {
-      setMessageError(res.zodErrors.message.message);
-    } else {
-      if ("status" in res && res.status) {
-        toast.success(res.payload.message);
-        setVerified(true);
-        setTimeout(() => onClose(), 2500);
-      } else {
-        toast.error("Something Went Wrong");
-      }
-    }
-    setVerifyLoading(false);
   };
 
   return (
@@ -135,27 +118,14 @@ export default function ReplyManagerRequestModal({
               {responseEvent.type === ResponseEventType.Verify && (
                 <>
                   <div>
-                    {verified ? (
-                      <Button
-                        variant="light"
-                        color="teal"
-                        leftSection={<FaCheck />}
-                      >
-                        Verified
-                      </Button>
-                    ) : (
-                      <Button
-                        variant="light"
-                        color="teal"
-                        leftSection={<MdVerified />}
-                        onClick={handleVerify}
-                        loading={verifyLoading}
-                      >
-                        Verify The Response
-                      </Button>
-                    )}
+                    <Checkbox
+                      className="cursor-pointer"
+                      color="teal"
+                      label={<>Verify The Response</>}
+                      checked={verified}
+                      onChange={() => setVerified(!verified)}
+                    />
                   </div>
-                  <Divider my="xs" label="OR" labelPosition="center" />
                 </>
               )}
 

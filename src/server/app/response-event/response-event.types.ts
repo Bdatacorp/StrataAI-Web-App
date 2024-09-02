@@ -45,5 +45,6 @@ export type CreateResponseEventDto = {
 
 export type ReplyEventDto = {
   message: string;
+  verified: boolean;
   requestId: string;
 };

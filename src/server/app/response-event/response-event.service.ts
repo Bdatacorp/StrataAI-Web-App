@@ -37,13 +37,12 @@ export class ResponseEventService extends Service {
     return res;
   }
 
-  async replyEvent(replyEventDto: ReplyEventDto, token: string) {
-    const URL = `${process.env.BASE_API_URL}${ResponseEventRoutes.MANGER_EVENT_REPLY}/${replyEventDto.requestId}`;
-    const res = await this.Http.Post(
-      { message: replyEventDto.message },
-      token,
-      URL
-    );
+  async replyEvent(
+    { message, requestId }: { message: string; requestId: string },
+    token: string
+  ) {
+    const URL = `${process.env.BASE_API_URL}${ResponseEventRoutes.MANGER_EVENT_REPLY}/${requestId}`;
+    const res = await this.Http.Post({ message: message }, token, URL);
     return res;
   }
 

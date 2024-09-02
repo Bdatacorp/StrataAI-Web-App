@@ -8,19 +8,21 @@ export default function ReplyElement({
   messageRef,
   onClose,
   hanldeConfirm,
+
 }: {
   messageError: string;
   messageRef: React.RefObject<HTMLTextAreaElement>;
   onClose: () => void;
   hanldeConfirm: () => Promise<void>;
+
 }) {
   return (
     <>
       <Textarea
         error={messageError}
-        label="Message"
+        label="Comment"
         description="Reply message"
-        placeholder="Type your message here"
+        placeholder="Type your comment here"
         ref={messageRef}
         autosize
         minRows={7}
