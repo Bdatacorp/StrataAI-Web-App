@@ -21,8 +21,6 @@ import { FaUserCircle } from "react-icons/fa";
 import { MdSend, MdVerified } from "react-icons/md";
 import { toast } from "react-toastify";
 import ReplyElement from "./reply";
-import verifyResponseEventAction from "@/server/actions/response-event/verifyResponseEventAction";
-import { FaCheck } from "react-icons/fa6";
 
 export default function ReplyManagerRequestModal({
   responseEvent,
