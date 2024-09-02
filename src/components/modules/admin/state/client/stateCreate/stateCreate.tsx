@@ -90,8 +90,7 @@ export default function StateCreate() {
 
     if (res.status == true) {
       toast.success(res.payload.message);
-      setActive(2);
-      dispatch(closeCreateStateModel());
+      onClose();
     } else {
       toast.error(res.payload.message);
     }
