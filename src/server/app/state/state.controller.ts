@@ -62,34 +62,6 @@ class StateController {
     }
   }
 
-  async uploadToState(formData: FormData) {
-    "use server";
-    try {
-      const stateId = formData.get("stateId") as string;
-      if (!stateId)
-        return this.zodErrorMessage.format({
-          status: false,
-          message: "State could not be found",
-        });
-      const res = await this.stateService.uploadToState(
-        formData,
-        stateId,
-        await ServerToken.getUserToken()
-      );
-      const { response, payload } = res as HttpPostReturnType;
-
-      return this.responseProcess.process(
-        { response, payload },
-        {
-          tags: [stateId, FilesCacheTags.Files],
-          allowDefaultTags: true,
-        }
-      );
-    } catch (error: any) {
-      return this.zodErrorMessage.format(error);
-    }
-  }
-
   async revalidateState(stateId: string) {
     "use server";
     return revalidateCache([

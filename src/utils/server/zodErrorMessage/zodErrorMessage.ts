@@ -1,5 +1,7 @@
 class ZodErrorMessage {
   format(error: any) {
+    console.log(error);
+
     if (!error.errors) return { errors: error };
 
     const formattedErrors = error.errors.reduce((acc: any, err: any) => {

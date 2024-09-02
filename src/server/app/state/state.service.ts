@@ -9,21 +9,7 @@ export class StateService extends Service {
     super(URL);
   }
 
-  /**
-   * Upload Documents to State
-   * @param formData FormData
-   * @param stateID
-   * @returns Response
-   */
-  async uploadToState(
-    formData: FormData,
-    stateID: string,
-    token: string
-  ): Promise<HttpPostReturnType | void> {
-    const URL = `${process.env.BASE_API_URL}${StateRoutes.UPLOAD_TO_STATE}/${stateID}`;
-    const res = await this.Http.Upload(formData, token, URL);
-    return res;
-  }
+
 
   /**
    * Get Associated Files

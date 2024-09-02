@@ -6,7 +6,7 @@ import { closeCreateStateModel } from "@/lib/provider/features/state/state.slice
 import { RootState } from "@/lib/provider/store";
 import createStateAction from "@/server/actions/state/createStateAction";
 import revalidateStateAction from "@/server/actions/state/revalidateStateAction";
-import uploadToStateAction from "@/server/actions/state/uploadToStateAction";
+import uploadToStateAction from "@/server/actions/files/uploadToStateAction";
 import { Button, Group, Modal, rem, Stepper, TextInput } from "@mantine/core";
 import { FileWithPath, PDF_MIME_TYPE } from "@mantine/dropzone";
 import { Dispatch, SetStateAction, useState } from "react";
