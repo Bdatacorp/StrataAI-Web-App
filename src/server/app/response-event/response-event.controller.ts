@@ -11,8 +11,6 @@ import {
   ResponseEventAnalytics,
 } from "./response-event.types";
 import ResponseEventTags from "./response-event.tags";
-import { ReplyEventValidate } from "./response-event.validate";
-import { log } from "node:console";
 
 class ResponseEventController {
   private responseEventService: ResponseEventService;
@@ -70,14 +68,26 @@ class ResponseEventController {
   async replyToResponseEventAction(replyEventDto: ReplyEventDto) {
     "use server";
     try {
-      const validated = ReplyEventValidate.parse(replyEventDto);
+      if (!replyEventDto.requestId)
+        return this.zodErrorMessage.format({
+          status: false,
+          message: "Request ID could not be found",
+        });
 
       if (replyEventDto.verified == true) {
-        validated.message = `Your response has been verified by the manager. \nComment : \n ${validated.message}`;
+        replyEventDto.message = `Your response has been verified by the manager. ${
+          replyEventDto.message && "\nComment : \n" + replyEventDto.message
+        }`;
+      } else {
+        if (!replyEventDto.message)
+          return this.zodErrorMessage.format({
+            status: false,
+            message: "Please verify the response or type a comment",
+          });
       }
 
       const res = await this.responseEventService.replyEvent(
-        validated,
+        replyEventDto,
         await ServerToken.getUserToken()
       );
       const { response, payload } = res as HttpPostReturnType;
