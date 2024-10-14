@@ -3,7 +3,13 @@
 import { useSelector } from "react-redux";
 import { RootState } from "@/lib/provider/store";
 import { ActionIcon, Textarea, TextInput } from "@mantine/core";
-import { KeyboardEvent, useRef, useState } from "react";
+import {
+  Dispatch,
+  KeyboardEvent,
+  SetStateAction,
+  useRef,
+  useState,
+} from "react";
 import { MdOutlineClear, MdSend } from "react-icons/md";
 import Link from "next/link";
 import { Modules } from "@/lib/config/modules";
@@ -12,19 +18,21 @@ export default function ChatFooter({
   handleSend,
   loading,
   messageInputError,
+  setMessageInputError,
 }: {
   handleSend: (text: string | undefined) => void;
   loading: boolean;
   messageInputError: string;
+  setMessageInputError: Dispatch<SetStateAction<string>>;
 }) {
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
-  // const streamingResponse = useSelector(
-  //   (state: RootState) => state.ui.streamingResponse
-  // );
-
-  const hanldePressEnter = (e: KeyboardEvent<HTMLTextAreaElement>) => {
-    // e.key === "Enter" && handleSend(inputRef.current?.value);
+  const hanldeTextareaKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+    setMessageInputError("");
+    if (e.key === "Enter" && e.shiftKey === false) {
+      e.preventDefault();
+      handleSend(inputRef.current?.value);
+    }
   };
 
   const hanldeCancelButton = () => {
@@ -59,7 +67,7 @@ export default function ChatFooter({
             error={messageInputError}
             radius="lg"
             placeholder="Ask Anything"
-            onKeyDown={(e) => hanldePressEnter(e)}
+            onKeyDown={(e) => hanldeTextareaKeyDown(e)}
           />
         </div>
         <div>

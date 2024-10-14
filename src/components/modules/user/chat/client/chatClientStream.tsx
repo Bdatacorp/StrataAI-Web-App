@@ -166,6 +166,7 @@ export default function ChatClientStream({
       <ChatMessages messages={clientMessages} />
       <ChatFooter
         messageInputError={messageInputError}
+        setMessageInputError={setMessageInputError}
         handleSend={handleSend}
         loading={loading}
       />

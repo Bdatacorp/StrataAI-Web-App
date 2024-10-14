@@ -1,16 +1,20 @@
 "use client";
 
 import React, { useState } from "react";
-import { FaRegCalendarAlt } from "react-icons/fa";
-import { AiOutlineLogout } from "react-icons/ai";
+import { FaPowerOff, FaRegCalendarAlt } from "react-icons/fa";
+import { AiOutlineLogout, AiOutlineMessage } from "react-icons/ai";
 import { CgMenuLeft } from "react-icons/cg";
-import { ActionIcon, Drawer } from "@mantine/core";
+import { ActionIcon, Drawer, Tooltip } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import MobileSidebar from "../adminSideBar/MobileSidebar";
 import getDate from "@/utils/client/services/getDate";
 import Image from "next/image";
 import { Colors } from "@/lib/config/colors";
 import { signOut } from "next-auth/react";
+import { BiMessage } from "react-icons/bi";
+import Link from "next/link";
+import { Modules } from "@/lib/config/modules";
+import { RiMessage3Fill } from "react-icons/ri";
 
 const AdminHeader = () => {
   // NAVBAR
@@ -45,7 +49,7 @@ const AdminHeader = () => {
           </div>
         </div>
 
-        {/* MOBILE SIDEBAR */}
+        {/* Mobile Drawer Menu */}
         <div className=" flex items-center gap-6  lg:hidden">
           {/* MENU ICON */}
           <div className="w-fit" onClick={open}>
@@ -69,20 +73,36 @@ const AdminHeader = () => {
           </Drawer>
         </div>
 
-        {/* NOTIFICATIONS | SETTINGS | ACCOUNT */}
-        <div className="flex items-center gap-5 ">
-          <div className="flex items-center gap-2">
-            <ActionIcon
-              loading={logoutLoading}
-              color={Colors.primary}
-              onClick={() => {
-                setLogoutLoading(true);
-                signOut();
-              }}
-              className="rounded-full w-8 h-8"
-            >
-              <AiOutlineLogout className="text-2xl" />
-            </ActionIcon>
+        <div className="flex items-center gap-4 ">
+          <div className="flex items-center">
+            <Link href={Modules.USER.CHAT.route} target="_blank">
+              <Tooltip label="Visit Chat">
+                <ActionIcon
+                  color={Colors.secondary}
+                  className=" animate__animated animate__jello animate__infinite"
+                  variant="transparent"
+                >
+                  <RiMessage3Fill className="text-2xl" />
+                </ActionIcon>
+              </Tooltip>
+            </Link>
+          </div>
+
+          {/* Logout */}
+          <div className="flex items-center">
+            <Tooltip label="Logout">
+              <ActionIcon
+                variant="transparent"
+                loading={logoutLoading}
+                color={Colors.primary}
+                onClick={() => {
+                  setLogoutLoading(true);
+                  signOut();
+                }}
+              >
+                <FaPowerOff className="text-xl" />
+              </ActionIcon>
+            </Tooltip>
           </div>
         </div>
       </div>

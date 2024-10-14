@@ -80,6 +80,7 @@ export default function ChatClient({
       <ChatMessages messages={clientMessages} />
       <ChatFooter
         messageInputError={messageInputError}
+        setMessageInputError={setMessageInputError}
         handleSend={handleSend}
         loading={loading}
       />
