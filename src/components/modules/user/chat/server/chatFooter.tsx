@@ -32,6 +32,7 @@ export default function ChatFooter({
     if (e.key === "Enter" && e.shiftKey === false) {
       e.preventDefault();
       handleSend(inputRef.current?.value);
+      hanldeCancelButton();
     }
   };
 
