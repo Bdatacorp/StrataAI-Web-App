@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { FaPowerOff, FaRegCalendarAlt } from "react-icons/fa";
 import { AiOutlineLogout, AiOutlineMessage } from "react-icons/ai";
 import { CgMenuLeft } from "react-icons/cg";
-import { ActionIcon, Drawer, Tooltip } from "@mantine/core";
+import { ActionIcon, Burger, Drawer, Tooltip } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import MobileSidebar from "../adminSideBar/MobileSidebar";
 import getDate from "@/utils/client/services/getDate";
@@ -21,19 +21,15 @@ const AdminHeader = () => {
   const [opened, { open, close }] = useDisclosure(false);
   const [logoutLoading, setLogoutLoading] = useState<boolean>(false);
 
-  // SEARCH
-  const [searchOpened, { open: openSearch, close: closeSearch }] =
-    useDisclosure(false);
-
   const { formattedDateEnglish, greeting } = getDate();
 
   return (
-    <div className="flex items-center lg:justify-between py-[10px] px-4 lg:px-6">
+    <div className="w-full h-full flex items-center lg:justify-between py-[10px] px-4 lg:px-6">
       <div className="grow md:w-auto flex md:justify-start gap-3 items-center">
         <Image
           src={"/img/strata-ai.png"}
           alt="Strata Logo"
-          width={150}
+          width={130}
           height={80}
         />
       </div>
@@ -50,11 +46,14 @@ const AdminHeader = () => {
         </div>
 
         {/* Mobile Drawer Menu */}
+
         <div className=" flex items-center gap-6  lg:hidden">
-          {/* MENU ICON */}
-          <div className="w-fit" onClick={open}>
-            <CgMenuLeft className="text-3xl" />
-          </div>
+          <Burger
+            size="md"
+            opened={opened}
+            onClick={open}
+            aria-label="Toggle navigation"
+          />
 
           <Drawer
             opened={opened}
