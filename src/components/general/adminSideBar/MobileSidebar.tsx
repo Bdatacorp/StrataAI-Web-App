@@ -39,14 +39,16 @@ const MobileSidebar = () => {
         <div>
           <span className="text-[12px] font-[600]">POWERED BY</span>
         </div>
-        <div className="w-[100px] h-[25px] relative">
-          <Image
-            src={"/img/safenax.png"}
-            fill={true}
-            alt="logo"
-            className="w-full h-full cursor-pointer"
-          />
-        </div>
+        <Link href={process.env.NEXT_PUBLIC_SAFENAX_URL||"https://safenax.com"} target="_blank">
+          <div className="w-[100px] h-[25px] relative">
+            <Image
+              src={"/img/safenax.png"}
+              fill={true}
+              alt="logo"
+              className="w-full h-full cursor-pointer"
+            />
+          </div>
+        </Link>
       </div>
     </div>
   );
