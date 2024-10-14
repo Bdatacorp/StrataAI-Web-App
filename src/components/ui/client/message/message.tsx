@@ -53,7 +53,7 @@ export default function ChatMessage(message: ClientMessage) {
                       onClick={() =>
                         dispatch(
                           setAnnotationPDF({
-                            url: `${process.env.NEXT_PUBLIC_BASE_API_URL}${FilesRoute.VIEW}/${metadata.filename}`,
+                            url: `${process.env.NEXT_PUBLIC_AWS_S3_URL}/${metadata.filename}`,
                             page: parseInt(metadata.page),
                           })
                         )
